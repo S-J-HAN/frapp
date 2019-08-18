@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1076438576122",
+    "firebase_url": "https://frapp-87d5d.firebaseio.com",
+    "project_id": "frapp-87d5d",
+    "storage_bucket": "frapp-87d5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076438576122:android:695dae0a39add7f2",
+        "android_client_info": {
+          "package_name": "com.itproject.frapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1076438576122-270f61d8g2hj43gai55rt1u8khthnfat.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxnnnay7IJzjmJK72H6SMVUgXUy5AjXlo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1076438576122-270f61d8g2hj43gai55rt1u8khthnfat.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

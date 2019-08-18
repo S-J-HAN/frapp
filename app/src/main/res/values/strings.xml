@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">frapp</string>
+    <string name="title_activity_login">Login</string>
+    <string name="frapp">frapp</string>
+    <string name="login">login</string>
+    <string name="signup">signup</string>
+    <string name="profile">profile</string>
+    <string name="settings">settings</string>
+    <string name="upload">upload</string>
+</resources>
