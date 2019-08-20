@@ -7,7 +7,6 @@ This is the group repo for frapp! More details will come as we finish the resear
 ## Communication and organisation 
 - Slack
 - Airtable
-- Messenger
 - Google Docs
 
 ## App Software
