@@ -17,9 +17,9 @@ import com.google.firebase.database.ValueEventListener;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseAuth mAuth;
     private FirebaseUser currUser;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database;
     private DatabaseReference ref;
 
     private TextView jsonView;
@@ -29,16 +29,18 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
         currUser = mAuth.getCurrentUser();
-        ref = database.getReference("frapp-87d5d");
+        ref = database.getReference();
 
         jsonView = findViewById(R.id.jsonText);
 
         ref.child("users").child(currUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.i("REALTIME DB", "onDataChange: yooooo");
-                jsonView.setText(dataSnapshot.getValue().toString());
+                User user = dataSnapshot.getValue(User.class);
+                jsonView.setText(dataSnapshot.toString());
             }
 
             @Override
