@@ -21,4 +21,32 @@ public class Artifact {
         this.title = title;
     }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setOp(String op) {
+        this.op = op;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDate() {
+        return this.date;
+    }
+
 }
