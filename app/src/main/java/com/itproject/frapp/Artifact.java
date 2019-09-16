@@ -11,7 +11,7 @@ public class Artifact {
     private String op; // UserID of the original poster
     private String tags;
     private String title;
-    private HashMap<String, Comment> comments;
+    private ArrayList<Comment> comments = new ArrayList<>();
 
     public Artifact() {
     }
@@ -55,11 +55,12 @@ public class Artifact {
 //    }
 
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
-        HashMap<String, Comment> newComments = new HashMap<>();
+        ArrayList<Comment> newComments = new ArrayList<>();
+//        HashMap<String, Comment> newComments = new HashMap<>();
         for (String key : comments.keySet()) {
-            newComments.put(key, new Comment(comments.get(key).get("op"),
-                                             comments.get(key).get("datetime"),
-                                             comments.get(key).get("text")));
+            newComments.add(new Comment(comments.get(key).get("op"),
+                                        comments.get(key).get("datetime"),
+                                        comments.get(key).get("text")));
         }
         this.comments = newComments;
     }
@@ -88,7 +89,7 @@ public class Artifact {
         return this.title;
     }
 
-    public HashMap<String, Comment> getComments() {
+    public ArrayList<Comment> getComments() {
         return this.comments;
     }
 
