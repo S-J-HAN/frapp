@@ -8,6 +8,7 @@ public class Artifact {
     private String op; // UserID of the original poster
     private String tags;
     private String title;
+    private String url;
 
     public Artifact() {
     }
@@ -19,6 +20,38 @@ public class Artifact {
         this.op = op;
         this.tags = tags;
         this.title = title;
+    }
+
+    public void setDate(String date) {
+        this.date  = date;
+    }
+
+    public void setDescription(String description) {
+        this.description =  description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setOp(String op) {
+        this.op = op;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
     }
 
 }
