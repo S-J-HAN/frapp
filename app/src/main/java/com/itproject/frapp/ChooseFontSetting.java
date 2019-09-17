@@ -52,6 +52,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     public void onClick(View view) {
         String fontSize = "M";
 
+
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -85,6 +86,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     }
 
     public void openBirthdaySetting(View view) {
+
         Intent intent = new Intent(this, ChooseBirthdaySetting.class);
         startActivity(intent);
         finish();
