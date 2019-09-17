@@ -11,6 +11,7 @@ public class Artifact {
     private String op; // UserID of the original poster
     private String tags;
     private String title;
+    private String url;
     private ArrayList<Comment> comments = new ArrayList<>();
 
     public Artifact() {
@@ -50,13 +51,39 @@ public class Artifact {
         this.title = title;
     }
 
-//    public void setComments(ArrayList<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public void setDate(String date) {
+        this.date  = date;
+    }
+
+    public void setDescription(String description) {
+        this.description =  description;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setOp(String op) {
+        this.op = op;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
 
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
         ArrayList<Comment> newComments = new ArrayList<>();
-//        HashMap<String, Comment> newComments = new HashMap<>();
         for (String key : comments.keySet()) {
             newComments.add(new Comment(comments.get(key).get("op"),
                                         comments.get(key).get("datetime"),

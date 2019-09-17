@@ -20,7 +20,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_language);
+        setContentView(R.layout.activity_choose_birthday_setting);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();

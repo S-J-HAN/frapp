@@ -20,7 +20,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_language);
+        setContentView(R.layout.activity_choose_dpsetting);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();

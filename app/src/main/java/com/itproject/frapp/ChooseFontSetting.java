@@ -20,7 +20,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_language);
+        setContentView(R.layout.activity_choose_font_setting);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -45,7 +45,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     }
 
     public void openBirthdaySetting() {
-        Intent intent = new Intent(this, ChooseFontSetting.class);
+        Intent intent = new Intent(this, ChooseBirthdaySetting.class);
         startActivity(intent);
         finish();
     }

@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
                                                 }
                                             });
                                     break;
-                                } else {
-                                    Log.i("NO MATCH", user.getName() + " " + nameInput.getText().toString());
                                 }
                             }
 
