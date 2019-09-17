@@ -115,6 +115,16 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("Firebase problem", "realtime db cancelled", databaseError.toException());
             }
         });
+
+
+        Button artifactButton = findViewById(R.id.button_artifact);
+
+        artifactButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                goToArtifact(view);
+            }
+        });
+
     }
 
     public void openSettingsActivity(View view) {
@@ -129,18 +139,13 @@ public class HomeActivity extends AppCompatActivity {
 
 //         Button artifactButton = findViewById(R.id.button_artifact);
 
-//         artifactButton.setOnClickListener(new View.OnClickListener() {
-//             public void onClick(View view) {
-//                 goToArtifact(view);
-//             }
-//         });
 
-//     }
+     }
 
-//     public void goToArtifact(View view) {
-//         Intent intent = new Intent(this, ArtifactActivity.class);
-//         startActivity(intent);
-//         finish();
+     public void goToArtifact(View view) {
+         Intent intent = new Intent(this, ArtifactActivity.class);
+         startActivity(intent);
+         finish();
     }
 
 }

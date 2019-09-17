@@ -21,6 +21,7 @@
 
         <activity android:name=".UploadActivity"></activity>
         <activity android:name=".SettingsActivity" />
+        <activity android:name=".ArtifactActivity" />
 
         <activity android:name=".ChooseDPSetting" />
         <activity android:name=".ChooseBirthdaySetting" />
