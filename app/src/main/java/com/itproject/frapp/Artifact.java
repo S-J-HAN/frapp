@@ -13,19 +13,20 @@ public class Artifact {
     private String title;
     private String url;
     private ArrayList<Comment> comments = new ArrayList<>();
+    private Object HashMap;
 
     public Artifact() {
     }
 
-//    public Artifact(String date, String description, String location, String op, String tags, String title, ArrayList<Comment> comments) {
-//        this.date = date;
-//        this.description = description;
-//        this.location = location;
-//        this.op = op;
-//        this.tags = tags;
-//        this.title = title;
-//        this.comments = comments;
-//    }
+    public Artifact(String date, String description, String location, String op, String tags, String title, ArrayList<Comment> comments) {
+        this.date = date;
+        this.description = description;
+        this.location = location;
+        this.op = op;
+        this.tags = tags;
+        this.title = title;
+        this.comments = comments;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -51,29 +52,6 @@ public class Artifact {
         this.title = title;
     }
 
-    public void setDate(String date) {
-        this.date  = date;
-    }
-
-    public void setDescription(String description) {
-        this.description =  description;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setOp(String op) {
-        this.op = op;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -81,6 +59,7 @@ public class Artifact {
 
     public String getUrl() {
         return url;
+    }
 
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
         ArrayList<Comment> newComments = new ArrayList<>();
