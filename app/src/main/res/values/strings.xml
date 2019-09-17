@@ -8,4 +8,10 @@
     <string name="settings">settings</string>
     <string name="upload">upload</string>
     <string name="next">next</string>
+
+    <string-array name="languageOptions">
+        <item>English</item>
+        <item>Chinese</item>
+    </string-array>
+
 </resources>
