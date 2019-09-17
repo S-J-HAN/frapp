@@ -3,8 +3,11 @@ package com.itproject.frapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,5 +51,21 @@ public class HomeActivity extends AppCompatActivity {
                 Log.e("Firebase problem", "realtime db cancelled", databaseError.toException());
             }
         });
+
+        Button artifactButton = findViewById(R.id.button_artifact);
+
+        artifactButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                goToArtifact(view);
+            }
+        });
+
     }
+
+    public void goToArtifact(View view) {
+        Intent intent = new Intent(this, ArtifactActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
 }
