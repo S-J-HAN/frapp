@@ -66,15 +66,15 @@ public class HomeActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        // Set up settings button
-        settingsButton = findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Open settings page
-                openSettings();
-            }
-        });
+//        // Set up settings button
+//        settingsButton = findViewById(R.id.settingsButton);
+//        settingsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Open settings page
+//                openSettingsActivity();
+//            }
+//        });
 
         // Set up upload button
         uploadButton = findViewById(R.id.uploadButton);
