@@ -94,7 +94,12 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             holder.postComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Comment comment = new Comment(currentUser.getDisplayName(), "date", newCommentText);
+                    Comment comment = new Comment();
+                    comment.setOp(currentUser.getDisplayName());
+                    System.out.println(currentUser.getDisplayName() + "test");
+                    comment.setDateTime("date");
+                    comment.setText(newCommentText);
+                    System.out.println(comment.toString() + "hello");
                     dbRef.child("artifacts").child(artifactID).child("comments").push().setValue(comment);
                 }
             });

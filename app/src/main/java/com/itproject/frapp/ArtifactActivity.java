@@ -49,6 +49,7 @@ public class ArtifactActivity extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference();
 
 
+
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
         // use this setting to improve performance if you know that changes
@@ -64,24 +65,12 @@ public class ArtifactActivity extends AppCompatActivity {
         dbRef.child("artifacts").child(artifactID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.println(Log.DEBUG, "hello", dataSnapshot.getChildren().toString());
-//                System.out.println(dataSnapshot.getChildren());
-//                // Get ArtifactActivity object and do stuff with it inside onDataChange
+
                 Artifact artifact = dataSnapshot.getValue(Artifact.class);
-//                TextView date = findViewById(R.id.textView_date);
-//                date.setText(artifact.getDate());
-//                ImageView image = findViewById(R.id.imageView_artifact);
-//                // image.setImage..............
-//                TextView description = findViewById(R.id.textView_description);
-//                description.setText(artifact.getDescription());
-//
-//                TextView tags = findViewById(R.id.textView_tags);
-//                tags.setText(artifact.getComments().toString());
-                // specify an adapter (see also next example)
+
+                // specify an adapter
                 ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef);
                 recyclerView.setAdapter(mAdapter);
-
-
 
 
             }

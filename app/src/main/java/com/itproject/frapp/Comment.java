@@ -39,4 +39,8 @@ public class Comment {
         return this.text;
     }
 
+    public String toString() {
+        return this.op + this.datetime + this.text;
+    }
+
 }
