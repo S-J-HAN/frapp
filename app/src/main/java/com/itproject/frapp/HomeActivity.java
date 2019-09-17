@@ -66,15 +66,15 @@ public class HomeActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-        // Set up settings button
-        settingsButton = findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Open settings page
-                openSettings();
-            }
-        });
+//        // Set up settings button
+//        settingsButton = findViewById(R.id.settingsButton);
+//        settingsButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Open settings page
+//                openSettingsActivity();
+//            }
+//        });
 
         // Set up upload button
         uploadButton = findViewById(R.id.uploadButton);
@@ -116,6 +116,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+
         Button artifactButton = findViewById(R.id.button_artifact);
 
         artifactButton.setOnClickListener(new View.OnClickListener() {
@@ -126,14 +127,17 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    public void openSettings() {
+    public void openSettingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void openUpload() {
         Intent intent = new Intent(this, UploadActivity.class);
         startActivity(intent);
+
+//         Button artifactButton = findViewById(R.id.button_artifact);
 
 
      }

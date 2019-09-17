@@ -87,12 +87,11 @@ public class ChooseDPSetting extends AppCompatActivity {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         file = Uri.fromFile(getOutputMediaFile());
         takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-
         startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 
-        //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-        //   startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        //}
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
     }
 
 
@@ -112,7 +111,7 @@ public class ChooseDPSetting extends AppCompatActivity {
             profileImage.setImageURI(file);
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            profileImage.setImageBitmap(imageBitmap);
+            profileImage.setImageBitmap(cropImage(imageBitmap));
         }
 
         // handles if photo selected from gallery
@@ -124,9 +123,26 @@ public class ChooseDPSetting extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            profileImage.setImageBitmap(selectedPhoto);
-
+            profileImage.setImageBitmap(cropImage(selectedPhoto));
         }
+
+
+    }
+
+
+    private Bitmap cropImage(Bitmap image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        int newWidth = (height > width) ? width : height;
+        int newHeight = (height > width) ? height - (height - width) : height;
+
+        int cropWidth = (width - height) / 2;
+        cropWidth = (cropWidth < 0) ? 0 : cropWidth;
+        int cropHeight = (height - width) / 2;
+        cropHeight = (cropHeight < 0) ? 0 : cropHeight;
+
+        return Bitmap.createBitmap(image, cropWidth, cropHeight, newWidth, newHeight);
     }
 
 
@@ -140,6 +156,7 @@ public class ChooseDPSetting extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
     }
+
 
     public void openHomePage(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
