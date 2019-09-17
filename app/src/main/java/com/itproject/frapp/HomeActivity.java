@@ -116,6 +116,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        Button artifactButton = findViewById(R.id.button_artifact);
+
+        artifactButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                goToArtifact(view);
+            }
+        });
+
     }
 
     public void openSettings() {
@@ -126,21 +134,14 @@ public class HomeActivity extends AppCompatActivity {
     public void openUpload() {
         Intent intent = new Intent(this, UploadActivity.class);
         startActivity(intent);
-      
-//         Button artifactButton = findViewById(R.id.button_artifact);
 
-//         artifactButton.setOnClickListener(new View.OnClickListener() {
-//             public void onClick(View view) {
-//                 goToArtifact(view);
-//             }
-//         });
 
-//     }
+     }
 
-//     public void goToArtifact(View view) {
-//         Intent intent = new Intent(this, ArtifactActivity.class);
-//         startActivity(intent);
-//         finish();
+     public void goToArtifact(View view) {
+         Intent intent = new Intent(this, ArtifactActivity.class);
+         startActivity(intent);
+         finish();
     }
 
 }
