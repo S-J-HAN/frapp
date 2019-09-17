@@ -42,17 +42,17 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="221dp"
-        android:layout_height="240dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:src="@drawable/frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadDP"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/uploadDP" />
 
     <Button
         android:id="@+id/uploadFromGalleryButton"
@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="selectPhotoFromGallery"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:onClick="takePicture"
