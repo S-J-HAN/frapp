@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
+
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -114,28 +116,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-//        storageRef.child("artifacts/frapp8.JPG").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                // Got the download URL
-//                Log.i("IMAGE URL", "onSuccess: " + uri.toString());
-//
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception exception) {
-//                // Handle any errors
-//            }
-//        });
-
-//        // Test image download
-//        ImageView testView = findViewById(R.id.testView);
-//        String image = "https://firebasestorage.googleapis.com/v0/b/frapp-87d5d.appspot.com/o/artifacts%2Ffrapp7.HEIC?alt=media&token=92c79aed-c59d-44a2-a738-8df583c7fa0d";
-//        Glide.with(this)
-//                .load(image)
-//                .centerCrop()
-//                .into(testView);
-
     }
 
     public void openSettings() {
@@ -146,5 +126,21 @@ public class HomeActivity extends AppCompatActivity {
     public void openUpload() {
         Intent intent = new Intent(this, UploadActivity.class);
         startActivity(intent);
+      
+//         Button artifactButton = findViewById(R.id.button_artifact);
+
+//         artifactButton.setOnClickListener(new View.OnClickListener() {
+//             public void onClick(View view) {
+//                 goToArtifact(view);
+//             }
+//         });
+
+//     }
+
+//     public void goToArtifact(View view) {
+//         Intent intent = new Intent(this, ArtifactActivity.class);
+//         startActivity(intent);
+//         finish();
     }
+
 }
