@@ -3,15 +3,15 @@ package com.itproject.frapp;
 public class Comment {
 
     private String op;
-    private String datetime;
+    private String dateTime;
     private String text;
 
     public Comment() {
     }
 
-    public Comment(String op, String datetime, String text) {
+    public Comment(String op, String dateTime, String text) {
         this.op = op;
-        this.datetime = datetime;
+        this.dateTime = dateTime;
         this.text = text;
     }
 
@@ -19,8 +19,8 @@ public class Comment {
         this.op = op;
     }
 
-    public void setDateTime(String datetime) {
-        this.datetime = datetime;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public void setText(String text) {
@@ -32,7 +32,7 @@ public class Comment {
     }
 
     public String getDateTime() {
-        return this.datetime;
+        return this.dateTime;
     }
 
     public String getText() {
@@ -40,7 +40,7 @@ public class Comment {
     }
 
     public String toString() {
-        return this.op + this.datetime + this.text;
+        return this.op + this.dateTime + this.text;
     }
 
 }
