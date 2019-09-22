@@ -131,7 +131,6 @@ public class HomeActivity extends AppCompatActivity {
     public void openSettingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void openUpload() {
