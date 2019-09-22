@@ -36,13 +36,13 @@
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@+id/settingsButton"
         app:layout_constraintTop_toTopOf="parent" />
-    <Button
-        android:id="@+id/button_artifact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Artifact"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="12dp" />
+<!--    <Button-->
+<!--        android:id="@+id/button_artifact"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Artifact"-->
+<!--        tools:layout_editor_absoluteX="16dp"-->
+<!--        tools:layout_editor_absoluteY="12dp" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

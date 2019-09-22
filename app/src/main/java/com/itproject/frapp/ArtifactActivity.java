@@ -23,13 +23,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ArtifactActivity extends AppCompatActivity {
 
-    private String date;
-    private String description;
-    private String location;
-    private String op; // UserID of the original poster
-    private String tags;
-    private String title;
-
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
@@ -47,6 +40,9 @@ public class ArtifactActivity extends AppCompatActivity {
 
         // Connect to database
         dbRef = FirebaseDatabase.getInstance().getReference();
+
+        // Get the correct artifactID
+        artifactID = getIntent().getStringExtra("ARTIFACT_ID");
 
 
 

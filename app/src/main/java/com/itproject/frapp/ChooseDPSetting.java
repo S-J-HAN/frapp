@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -84,14 +85,14 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 
     public void takePicture(View view) {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        file = Uri.fromFile(getOutputMediaFile());
-        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }
+//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        file = Uri.fromFile(getOutputMediaFile());
+//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+//        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//
+//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }
     }
 
 
@@ -124,6 +125,21 @@ public class ChooseDPSetting extends AppCompatActivity {
                 e.printStackTrace();
             }
             profileImage.setImageBitmap(cropImage(selectedPhoto));
+
+//            // Upload photo onto firebase storage
+//            UploadTask uploadTask = mountainsRef.putBytes(data);
+//            uploadTask.addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception exception) {
+//                    // Handle unsuccessful uploads
+//                }
+//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//                @Override
+//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+//                    // ...
+//                }
+//            });
         }
 
 
@@ -146,16 +162,16 @@ public class ChooseDPSetting extends AppCompatActivity {
     }
 
 
-    private static File getOutputMediaFile() {
-        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "CameraDemo");
-
-        if ((!mediaStorageDir.exists()) && (!mediaStorageDir.mkdirs())) {
-            return null;
-        }
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
-    }
+//    private static File getOutputMediaFile() {
+//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "CameraDemo");
+//
+//        if ((!mediaStorageDir.exists()) && (!mediaStorageDir.mkdirs())) {
+//            return null;
+//        }
+//
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
+//    }
 
 
     public void openHomePage(View view) {

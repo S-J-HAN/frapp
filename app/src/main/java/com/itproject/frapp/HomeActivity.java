@@ -90,7 +90,7 @@ public class HomeActivity extends AppCompatActivity {
 //        // Get list of artifacts
 //        jsonView = findViewById(R.id.jsonText);
 
-        imageView = findViewById(R.id.imageView);
+//        imageView = findViewById(R.id.imageView);
         gallery = findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), GALLERYWIDTH);
         gallery.setLayoutManager(gridLayoutManager);
@@ -102,6 +102,7 @@ public class HomeActivity extends AppCompatActivity {
                 int c = 0;
                 for (DataSnapshot arti : dataSnapshot.getChildren()) {
                     Artifact a = arti.getValue(Artifact.class);
+                    a.setID(arti.getKey());
                     artifacts.add(a);
                 }
 //                jsonView.setText(urls[0]);
@@ -117,13 +118,13 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        Button artifactButton = findViewById(R.id.button_artifact);
-
-        artifactButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                goToArtifact(view);
-            }
-        });
+//        Button artifactButton = findViewById(R.id.button_artifact);
+//
+//        artifactButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                goToArtifact(view);
+//            }
+//        });
 
     }
 
@@ -138,13 +139,12 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
 
 //         Button artifactButton = findViewById(R.id.button_artifact);
-
-
-     }
-
-     public void goToArtifact(View view) {
-         Intent intent = new Intent(this, ArtifactActivity.class);
-         startActivity(intent);
     }
+
+
+//    public void goToArtifact(View view) {
+//         Intent intent = new Intent(this, ArtifactActivity.class);
+//         startActivity(intent);
+//    }
 
 }
