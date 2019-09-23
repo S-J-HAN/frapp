@@ -32,13 +32,13 @@
 
     <ImageButton
         android:id="@+id/settingsButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="265dp"
+        android:layout_marginRight="290dp"
         android:src="@drawable/round_person_white_24dp"
         android:background="@drawable/roundcorner"
         android:contentDescription="Settings page"
@@ -49,8 +49,8 @@
 
     <ImageButton
         android:id="@+id/uploadButton"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
@@ -61,6 +61,20 @@
         android:textSize="10sp"
         app:layout_constraintLeft_toRightOf="@+id/settingsButton"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/searchBar"
+        android:layout_width="260dp"
+        android:layout_height="46dp"
+        android:layout_marginLeft="135dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/roundcorner"
+        android:foregroundTint="@android:color/black"
+        android:textCursorDrawable="@drawable/blackcursor"
+        android:paddingLeft="10dp"
+        android:inputType="text"
+        android:imeOptions="actionGo"/>
+
 
 
 </RelativeLayout>

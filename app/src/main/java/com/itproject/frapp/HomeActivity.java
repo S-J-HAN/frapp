@@ -11,13 +11,16 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -45,9 +48,13 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
 
+    private ArrayList<Artifact> allArtifacts;
+    private ArrayList<Artifact> currentArtifacts;
+
     private TextView jsonView;
     private ImageButton settingsButton;
     private ImageButton uploadButton;
+    private EditText searchBar;
 
     private ImageView imageView;
     private RecyclerView gallery;
@@ -87,6 +94,31 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        // Set up search bar
+        searchBar = findViewById(R.id.searchBar);
+        searchBar.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+                    // Search for keywords
+                    ArrayList<Artifact> relevant = search(searchBar.getText().toString());
+                    currentArtifacts = relevant;
+
+                    // Show only relevant artifacts
+                    GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
+                    gallery.setAdapter(galleryAdapter);
+
+                    // Defocus search bar
+//                    searchBar.clearFocus();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
 
 //
 //
@@ -101,16 +133,17 @@ public class HomeActivity extends AppCompatActivity {
         ref.child("artifacts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Artifact> artifacts = new ArrayList<Artifact>();
+                allArtifacts = new ArrayList<Artifact>();
                 int c = 0;
                 for (DataSnapshot arti : dataSnapshot.getChildren()) {
                     Artifact a = arti.getValue(Artifact.class);
                     a.setID(arti.getKey());
-                    artifacts.add(a);
+                    allArtifacts.add(a);
                 }
+                currentArtifacts = allArtifacts;
 //                jsonView.setText(urls[0]);
 
-                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), artifacts);
+                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
                 gallery.setAdapter(galleryAdapter);
             }
 
@@ -147,6 +180,26 @@ public class HomeActivity extends AppCompatActivity {
 //         Intent intent = new Intent(this, ArtifactActivity.class);
 //         startActivity(intent);
 //    }
+
+    public ArrayList<Artifact> search(String input) {
+        String[] terms = input.split(" ");
+        if (terms.length == 0) {
+            return allArtifacts;
+        }
+        ArrayList<Artifact> relevant = new ArrayList<Artifact>();
+        for (Artifact a : allArtifacts) {
+            for (String term : terms) {
+                if (a.getDescription().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getLocation().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getTags().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getDate().toLowerCase().contains(term.toLowerCase())) {
+                    relevant.add(a);
+                }
+            }
+        }
+
+        return relevant;
+    }
 
 
 }
