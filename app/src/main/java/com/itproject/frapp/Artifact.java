@@ -14,7 +14,6 @@ public class Artifact {
     private String url;
     private String id;
     private ArrayList<Comment> comments = new ArrayList<>();
-    private Object HashMap;
 
     public Artifact() {
     }
@@ -55,7 +54,6 @@ public class Artifact {
 
     public void setID(String id) { this.id = id; }
 
-
     public void setUrl(String url) {
         this.url = url;
     }
@@ -68,7 +66,7 @@ public class Artifact {
         ArrayList<Comment> newComments = new ArrayList<>();
         for (String key : comments.keySet()) {
             newComments.add(new Comment(comments.get(key).get("op"),
-                                        comments.get(key).get("datetime"),
+                                        comments.get(key).get("dateTime"),
                                         comments.get(key).get("text")));
         }
         this.comments = newComments;

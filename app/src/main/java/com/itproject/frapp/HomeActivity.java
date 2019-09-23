@@ -140,10 +140,10 @@ public class HomeActivity extends AppCompatActivity {
 //         Button artifactButton = findViewById(R.id.button_artifact);
     }
 
-
 //    public void goToArtifact(View view) {
 //         Intent intent = new Intent(this, ArtifactActivity.class);
 //         startActivity(intent);
 //    }
+
 
 }
