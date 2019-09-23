@@ -64,7 +64,6 @@
         android:contentDescription="Input the location here"
         android:ems="10"
         android:hint="eg. Beijing, China"
-        android:inputType="textArtifactLocation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artifactImageView" />
