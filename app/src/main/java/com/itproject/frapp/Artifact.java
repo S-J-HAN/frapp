@@ -12,6 +12,7 @@ public class Artifact {
     private String tags;
     private String title;
     private String url;
+    private String id;
     private ArrayList<Comment> comments = new ArrayList<>();
 
     public Artifact() {
@@ -50,6 +51,8 @@ public class Artifact {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public void setID(String id) { this.id = id; }
 
     public void setUrl(String url) {
         this.url = url;
@@ -96,5 +99,7 @@ public class Artifact {
     public ArrayList<Comment> getComments() {
         return this.comments;
     }
+
+    public String getID() { return this.id; }
 
 }

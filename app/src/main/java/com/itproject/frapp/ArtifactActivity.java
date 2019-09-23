@@ -35,6 +35,9 @@ public class ArtifactActivity extends AppCompatActivity {
         // Connect to database
         dbRef = FirebaseDatabase.getInstance().getReference();
 
+        // Get the correct artifactID
+        artifactID = getIntent().getStringExtra("ARTIFACT_ID");
+
 
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
