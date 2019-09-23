@@ -152,8 +152,9 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     }
 
     public void goBack() {
-        Intent intent = new Intent(context, HomeActivity.class);
-        context.startActivity(intent);
+//        Intent intent = new Intent(context, HomeActivity.class);
+//        context.startActivity(intent);
+        ((Activity)context).finish();
 
 //        ((Activity)context).onBackPressed();
 //        ((Activity)context).finish();

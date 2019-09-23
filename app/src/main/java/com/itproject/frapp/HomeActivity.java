@@ -170,7 +170,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openUpload() {
-        Intent intent = new Intent(this, ArtifactUpload.class);
+        Intent intent = new Intent(this, UploadActivity.class);
         startActivity(intent);
 
 //         Button artifactButton = findViewById(R.id.button_artifact);
