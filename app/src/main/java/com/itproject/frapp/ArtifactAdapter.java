@@ -1,6 +1,8 @@
 package com.itproject.frapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +35,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         public TextView op, dateTime, text;
         public TextView date, description, tags;
         public EditText newComment;
-        public Button postComment;
+        public Button postComment, back;
         public ImageView image;
 
 
@@ -46,6 +48,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 this.tags = (TextView) view.findViewById(R.id.textView_tags);
                 this.newComment = (EditText) view.findViewById(R.id.editText_newComment);
                 this.postComment = (Button) view.findViewById(R.id.button_postComment);
+                this.back = (Button) view.findViewById(R.id.button_back);
             } else {
                 this.op = (TextView) view.findViewById(R.id.textView_op);
                 this.dateTime = (TextView) view.findViewById(R.id.textView_dateTime);
@@ -112,6 +115,14 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 }
             });
 
+
+            holder.back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goBack();
+                }
+            });
+
         } else {
             Comment comment = artifact.getComments().get(position - 1);
             holder.dateTime.setText(comment.getDateTime());
@@ -138,6 +149,15 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     @Override
     public int getItemCount() {
         return artifact.getComments().size() + 1;
+    }
+
+    public void goBack() {
+        Intent intent = new Intent(context, HomeActivity.class);
+        context.startActivity(intent);
+
+//        ((Activity)context).onBackPressed();
+//        ((Activity)context).finish();
+//        ((Activity)context).finishActivity(0);
     }
 
 }
