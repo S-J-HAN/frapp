@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
-        android:text="Select preferred language"
+        android:text="@string/select_preferred_language"
         android:textSize="36sp"
         android:textStyle="bold"
         app:autoSizeTextType="none"
