@@ -3,8 +3,10 @@ package com.itproject.frapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -166,7 +168,6 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         if (findViewById((int) id) != null) {
             switch (parent.getId()) {
                 case R.id.daySpinner:
-                    System.out.println("IN DAY");
                     Spinner daySelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedDay = daySelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
@@ -175,7 +176,6 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
                     this.selectedDate = selectedDay;
                     break;
                 case R.id.monthSpinner:
-                    System.out.println("IN MONTH");
                     Spinner monthSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedMonth = monthSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
@@ -184,7 +184,6 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
                     this.selectedMonth = selectedMonth;
                     break;
                 case R.id.yearSpinner:
-                    System.out.println("IN YEAR");
                     Spinner yearSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedYear = yearSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {

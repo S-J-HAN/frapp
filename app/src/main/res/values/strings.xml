@@ -2,15 +2,26 @@
     <string name="app_name">frapp</string>
     <string name="title_activity_login" translatable="false">Login</string>
     <string name="frapp">frapp</string>
-    <string name="login" translatable="false">login</string>
-    <string name="signup" translatable="false">signup</string>
-    <string name="profile" translatable="false">profile</string>
-    <string name="settings" translatable="false">settings</string>
-    <string name="upload" translatable="false">upload</string>
+    <string name="login" translatable="true">login</string>
+    <string name="signup" translatable="true">signup</string>
+    <string name="profile" translatable="true">profile</string>
+    <string name="settings" translatable="true">settings</string>
+    <string name="upload" translatable="true">upload</string>
     <string name="next">next</string>
     <string name="hello" translatable="true">hello</string>
     <string name="choose_font_size" translatable="true">Choose font size</string>
     <string name="font_size" translatable="true">font size</string>
+    <string name="select_preferred_language">Select preferred language</string>
+    <string name="select_birthday" translatable="true">Select birthday</string>
+    <string name="upload_a_profile_picture" translatable="true">Upload a profile picture</string>
+    <string name="upload_from_gallery" translatable="true">Upload from gallery</string>
+    <string name="open_camera" translatable="true">Open camera</string>
+    <string name="edit_your_profile" translatable="true">Edit your profile</string>
+    <string name="language" translatable="true">Language</string>
+    <string name="birthday" translatable="true">Birthday</string>
+
+
+
 
     <string-array name="languageOptions">
         <item>English</item>
