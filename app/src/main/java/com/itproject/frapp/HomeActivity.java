@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
@@ -45,8 +46,8 @@ public class HomeActivity extends AppCompatActivity {
     private StorageReference storageRef;
 
     private TextView jsonView;
-    private Button settingsButton;
-    private Button uploadButton;
+    private ImageButton settingsButton;
+    private ImageButton uploadButton;
 
     private ImageView imageView;
     private RecyclerView gallery;
@@ -66,15 +67,15 @@ public class HomeActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-//        // Set up settings button
-//        settingsButton = findViewById(R.id.settingsButton);
-//        settingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //Open settings page
-//                openSettingsActivity();
-//            }
-//        });
+        // Set up settings button
+        settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Open settings page
+                openSettingsActivity();
+            }
+        });
 
         // Set up upload button
         uploadButton = findViewById(R.id.uploadButton);
@@ -85,6 +86,8 @@ public class HomeActivity extends AppCompatActivity {
                 openUpload();
             }
         });
+
+
 //
 //
 //        // Get list of artifacts
@@ -128,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    public void openSettingsActivity(View view) {
+    public void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }

@@ -36,7 +36,6 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
         viewHolder.galleryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("WAKAKAKAKA" + Integer.toString(i));
                 goToArtifact(artifacts.get(i).getID());
             }
         });
