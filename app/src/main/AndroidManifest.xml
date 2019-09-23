@@ -6,6 +6,7 @@
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
     <application
@@ -16,14 +17,11 @@
         android:supportsRtl="true"
         android:configChanges="locale|orientation"
         android:theme="@style/AppTheme">
+
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".ChooseDPSetting" />
-
         <activity android:name=".UploadActivity"></activity>
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".ArtifactActivity" />
-
-        <activity android:name=".ChooseDPSetting" />
         <activity android:name=".ChooseBirthdaySetting" />
         <activity android:name=".ChooseFontSetting" />
         <activity android:name=".ChooseLanguageActivity" />

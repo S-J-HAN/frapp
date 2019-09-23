@@ -2,13 +2,16 @@ package com.itproject.frapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +31,12 @@ import java.util.Locale;
 
 public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private Boolean firstTome = null;
+
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
-    private String currentLanguage = "ENG";
-
-    private final String[] languages = {"Select language: ", "English", "Chinese"};
+    private final String[] languages = {"Select language: ", "English", "汉语"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,19 +69,7 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
-        //Button next = findViewById(R.id.nextButton);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
 
-                // Set the user's language
-        //        String language = "ENG"; // Replace this with user selection
-        //        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
-
-                // Move on the the next page - font settings
-               // openFontSizeSetting();
-        //    }
-        //});
     }
 
 
@@ -93,23 +84,32 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         String languageSelected = (String) parent.getItemAtPosition(position);
         String language = "en";
 
-        Locale locale;
 
         if (languageSelected.equals("English")) {
-            System.out.println("ENGLISH");
             language = "en";
         }
 
-        if (languageSelected.equals("Chinese")){
-            System.out.println("CHINESE");
+        if (languageSelected.equals("汉语")){
             language = "zh";
         }
 
-        SetLanguage.setLanguage(this, language);
+        // set locale to required language
+        SetLanguage.setLocale(this, language);
 
+        // add to data base
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
-        //dbRef.child("users").child(currentUser.getUid()).child("language").;
+        // add language preference to local data storage
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(ChooseLanguageActivity.this);
+        SharedPreferences.Editor myEditor = myPreferences.edit();
+        myEditor.putString("LANGUAGE", language);
+        myEditor.commit();
+
+
+//        SharedPreferences sharedPreferences = this.getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("language", language);
+//        editor.apply();
     }
 
 
@@ -117,36 +117,40 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
 
     }
 
-/*
-    public void setLocale(Locale locale) {
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-            configuration.setLocale(locale);
-        } else{
-            configuration.locale=locale;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-            getApplicationContext().createConfigurationContext(configuration);
-        } else {
-            resources.updateConfiguration(configuration,displayMetrics);
-        }
 
-    }
-*/
-/*
-    public void setLanguage(String language) {
-        Locale locale = new Locale(language);
-        Locale.setDefault(locale);
+//    private boolean isFirstTime() {
+//
+//    }
 
-        Configuration config = new Configuration();
-        config.locale = locale;
+//    public void setLocale(Locale locale) {
+//        Resources resources = getResources();
+//        Configuration configuration = resources.getConfiguration();
+//        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+//            configuration.setLocale(locale);
+//        } else{
+//            configuration.locale=locale;
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+//            getApplicationContext().createConfigurationContext(configuration);
+//        } else {
+//            resources.updateConfiguration(configuration,displayMetrics);
+//        }
+//
+//    }
 
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
 
-    }
-*/
+//    public void setLanguage(String language) {
+//        Locale locale = new Locale(language);
+//        Locale.setDefault(locale);
+//
+//        Configuration config = new Configuration();
+//        config.locale = locale;
+//
+//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+//
+//    }
+
     public void openFontSizeSetting(View view) {
         Intent intent = new Intent(this, ChooseFontSetting.class);
         startActivity(intent);

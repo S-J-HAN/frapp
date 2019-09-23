@@ -17,7 +17,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
-        android:text="Edit your profile"
+        android:text="@string/edit_your_profile"
         android:textSize="36sp"
         android:textStyle="bold"
         app:autoSizeTextType="none"
@@ -29,50 +29,37 @@
         android:id="@+id/editLanguageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginTop="288dp"
         android:onClick="openLanguageSetting"
-        android:text="Language"
-        app:layout_constraintBottom_toBottomOf="@+id/editNameButton"
+        android:text="@string/language"
         app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/editNameButton"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/editBirthdayButton"
-        android:layout_width="wrap_content"
+        android:layout_width="91dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:onClick="openBirthdaySetting"
-        android:text="Birthday"
-        app:layout_constraintEnd_toEndOf="@+id/editLanguageButton"
-        app:layout_constraintStart_toStartOf="@+id/editLanguageButton"
+        android:text="@string/birthday"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/editLanguageButton" />
 
     <Button
         android:id="@+id/editTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:onClick="openFontSetting"
         android:text="@string/font_size"
         app:layout_constraintBottom_toBottomOf="@+id/editBirthdayButton"
-        app:layout_constraintEnd_toEndOf="@+id/editNameButton"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editNameButton"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@+id/editBirthdayButton"
         app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/editNameButton"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="288dp"
-        android:onClick="openNameSetting"
-        android:text="Name"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/backButton"

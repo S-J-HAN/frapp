@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">frapp</string>
+    <string name="title_activity_login">登录</string>
+    <string name="frapp">frapp</string>
+    <string name="login">登录</string>
+    <string name="signup">注册</string>
+    <string name="profile">轮廓</string>
+    <string name="settings">设置</string>
+    <string name="upload">上载</string>
+    <string name="next">下</string>
+    <string name="hello">你好</string>
+    <string name="choose_font_size">选择字体大小</string>
+    <string name="font_size">字体大小</string>
+    <string name="select_preferred_language">选择首选语言</string>
+    <string name="select_birthday">选择生日</string>
+    <string name="upload_a_profile_picture">上传个人资料图片</string>
+    <string name="upload_from_gallery">从图库上传</string>
+    <string name="open_camera">开放式摄像头</string>
+    <string name="edit_your_profile">编辑您的个人资料</string>
+    <string name="language">语言</string>
+    <string name="birthday">生日</string>
+
+
+</resources>
