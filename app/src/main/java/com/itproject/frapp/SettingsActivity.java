@@ -24,7 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
-
     public void openBirthdaySetting(View view) {
         Intent intent = new Intent(this, ChooseBirthdaySetting.class);
         startActivity(intent);

@@ -145,7 +145,6 @@ public class HomeActivity extends AppCompatActivity {
      public void goToArtifact(View view) {
          Intent intent = new Intent(this, ArtifactActivity.class);
          startActivity(intent);
-         finish();
     }
 
 }

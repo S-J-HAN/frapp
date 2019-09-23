@@ -7,11 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,18 +18,10 @@ import com.google.firebase.database.ValueEventListener;
 
 public class ArtifactActivity extends AppCompatActivity {
 
-    private String date;
-    private String description;
-    private String location;
-    private String op; // UserID of the original poster
-    private String tags;
-    private String title;
-
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
     private String artifactID = "frapp5";
-    private String commentID = "comment1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +56,8 @@ public class ArtifactActivity extends AppCompatActivity {
                 Artifact artifact = dataSnapshot.getValue(Artifact.class);
 
                 // specify an adapter
-                ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef);
+                ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef, getApplicationContext());
+
                 recyclerView.setAdapter(mAdapter);
 
 
@@ -77,8 +65,7 @@ public class ArtifactActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Something went wrong...
-                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+
                 Log.w("loadPost:onCancelled", databaseError.toException());
             }
         });

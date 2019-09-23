@@ -12,14 +12,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView_datetime"
+        app:layout_constraintBottom_toTopOf="@+id/textView_dateTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textView_datetime"
+        android:id="@+id/textView_dateTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -37,5 +37,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_datetime" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_dateTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>
