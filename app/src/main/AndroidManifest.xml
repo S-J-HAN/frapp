@@ -18,6 +18,14 @@
         android:configChanges="locale|orientation"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".ChooseDPSetting" />
         <activity android:name=".UploadActivity"></activity>
@@ -28,13 +36,6 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
     <uses-permission-sdk-23 android:name="android.permission.CAMERA"/>

@@ -1,9 +1,12 @@
 package com.itproject.frapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,11 +32,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+        viewHolder.galleryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("WAKAKAKAKA" + Integer.toString(i));
+                goToArtifact(artifacts.get(i).getID());
+            }
+        });
         Glide.with(context)
                 .load(artifacts.get(i).getUrl())
                 .centerCrop()
-                .into(viewHolder.image);
+                .into(viewHolder.galleryButton);
     }
 
     @Override
@@ -43,11 +53,21 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView image;
+//        ImageView image;
+//        Button galleryButton;
+        ImageButton galleryButton;
 
         public ViewHolder(View view) {
             super(view);
-            image = view.findViewById(R.id.imageView);
+//            image = view.findViewById(R.id.imageView);
+            galleryButton = view.findViewById(R.id.galleryButton);
         }
+    }
+
+    public void goToArtifact(String id) {
+        Intent intent = new Intent(context, ArtifactActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("ARTIFACT_ID", id);
+        context.startActivity(intent);
     }
 }
