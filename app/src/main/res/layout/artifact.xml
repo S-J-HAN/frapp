@@ -10,9 +10,14 @@
         android:id="@+id/imageView_artifact"
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:layout_marginBottom="48dp"
-        android:scaleType="fitXY"
+        android:adjustViewBounds="false"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/textView_date"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,9 +26,15 @@
 
     <TextView
         android:id="@+id/textView_tags"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme.Body"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center"
         android:text="#summer2012"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,9 +42,15 @@
 
     <TextView
         android:id="@+id/textView_description"
-        android:layout_width="wrap_content"
+        style="@style/AppTheme.Body"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:layout_marginBottom="24dp"
+        android:gravity="center"
         android:text="Jerome and Ben on the swings"
         app:layout_constraintBottom_toTopOf="@+id/textView_tags"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,8 +58,13 @@
 
     <TextView
         android:id="@+id/textView_date"
+        style="@style/AppTheme.Header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginLeft="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:layout_marginBottom="24dp"
         android:text="26 January 2012"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -53,8 +75,11 @@
 
     <Button
         android:id="@+id/button_postComment"
+        style="@style/AppTheme.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="36dp"
+        android:layout_marginRight="36dp"
         android:text="Post"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,16 +88,31 @@
 
     <EditText
         android:id="@+id/editText_newComment"
+        style="@style/AppTheme.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:ems="10"
         android:hint="Add a comment..."
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button_postComment"
         app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_back"
+        style="@style/AppTheme.Body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/back"
+        app:layout_constraintBottom_toTopOf="@+id/imageView_artifact"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

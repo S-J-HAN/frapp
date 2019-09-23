@@ -1,6 +1,5 @@
 package com.itproject.frapp;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,8 +20,6 @@ public class ArtifactActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
-    private String artifactID = "frapp5";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +33,7 @@ public class ArtifactActivity extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         // Get the correct artifactID
-        artifactID = getIntent().getStringExtra("ARTIFACT_ID");
-
-
+        final String artifactID = getIntent().getStringExtra("ARTIFACT_ID");
 
         final RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
