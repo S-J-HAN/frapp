@@ -31,9 +31,5 @@ public class ArtifactUploadActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ArtifactDateActivity.class);
         startActivity(intent);
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
-    }
+   
 }
