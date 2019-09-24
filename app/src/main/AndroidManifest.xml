@@ -30,6 +30,7 @@
         <activity android:name=".ChooseDPSetting" />
         <activity android:name=".UploadActivity"></activity>
         <activity android:name=".ArtifactActivity" />
+        <activity android:name=".ArtifactUpload" />
         <activity android:name=".ChooseBirthdaySetting" />
         <activity android:name=".ChooseFontSetting" />
         <activity android:name=".ChooseLanguageActivity" />
