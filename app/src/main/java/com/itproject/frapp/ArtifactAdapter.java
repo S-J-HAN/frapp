@@ -2,7 +2,6 @@ package com.itproject.frapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -43,7 +43,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             super(view);
             if (viewType == 0) {
                 this.image = (ImageView) view.findViewById(R.id.imageView_artifact);
-                this.date = (TextView) view.findViewById(R.id.textView_date);
+                this.date = (TextView) view.findViewById(R.id.textView_dateTime);
                 this.description = (TextView) view.findViewById(R.id.textView_description);
                 this.tags = (TextView) view.findViewById(R.id.textView_tags);
                 this.newComment = (EditText) view.findViewById(R.id.editText_newComment);
@@ -100,7 +100,11 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 public void onClick(View view) {
 
                     Date currentTime = Calendar.getInstance().getTime();
-                    String dateText = currentTime.toString();
+
+                    SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String dateText = newDateFormat.format(currentTime);
+
+//                    String dateText = currentTime.toString();
                     String newCommentText = holder.newComment.getText().toString();
 
 
@@ -152,8 +156,9 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     }
 
     public void goBack() {
-        Intent intent = new Intent(context, HomeActivity.class);
-        context.startActivity(intent);
+//        Intent intent = new Intent(context, HomeActivity.class);
+//        context.startActivity(intent);
+        ((Activity)context).finish();
 
 //        ((Activity)context).onBackPressed();
 //        ((Activity)context).finish();
