@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Locale;
 
 
 public class ChooseFontSetting extends AppCompatActivity {
@@ -28,30 +33,6 @@ public class ChooseFontSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_font_setting);
 
-        // Authenticate current user
-        //mAuth = FirebaseAuth.getInstance();
-        //final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        // Connect to database
-        //dbRef = FirebaseDatabase.getInstance().getReference();
-
-
-        //String userLanguage = dbRef.child("users").child(currentUser.getUid()).child("language").getKey();
-        //SetLanguage.setLanguage(this, userLanguage);
-
-        //Button next = findViewById(R.id.nextButton2);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-
-                // Set the location value for the user
-        //        String fontSize = "S"; // Replace this with whatever the user input is
-        //        dbRef.child("users").child(currentUser.getUid()).child("fontSize").setValue(fontSize);
-
-                // Move on the the next page - font settings
-        //        openBirthdaySetting();
-        //    }
-        //});
     }
 
 
@@ -83,6 +64,11 @@ public class ChooseFontSetting extends AppCompatActivity {
 
         dbRef.child("users").child(currentUser.getUid()).child("fontSize").setValue(fontSize);
 
+        // add to local storage
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("fontSize", fontSize);
+        editor.commit();
     }
 
 

@@ -1,20 +1,27 @@
 package com.itproject.frapp;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-
-
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
-
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHolder> {
@@ -22,29 +29,29 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     private String artifactID;
     private FirebaseUser currentUser;
     private DatabaseReference dbRef;
+    private Context context;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
-        public TextView op, datetime, text;
+        public TextView op, dateTime, text;
         public TextView date, description, tags;
         public EditText newComment;
-        public Button postComment;
+        public Button postComment, back;
+        public ImageView image;
 
 
         public ViewHolder(View view, int viewType) {
             super(view);
             if (viewType == 0) {
+                this.image = (ImageView) view.findViewById(R.id.imageView_artifact);
                 this.date = (TextView) view.findViewById(R.id.textView_date);
                 this.description = (TextView) view.findViewById(R.id.textView_description);
                 this.tags = (TextView) view.findViewById(R.id.textView_tags);
                 this.newComment = (EditText) view.findViewById(R.id.editText_newComment);
                 this.postComment = (Button) view.findViewById(R.id.button_postComment);
+                this.back = (Button) view.findViewById(R.id.button_back);
             } else {
                 this.op = (TextView) view.findViewById(R.id.textView_op);
-                this.datetime = (TextView) view.findViewById(R.id.textView_datetime);
+                this.dateTime = (TextView) view.findViewById(R.id.textView_dateTime);
                 this.text = (TextView) view.findViewById(R.id.textView_text);
             }
         }
@@ -58,18 +65,16 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public ArtifactAdapter(Artifact artifact, String artifactID, FirebaseUser currentUser, DatabaseReference dbRef) {
+    public ArtifactAdapter(Artifact artifact, String artifactID, FirebaseUser currentUser, DatabaseReference dbRef, Context context) {
         this.artifact = artifact;
         this.artifactID = artifactID;
         this.currentUser = currentUser;
         this.dbRef = dbRef;
+        this.context = context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
         if (viewType == 0) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.artifact, parent, false);
             return new ViewHolder(itemView, viewType);
@@ -79,42 +84,81 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         }
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         if (position == 0) {
+            Glide.with(context)
+                    .load(artifact.getUrl())
+                    .centerCrop()
+                    .into(holder.image);
             holder.date.setText(artifact.getDate());
             holder.description.setText(artifact.getDescription());
             holder.tags.setText(artifact.getTags());
 
-            final String newCommentText = holder.newComment.getText().toString();
-
             holder.postComment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    Date currentTime = Calendar.getInstance().getTime();
+                    String dateText = currentTime.toString();
+                    String newCommentText = holder.newComment.getText().toString();
+
+
                     Comment comment = new Comment();
-                    comment.setOp(currentUser.getDisplayName());
+                    comment.setOp(currentUser.getUid());
                     System.out.println(currentUser.getDisplayName() + "test");
-                    comment.setDateTime("date");
+
+                    comment.setDateTime(dateText);
                     comment.setText(newCommentText);
                     System.out.println(comment.toString() + "hello");
                     dbRef.child("artifacts").child(artifactID).child("comments").push().setValue(comment);
                 }
             });
 
+
+            holder.back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goBack();
+                }
+            });
+
         } else {
             Comment comment = artifact.getComments().get(position - 1);
-            holder.datetime.setText(comment.getDateTime());
+            holder.dateTime.setText(comment.getDateTime());
             holder.op.setText(comment.getOp());
             holder.text.setText(comment.getText());
+
+            dbRef.child("users").child(comment.getOp()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    User user = dataSnapshot.getValue(User.class);
+                    holder.op.setText(user.getName());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Something went wrong...
+                    System.out.println("Error retrieving user data in comment");
+                    holder.op.setText("Error");
+                }
+            });
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return artifact.getComments().size() + 1;
     }
+
+    public void goBack() {
+//        Intent intent = new Intent(context, HomeActivity.class);
+//        context.startActivity(intent);
+        ((Activity)context).finish();
+
+//        ((Activity)context).onBackPressed();
+//        ((Activity)context).finish();
+//        ((Activity)context).finishActivity(0);
+    }
+
 }

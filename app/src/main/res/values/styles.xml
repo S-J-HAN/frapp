@@ -8,6 +8,21 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Body">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:fontFamily">@font/proximanova</item>
+
+    </style>
+
+    <style name="AppTheme.Header">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">12pt</item>
+        <item name="android:fontFamily">elephant</item>
+
+    </style>
+
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

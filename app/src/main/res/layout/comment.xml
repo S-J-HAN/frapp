@@ -8,20 +8,30 @@
 
     <TextView
         android:id="@+id/textView_op"
+        style="@style/AppTheme.Body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/textView_datetime"
+        app:layout_constraintBottom_toTopOf="@+id/textView_dateTime"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textView_datetime"
+        android:id="@+id/textView_dateTime"
+        style="@style/AppTheme.Body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/textView_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,12 +40,17 @@
 
     <TextView
         android:id="@+id/textView_text"
+        style="@style/AppTheme.Body"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginBottom="8dp"
         android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_datetime" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_dateTime" />
 </androidx.constraintlayout.widget.ConstraintLayout>

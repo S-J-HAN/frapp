@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+
 import android.os.Bundle;
 
 public class ArtifactDateActivity extends AppCompatActivity {
@@ -29,5 +30,6 @@ public class ArtifactDateActivity extends AppCompatActivity {
     public void openArtifactDescription() {
         Intent intent = new Intent(this, ArtifactDescriptionActivity.class);
         startActivity(intent);
+
     }
 }

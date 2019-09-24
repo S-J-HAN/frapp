@@ -9,11 +9,15 @@ import android.content.Intent;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,9 +40,13 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageRef;
 
+    private ArrayList<Artifact> allArtifacts;
+    private ArrayList<Artifact> currentArtifacts;
+
     private TextView jsonView;
-    private Button settingsButton;
-    private Button uploadButton;
+    private ImageButton settingsButton;
+    private ImageButton uploadButton;
+    private EditText searchBar;
 
     private ImageView imageView;
     private RecyclerView gallery;
@@ -58,15 +66,15 @@ public class HomeActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
-//        // Set up settings button
-//        settingsButton = findViewById(R.id.settingsButton);
-//        settingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //Open settings page
-//                openSettingsActivity();
-//            }
-//        });
+        // Set up settings button
+        settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Open settings page
+                openSettingsActivity();
+            }
+        });
 
         // Set up upload button
         uploadButton = findViewById(R.id.uploadButton);
@@ -77,12 +85,39 @@ public class HomeActivity extends AppCompatActivity {
                 openUpload();
             }
         });
+
+        // Set up search bar
+        searchBar = findViewById(R.id.searchBar);
+        searchBar.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+
+                    // Search for keywords
+                    ArrayList<Artifact> relevant = search(searchBar.getText().toString());
+                    currentArtifacts = relevant;
+
+                    // Show only relevant artifacts
+                    GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
+                    gallery.setAdapter(galleryAdapter);
+
+                    // Defocus search bar
+//                    searchBar.clearFocus();
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
 //
 //
 //        // Get list of artifacts
 //        jsonView = findViewById(R.id.jsonText);
 
-        imageView = findViewById(R.id.imageView);
+//        imageView = findViewById(R.id.imageView);
         gallery = findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), GALLERYWIDTH);
         gallery.setLayoutManager(gridLayoutManager);
@@ -90,15 +125,17 @@ public class HomeActivity extends AppCompatActivity {
         ref.child("artifacts").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Artifact> artifacts = new ArrayList<Artifact>();
+                allArtifacts = new ArrayList<Artifact>();
                 int c = 0;
                 for (DataSnapshot arti : dataSnapshot.getChildren()) {
                     Artifact a = arti.getValue(Artifact.class);
-                    artifacts.add(a);
+                    a.setID(arti.getKey());
+                    allArtifacts.add(a);
                 }
+                currentArtifacts = allArtifacts;
 //                jsonView.setText(urls[0]);
 
-                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), artifacts);
+                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
                 gallery.setAdapter(galleryAdapter);
             }
 
@@ -109,35 +146,53 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        Button artifactButton = findViewById(R.id.button_artifact);
-
-        artifactButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                goToArtifact(view);
-            }
-        });
+//        Button artifactButton = findViewById(R.id.button_artifact);
+//
+//        artifactButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                goToArtifact(view);
+//            }
+//        });
 
     }
 
-    public void openSettingsActivity(View view) {
+    public void openSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-        finish();
     }
 
     public void openUpload() {
         Intent intent = new Intent(this, ArtifactUploadActivity.class);
+
         startActivity(intent);
 
 //         Button artifactButton = findViewById(R.id.button_artifact);
-
-
-     }
-
-     public void goToArtifact(View view) {
-         Intent intent = new Intent(this, ArtifactActivity.class);
-         startActivity(intent);
-         finish();
     }
+
+//    public void goToArtifact(View view) {
+//         Intent intent = new Intent(this, ArtifactActivity.class);
+//         startActivity(intent);
+//    }
+
+    public ArrayList<Artifact> search(String input) {
+        String[] terms = input.split(" ");
+        if (terms.length == 0) {
+            return allArtifacts;
+        }
+        ArrayList<Artifact> relevant = new ArrayList<Artifact>();
+        for (Artifact a : allArtifacts) {
+            for (String term : terms) {
+                if (a.getDescription().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getLocation().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getTags().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getDate().toLowerCase().contains(term.toLowerCase())) {
+                    relevant.add(a);
+                }
+            }
+        }
+
+        return relevant;
+    }
+
 
 }
