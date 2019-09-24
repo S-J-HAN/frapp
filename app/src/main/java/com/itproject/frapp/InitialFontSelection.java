@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Locale;
 
 
-public class ChooseFontSetting extends AppCompatActivity {
+public class InitialFontSelection extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -31,7 +31,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_font_setting);
+        setContentView(R.layout.activity_initial_font_selection);
 
     }
 
@@ -102,10 +102,11 @@ public class ChooseFontSetting extends AppCompatActivity {
         //imageView.setImageResource(R.drawable.tick);
     }
 
+    public void openInitialBirthdaySelection(View view) {
 
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, InitialBirthdaySelection.class);
         startActivity(intent);
         finish();
     }
+
 }

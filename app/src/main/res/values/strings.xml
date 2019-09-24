@@ -22,8 +22,6 @@
     <string name="back" translatable="true">Back</string>
 
 
-
-
     <string-array name="languageOptions">
         <item>English</item>
         <item>Chinese</item>

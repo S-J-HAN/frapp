@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLanguageSettings() {
-        Intent intent = new Intent(this, ChooseLanguageActivity.class);
+        Intent intent = new Intent(this, InitialLanguageSelection.class);
         startActivity(intent);
         finish();
     }
