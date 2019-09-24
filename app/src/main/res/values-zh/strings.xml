@@ -7,8 +7,8 @@
     <string name="signup">注册</string>
     <string name="profile">轮廓</string>
     <string name="settings">设置</string>
-    <string name="upload">上载</string>
-    <string name="next">下</string>
+    <string name="upload">上传</string>
+    <string name="next">确认</string>
     <string name="hello">你好</string>
     <string name="choose_font_size">选择字体大小</string>
     <string name="font_size">字体大小</string>
@@ -21,6 +21,10 @@
     <string name="language">语言</string>
     <string name="birthday">生日</string>
     <string name="back">回去</string>
+    <string name="upload_artifact">上传文件</string>
+    <string name="date_of_artifact">文件日期</string>
+    <string name="add_a_description">加文字</string>
+    <string name="add_tags">加标签</string>
 
 
 </resources>

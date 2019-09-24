@@ -20,6 +20,10 @@
     <string name="language" translatable="true">Language</string>
     <string name="birthday" translatable="true">Birthday</string>
     <string name="back" translatable="true">Back</string>
+    <string name="upload_artifact" translatable="true">Upload artifact</string>
+    <string name="date_of_artifact" translatable="true">Date of artifact</string>
+    <string name="add_a_description" translatable="true">Add a description</string>
+    <string name="add_tags" translatable="true">Add tags</string>
 
 
 
