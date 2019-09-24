@@ -30,7 +30,6 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".SignupActivity" />
         <activity android:name=".LoginActivity" />
-<<<<<<< Updated upstream
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,12 +37,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-=======
         <activity android:name="ArtifactUploadActivity" />
         <activity android:name="ArtifactDateActivity" />
         <activity android:name="ArtifactDescriptionActivity" />
         <activity android:name="ArtifactTagsActivity" />
->>>>>>> Stashed changes
+
     </application>
 
     <uses-permission-sdk-23 android:name="android.permission.CAMERA"/>

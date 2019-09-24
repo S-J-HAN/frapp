@@ -7,7 +7,7 @@ import android.widget.Button;
 
 import android.os.Bundle;
 
-public class ArtifactUpload extends AppCompatActivity {
+public class ArtifactUploadActivity extends AppCompatActivity {
 
     private Button nextButton;
 
