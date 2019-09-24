@@ -26,7 +26,7 @@
 
     <!-- Still need to add what this button does -->
     <Button
-        android:id="@+id/nextButton11"
+        android:id="@+id/nextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
