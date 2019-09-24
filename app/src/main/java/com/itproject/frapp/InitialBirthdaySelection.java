@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class InitialBirthdaySelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     private final int MIN_YEAR = 1900;
@@ -45,7 +45,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_birthday_setting);
+        setContentView(R.layout.activity_initial_birthday_selection);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -153,11 +153,11 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         //    @Override
         //    public void onClick(View view) {
 
-                // Set the user's birthday
+        // Set the user's birthday
         //        String birthday = "DD/MM/YYYY"; // Replace this with user input
         //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
 
-                // Move on the the next page - font settings
+        // Move on the the next page - font settings
         //       openDPSetting();
         //    }
         //});
@@ -226,15 +226,11 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     }
 
 
-    public void openDPSetting(View view) {
-        Intent intent = new Intent(this, ChooseDPSetting.class);
+    public void openInitialDPSelection(View view) {
+        Intent intent = new Intent(this, InitialDPSelection.class);
         startActivity(intent);
         finish();
     }
 
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 }
