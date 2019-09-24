@@ -12,7 +12,6 @@ import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Locale;
 
 
-public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class InitialLanguageSelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Boolean firstTome = null;
 
@@ -42,7 +41,7 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_language);
+        setContentView(R.layout.activity_initial_language_selection);
 
         // language spinner
         Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
@@ -103,7 +102,7 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
         // add language preference to local data storage
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(ChooseLanguageActivity.this);
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(InitialLanguageSelection.this);
         SharedPreferences.Editor myEditor = myPreferences.edit();
         myEditor.putString("LANGUAGE", language);
         myEditor.commit();
@@ -116,45 +115,10 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     }
 
 
-//    private boolean isFirstTime() {
-//
-//    }
-
-//    public void setLocale(Locale locale) {
-//        Resources resources = getResources();
-//        Configuration configuration = resources.getConfiguration();
-//        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-//            configuration.setLocale(locale);
-//        } else{
-//            configuration.locale=locale;
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-//            getApplicationContext().createConfigurationContext(configuration);
-//        } else {
-//            resources.updateConfiguration(configuration,displayMetrics);
-//        }
-//
-//    }
-
-
-//    public void setLanguage(String language) {
-//        Locale locale = new Locale(language);
-//        Locale.setDefault(locale);
-//
-//        Configuration config = new Configuration();
-//        config.locale = locale;
-//
-//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//
-//    }
-
-
-
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    public void openFontSizeSetting(View view) {
+        Intent intent = new Intent(this, InitialFontSelection.class);
         startActivity(intent);
-        finish();
     }
+
 
 }

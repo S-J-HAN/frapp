@@ -91,23 +91,24 @@ public class HomeActivity extends AppCompatActivity {
         searchBar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-
+                if (searchBar.getText().toString().length() <= 1) {
+                    //  All artifacts
+                    currentArtifacts = allArtifacts;
+                } else {
                     // Search for keywords
                     ArrayList<Artifact> relevant = search(searchBar.getText().toString());
                     currentArtifacts = relevant;
+                }
 
-                    // Show only relevant artifacts
-                    GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
-                    gallery.setAdapter(galleryAdapter);
+                // Show only relevant artifacts
+                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
+                gallery.setAdapter(galleryAdapter);
 
-                    // Defocus search bar
+                // Defocus search bar
 //                    searchBar.clearFocus();
 
-                    return true;
-                }
-                return false;
+                return true;
+
             }
         });
 

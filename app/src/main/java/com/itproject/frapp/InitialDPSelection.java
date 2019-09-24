@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ChooseDPSetting extends AppCompatActivity {
+public class InitialDPSelection extends AppCompatActivity {
 
     public final static int REQUEST_CAPTURE_IMAGE  = 100;
     public final static int SELECT_PHOTO_CODE = 1046;
@@ -48,7 +48,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_dpsetting);
+        setContentView(R.layout.activity_initial_dpselection);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -71,9 +71,9 @@ public class ChooseDPSetting extends AppCompatActivity {
         //    @Override
         //    public void onClick(View view) {
 
-                // Insert stuff for uploading photo here
+        // Insert stuff for uploading photo here
 
-                // Move on the the next page - font settings
+        // Move on the the next page - font settings
         //        openHomePage();
         //    }
         //});
@@ -226,8 +226,8 @@ public class ChooseDPSetting extends AppCompatActivity {
 //    }
 
 
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    public void openHomePage(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }

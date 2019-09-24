@@ -26,8 +26,6 @@
     <string name="add_tags" translatable="true">Add tags</string>
 
 
-
-
     <string-array name="languageOptions">
         <item>English</item>
         <item>Chinese</item>
