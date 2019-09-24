@@ -134,7 +134,11 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void openUpload() {
+<<<<<<< Updated upstream
         Intent intent = new Intent(this, ArtifactUpload.class);
+=======
+        Intent intent = new Intent(this, ArtifactUploadActivity.class);
+>>>>>>> Stashed changes
         startActivity(intent);
 
 //         Button artifactButton = findViewById(R.id.button_artifact);
