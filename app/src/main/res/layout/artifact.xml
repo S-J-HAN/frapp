@@ -26,7 +26,7 @@
 
     <TextView
         android:id="@+id/textView_tags"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/textView_description"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
@@ -73,7 +73,7 @@
 
     <Button
         android:id="@+id/button_postComment"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
@@ -86,7 +86,7 @@
 
     <EditText
         android:id="@+id/editText_newComment"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -101,7 +101,7 @@
 
     <Button
         android:id="@+id/button_back"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

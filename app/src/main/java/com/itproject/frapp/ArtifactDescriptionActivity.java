@@ -4,13 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 
 import android.os.Bundle;
 
 public class ArtifactDescriptionActivity extends AppCompatActivity {
 
-    private Button nextButton;
+    private ImageButton nextButton;
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {

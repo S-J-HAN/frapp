@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 import android.os.Bundle;
@@ -18,7 +19,7 @@ public class ArtifactUploadActivity extends AppCompatActivity {
 
     private ImageView profileImage;
 
-    private Button nextButton;
+    private ImageButton nextButton;
     private Button uploadFromCameraButton;
 
     public final static int REQUEST_IMAGE_CAPTURE = 100;
