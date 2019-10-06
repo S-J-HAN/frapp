@@ -6,12 +6,12 @@ package com.itproject.frapp;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.stfalcon.imageviewer.StfalconImageViewer;
-import com.stfalcon.imageviewer.loader.ImageLoader;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,12 +47,14 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         private TextView op, dateTime, text;
         private TextView date, description, tags;
         private EditText newComment;
-        private Button postComment, back;
+        private Button postComment;
         private ImageView image;
+        private ImageButton back;
 
 
         ViewHolder(View view, int viewType) {
             super(view);
+            // If this is the artifact details view
             if (viewType == artifactViewType) {
                 this.image = view.findViewById(R.id.imageView_artifact);
                 this.date = view.findViewById(R.id.textView_dateTime);
@@ -61,7 +62,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 this.tags = view.findViewById(R.id.textView_tags);
                 this.newComment = view.findViewById(R.id.editText_newComment);
                 this.postComment = view.findViewById(R.id.button_postComment);
-                this.back = view.findViewById(R.id.button_back);
+                this.back = view.findViewById(R.id.imageButton_back);
+            // If this is the comment view
             } else {
                 this.op = view.findViewById(R.id.textView_op);
                 this.dateTime = view.findViewById(R.id.textView_dateTime);
@@ -110,9 +112,10 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             holder.tags.setText(artifact.getTags());
 
             // Posting a new comment
-            holder.postComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            holder.postComment.setOnClickListener(view -> {
+
+                // Only post a comment if it contains something
+                if (holder.newComment.getText().length() > 0) {
 
                     Date currentTime = Calendar.getInstance().getTime();
 
@@ -127,20 +130,24 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                     comment.setDateTime(dateText);
                     comment.setText(newCommentText);
 
+
                     // Push the new comment into the database
                     dbRef.child("artifacts").child(artifactID).child("comments").push().setValue(comment);
                 }
             });
 
             // Pressing the back button to go back to the gallery
-            holder.back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    goBack();
-                }
+            holder.back.setOnClickListener(view -> goBack());
+
+            // Clicking on an image opens it in full screen mode using Stfalcon library
+            holder.image.setOnClickListener(view -> {
+
+                String[] images = { artifact.getUrl() };
+
+                new StfalconImageViewer.Builder<>(context, images, (imageView, imageUrl) ->
+                        Glide.with(context).load(imageUrl).into(imageView)).show();
+
             });
-
-
 
         } else {
             Comment comment = artifact.getComments().get(position - 1);
@@ -177,13 +184,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
 
     // Go back to the gallery
     private void goBack() {
-//        Intent intent = new Intent(context, HomeActivity.class);
-//        context.startActivity(intent);
         ((Activity)context).finish();
-
-//        ((Activity)context).onBackPressed();
-//        ((Activity)context).finish();
-//        ((Activity)context).finishActivity(0);
     }
 
 }

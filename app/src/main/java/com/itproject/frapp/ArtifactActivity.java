@@ -58,7 +58,7 @@ public class ArtifactActivity extends AppCompatActivity {
                     Artifact artifact = dataSnapshot.getValue(Artifact.class);
 
                     // Create an adapter to manager the contents of the recycler view
-                    ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef, getApplicationContext());
+                    ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef, ArtifactActivity.this);
 
                     recyclerView.setAdapter(mAdapter);
 
