@@ -53,7 +53,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         private EditText newComment;
         private Button postComment;
         private ImageView image;
-        private ImageButton back;
+        private ImageButton back, deleteComment;
 
 
         ViewHolder(View view, int viewType) {
@@ -72,6 +72,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 this.op = view.findViewById(R.id.textView_op);
                 this.dateTime = view.findViewById(R.id.textView_dateTime);
                 this.text = view.findViewById(R.id.textView_text);
+                this.deleteComment = view.findViewById(R.id.imageButton_deleteComment);
             }
         }
     }
@@ -149,7 +150,9 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 String[] images = { artifact.getUrl() };
 
                 new StfalconImageViewer.Builder<>(context, images, (imageView, imageUrl) ->
-                        Glide.with(context).load(imageUrl).into(imageView)).show();
+                        Glide.with(context).load(imageUrl).into(imageView))
+                        .withTransitionFrom(holder.image)
+                        .show();
 
             });
 
@@ -158,6 +161,14 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             holder.dateTime.setText(comment.getDateTime());
             holder.op.setText(comment.getOp());
             holder.text.setText(comment.getText());
+
+            // Show the delete button on a comment if this is the user who posted it
+            if (comment.getOp().equals(currentUser.getUid())) {
+                holder.deleteComment.setVisibility(View.VISIBLE);
+                holder.deleteComment.setOnClickListener(view -> {
+                    dbRef.child("artifacts").child(artifactID).child("comments").child(comment.getId()).removeValue();
+                });
+            }
 
             dbRef.child("users").child(comment.getOp()).addValueEventListener(new ValueEventListener() {
                 @Override
