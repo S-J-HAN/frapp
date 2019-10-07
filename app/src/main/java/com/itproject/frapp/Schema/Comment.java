@@ -1,5 +1,10 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
 
+package com.itproject.frapp.Schema;
+
+// Class containing the details of a comment
 public class Comment {
 
     private String op;

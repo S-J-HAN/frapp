@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 
 import android.os.Bundle;
+
+import com.itproject.frapp.MainGallery.HomeActivity;
+import com.itproject.frapp.R;
 
 public class ArtifactTagsActivity extends AppCompatActivity {
 

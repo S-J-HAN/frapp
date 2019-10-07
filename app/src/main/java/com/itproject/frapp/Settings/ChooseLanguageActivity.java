@@ -2,13 +2,17 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp;
+package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.itproject.frapp.R;
 import com.itproject.frapp.SetLanguage;
-import com.itproject.frapp.SettingsActivity;
+import com.itproject.frapp.Settings.SettingsActivity;
 
 
 /* allows the user to select a language (either english or chinese)

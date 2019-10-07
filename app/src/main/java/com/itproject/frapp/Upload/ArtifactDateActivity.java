@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -14,6 +14,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD:app/src/main/java/com/itproject/frapp/ArtifactDateActivity.java
+=======
+import com.itproject.frapp.R;
+import com.itproject.frapp.Settings.ChooseDPSetting;
+
+>>>>>>> 947a9e3ac77319b554a11ac0b49da91c6ae77c6e:app/src/main/java/com/itproject/frapp/Upload/ArtifactDateActivity.java
 import java.util.ArrayList;
 import java.util.Calendar;
 

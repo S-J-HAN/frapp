@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp;
+package com.itproject.frapp.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.itproject.frapp.R;
-import com.itproject.frapp.SettingsActivity;
+import com.itproject.frapp.Settings.SettingsActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
