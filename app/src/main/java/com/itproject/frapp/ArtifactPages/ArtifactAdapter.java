@@ -6,6 +6,7 @@ package com.itproject.frapp.ArtifactPages;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -53,7 +56,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         private EditText newComment;
         private Button postComment;
         private ImageView image;
-        private ImageButton back, deleteComment;
+        private ImageButton deleteComment;
+        private LinearLayout back;
 
 
         ViewHolder(View view, int viewType) {
@@ -66,7 +70,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 this.tags = view.findViewById(R.id.textView_tags);
                 this.newComment = view.findViewById(R.id.editText_newComment);
                 this.postComment = view.findViewById(R.id.button_postComment);
-                this.back = view.findViewById(R.id.imageButton_back);
+                this.back = view.findViewById(R.id.linearLayout_back);
             // If this is the comment view
             } else {
                 this.op = view.findViewById(R.id.textView_op);
@@ -166,7 +170,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             if (comment.getOp().equals(currentUser.getUid())) {
                 holder.deleteComment.setVisibility(View.VISIBLE);
                 holder.deleteComment.setOnClickListener(view -> {
-                    dbRef.child("artifacts").child(artifactID).child("comments").child(comment.getId()).removeValue();
+                    deleteCommentConfirmation(comment);
                 });
             }
 
@@ -200,6 +204,18 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
     // Go back to the gallery
     private void goBack() {
         ((Activity)context).finish();
+    }
+
+    // Show a confirmation dialog box before deleting a comment
+    private void deleteCommentConfirmation(Comment comment) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.delete_comment)
+                .setPositiveButton(R.string.delete, (dialog, which) ->
+                        dbRef.child("artifacts").child(artifactID).child("comments").child(comment.getId()).removeValue())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                      // Do nothing
+                })
+                .show();
     }
 
 }

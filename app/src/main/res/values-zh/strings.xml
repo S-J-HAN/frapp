@@ -22,6 +22,10 @@
     <string name="birthday">生日</string>
     <string name="back">回去</string>
     <string name="error">错误</string>
-
+    <string name="delete_comment">删除评论？</string>
+    <string name="delete">删除</string>
+    <string name="cancel">取消</string>
+    <string name="add_a_comment">添加评论…</string>
+    <string name="post">邮寄</string>
 
 </resources>

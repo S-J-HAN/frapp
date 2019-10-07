@@ -37,7 +37,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_back" />
 
     <Button
         android:id="@+id/mediumButton"
@@ -83,7 +83,7 @@
         app:layout_constraintTop_toBottomOf="@+id/mediumButton" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textView_back"
         android:layout_width="295dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"

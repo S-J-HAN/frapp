@@ -21,6 +21,12 @@
     <string name="birthday" translatable="true">Birthday</string>
     <string name="back" translatable="true">Back</string>
     <string name="error" translateable="true">Error</string>
+    <string name="delete_comment" translateable="true">Delete comment?</string>
+    <string name="delete" translateable="true">Delete</string>
+    <string name="cancel" translateable="true">Cancel</string>
+    <string name="add_a_comment" translateable="true">Add a comment…</string>
+    <string name="post" translateable="true">Post</string>
+
 
 
     <string-array name="languageOptions">
