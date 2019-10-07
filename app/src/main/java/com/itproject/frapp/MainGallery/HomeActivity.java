@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.MainGallery;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,13 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -28,6 +26,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.itproject.frapp.Upload.ArtifactUploadActivity;
+import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
+import com.itproject.frapp.Settings.SettingsActivity;
 
 import java.util.ArrayList;
 
@@ -92,7 +94,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
                 if (searchBar.getText().toString().length() <= 1) {
-                    //  All artifacts
+                    // All artifacts
                     currentArtifacts = allArtifacts;
                 } else {
                     // Search for keywords
@@ -104,21 +106,11 @@ public class HomeActivity extends AppCompatActivity {
                 GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
                 gallery.setAdapter(galleryAdapter);
 
-                // Defocus search bar
-//                    searchBar.clearFocus();
-
                 return true;
 
             }
         });
 
-
-//
-//
-//        // Get list of artifacts
-//        jsonView = findViewById(R.id.jsonText);
-
-//        imageView = findViewById(R.id.imageView);
         gallery = findViewById(R.id.recyclerView);
         gridLayoutManager = new GridLayoutManager(getApplicationContext(), GALLERYWIDTH);
         gallery.setLayoutManager(gridLayoutManager);
@@ -146,15 +138,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-//        Button artifactButton = findViewById(R.id.button_artifact);
-//
-//        artifactButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//                goToArtifact(view);
-//            }
-//        });
-
     }
 
     public void openSettingsActivity() {
@@ -167,13 +150,7 @@ public class HomeActivity extends AppCompatActivity {
 
         startActivity(intent);
 
-//         Button artifactButton = findViewById(R.id.button_artifact);
     }
-
-//    public void goToArtifact(View view) {
-//         Intent intent = new Intent(this, ArtifactActivity.class);
-//         startActivity(intent);
-//    }
 
     public ArrayList<Artifact> search(String input) {
         String[] terms = input.split(" ");

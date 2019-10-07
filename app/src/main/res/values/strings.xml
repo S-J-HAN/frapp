@@ -20,8 +20,7 @@
     <string name="language" translatable="true">Language</string>
     <string name="birthday" translatable="true">Birthday</string>
     <string name="back" translatable="true">Back</string>
-
-
+    <string name="error" translateable="true">Error</string>
 
 
     <string-array name="languageOptions">

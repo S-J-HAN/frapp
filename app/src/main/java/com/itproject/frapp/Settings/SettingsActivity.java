@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.view.View;
+
+import com.itproject.frapp.MainGallery.HomeActivity;
+import com.itproject.frapp.R;
+import com.itproject.frapp.Settings.ChooseBirthdaySetting;
+import com.itproject.frapp.Settings.ChooseDPSetting;
+import com.itproject.frapp.Settings.ChooseFontSetting;
+import com.itproject.frapp.Settings.ChooseLanguageActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -58,7 +65,5 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
-
-
     }
 }

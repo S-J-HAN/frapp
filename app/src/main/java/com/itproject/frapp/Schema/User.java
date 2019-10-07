@@ -1,9 +1,15 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
 
+package com.itproject.frapp.Schema;
+
+// Class for storing and retrieving a user's name
 public class User {
 
-    private String email;
     private String name;
+
+    private String email;
     private String location;
 
     public User() {

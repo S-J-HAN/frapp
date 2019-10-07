@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.InitialSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -6,13 +6,11 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -22,19 +20,22 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.UploadTask;
+import com.itproject.frapp.MainGallery.HomeActivity;
+import com.itproject.frapp.R;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ChooseDPSetting extends AppCompatActivity {
+public class InitialDPSelection extends AppCompatActivity {
 
-    public final static int REQUEST_IMAGE_CAPTURE = 100;
+    public final static int REQUEST_CAPTURE_IMAGE  = 100;
     public final static int SELECT_PHOTO_CODE = 1046;
 
     private Uri file;
+
+    private String currentPhotoPath;
 
     private ImageView profileImage;
     private Button uploadFromCameraButton;
@@ -45,7 +46,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_dpsetting);
+        setContentView(R.layout.activity_initial_dpselection);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -68,33 +69,78 @@ public class ChooseDPSetting extends AppCompatActivity {
         //    @Override
         //    public void onClick(View view) {
 
-                // Insert stuff for uploading photo here
+        // Insert stuff for uploading photo here
 
-                // Move on the the next page - font settings
+        // Move on the the next page - font settings
         //        openHomePage();
         //    }
         //});
     }
 
-    //@Override
-    public void onRequestPermissionsResults(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 0) {
-            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-                uploadFromCameraButton.setEnabled(true);
-            }
+//    //@Override
+//    public void onRequestPermissionsResults(int requestCode, String[] permissions, int[] grantResults) {
+//        if (requestCode == 0) {
+//            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+//                uploadFromCameraButton.setEnabled(true);
+//            }
+//        }
+//    }
+
+
+    public void takePhoto(View view) {
+        openCameraIntent();
+    }
+
+    private void openCameraIntent() {
+        Intent pictureIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE
+        );
+        if(pictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(pictureIntent,
+                    REQUEST_CAPTURE_IMAGE);
         }
     }
 
 
-    public void takePicture(View view) {
+
+
+//    public void dispatchTakePictureIntent(View view) {
 //        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        file = Uri.fromFile(getOutputMediaFile());
-//        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, file);
-//        startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 //
 //        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//           startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//            // Create the File where the photo should go
+//            File photoFile = null;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException ex) {
+//                // Error occurred while creating the File
+//            }
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+//                Uri photoURI = FileProvider.getUriForFile(this,
+//                        "com.example.android.fileprovider",
+//                        photoFile);
+//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//            }
 //        }
+//    }
+
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 
 
@@ -110,11 +156,13 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // handles if photo taken from camera
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            profileImage.setImageURI(file);
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            profileImage.setImageBitmap(cropImage(imageBitmap));
+        if (requestCode == REQUEST_CAPTURE_IMAGE &&
+                resultCode == RESULT_OK) {
+            if (data != null && data.getExtras() != null) {
+                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+                ImageView mImageView = new ImageView(this);
+                mImageView.setImageBitmap(imageBitmap);
+            }
         }
 
         // handles if photo selected from gallery
@@ -181,4 +229,5 @@ public class ChooseDPSetting extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

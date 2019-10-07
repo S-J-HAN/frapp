@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.Button;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+
+import com.itproject.frapp.R;
+import com.itproject.frapp.Upload.ArtifactDateActivity;
 
 import java.io.IOException;
 

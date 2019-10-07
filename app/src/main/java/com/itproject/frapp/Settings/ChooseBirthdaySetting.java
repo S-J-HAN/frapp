@@ -1,17 +1,14 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +17,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     private final int MIN_YEAR = 1900;
@@ -39,12 +37,21 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
     private String selectedMonth = null;
     private String selectedYear = null;
 
-    private Button nextButton;
+    private FirebaseAuth mAuth;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_artifact_date);
+        setContentView(R.layout.activity_choose_birthday_setting);
+
+        // Authenticate current user
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Connect to database
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
 
         // create lists for spinners and add initial display value
         this.days = createList(1, NUM_DAYS);
@@ -136,14 +143,22 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         monthsSpinner.setOnItemSelectedListener(this);
         monthsSpinner.setSelection(0);
 
-        nextButton = findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Open settings page
-                openArtifactDescription();
-            }
-        });
+
+
+
+        //Button next = findViewById(R.id.nextButton3);
+        //next.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View view) {
+
+                // Set the user's birthday
+        //        String birthday = "DD/MM/YYYY"; // Replace this with user input
+        //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
+
+                // Move on the the next page - font settings
+        //       openDPSetting();
+        //    }
+        //});
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -180,9 +195,16 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         }
 
         if ((selectedDate == null) || (selectedMonth == null) || (selectedYear == null)) {
+            // Authenticate current user
+            mAuth = FirebaseAuth.getInstance();
+            final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+            // Connect to database
+            dbRef = FirebaseDatabase.getInstance().getReference();
 
             String birthday = selectedDate + "/" + selectedMonth + "/" + selectedYear;
 
+            dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
         }
     }
 
@@ -208,9 +230,9 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         finish();
     }
 
-    public void openArtifactDescription() {
-        Intent intent = new Intent(this, ArtifactDescriptionActivity.class);
+    public void openSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
-
+        finish();
     }
 }

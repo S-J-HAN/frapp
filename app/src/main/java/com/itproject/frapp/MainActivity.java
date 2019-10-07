@@ -21,6 +21,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itproject.frapp.InitialSignup.InitialLanguageSelection;
+import com.itproject.frapp.MainGallery.HomeActivity;
+import com.itproject.frapp.Schema.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -122,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLanguageSettings() {
-        Intent intent = new Intent(this, ChooseLanguageActivity.class);
+        Intent intent = new Intent(this, InitialLanguageSelection.class);
         startActivity(intent);
         finish();
     }

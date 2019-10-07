@@ -1,19 +1,22 @@
-package com.itproject.frapp;
+package com.itproject.frapp.MainGallery;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.itproject.frapp.ArtifactPages.ArtifactActivity;
+import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
@@ -23,6 +26,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     public GalleryAdapter(Context context, ArrayList<Artifact> artifacts) {
         this.context = context;
         this.artifacts = artifacts;
+
+        // Sort artifacts based on date
+        this.artifacts.sort(Comparator.comparing(Artifact::getSortableDate));
+        Collections.reverse(this.artifacts);
     }
 
     @Override

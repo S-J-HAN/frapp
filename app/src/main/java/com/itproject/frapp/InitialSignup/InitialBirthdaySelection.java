@@ -1,17 +1,14 @@
-package com.itproject.frapp;
+package com.itproject.frapp.InitialSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,11 +17,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class InitialBirthdaySelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     private final int MIN_YEAR = 1900;
@@ -45,7 +43,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_birthday_setting);
+        setContentView(R.layout.activity_initial_birthday_selection);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -153,11 +151,11 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         //    @Override
         //    public void onClick(View view) {
 
-                // Set the user's birthday
+        // Set the user's birthday
         //        String birthday = "DD/MM/YYYY"; // Replace this with user input
         //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
 
-                // Move on the the next page - font settings
+        // Move on the the next page - font settings
         //       openDPSetting();
         //    }
         //});
@@ -226,9 +224,11 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     }
 
 
-    public void openDPSetting(View view) {
-        Intent intent = new Intent(this, ChooseDPSetting.class);
+    public void openInitialDPSelection(View view) {
+        Intent intent = new Intent(this, InitialDPSelection.class);
         startActivity(intent);
         finish();
     }
+
+
 }
