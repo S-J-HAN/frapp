@@ -7,11 +7,6 @@ import android.widget.ImageView;
 import android.content.Intent;
 import android.view.View;
 
-import com.itproject.frapp.ChangeUserSettings.ChooseBirthdaySetting;
-import com.itproject.frapp.ChangeUserSettings.ChooseDPSetting;
-import com.itproject.frapp.ChangeUserSettings.ChooseFontSetting;
-import com.itproject.frapp.ChangeUserSettings.ChooseLanguageActivity;
-
 public class SettingsActivity extends AppCompatActivity {
 
     ImageView dp;

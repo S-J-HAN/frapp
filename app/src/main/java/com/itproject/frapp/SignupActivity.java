@@ -1,4 +1,4 @@
-package com.itproject.frapp.AppSetup;
+package com.itproject.frapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

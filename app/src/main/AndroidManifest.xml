@@ -24,10 +24,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InitialUserSelections.InitialDPSelection"></activity>
-        <activity android:name=".InitialUserSelections.InitialBirthdaySelection" />
-        <activity android:name=".InitialUserSelections.InitialFontSelection" />
-        <activity android:name=".InitialUserSelections.InitialLanguageSelection" />
+        <activity android:name=".InitialDPSelection"></activity>
+        <activity android:name=".InitialBirthdaySelection" />
+        <activity android:name=".InitialFontSelection" />
+        <activity android:name=".InitialLanguageSelection" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,15 +36,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity" />
-        <activity android:name=".ChangeUserSettings.ChooseDPSetting" />
+        <activity android:name=".ChooseDPSetting" />
         <activity android:name=".UploadActivity" />
         <activity android:name=".ArtifactActivity" />
-        <activity android:name=".ChangeUserSettings.ChooseBirthdaySetting" />
-        <activity android:name=".ChangeUserSettings.ChooseFontSetting" />
-        <activity android:name=".ChangeUserSettings.ChooseLanguageActivity" />
+        <activity android:name=".ChooseBirthdaySetting" />
+        <activity android:name=".ChooseFontSetting" />
+        <activity android:name=".ChooseLanguageActivity" />
         <activity android:name=".HomeActivity" />
-        <activity android:name=".AppSetup.SignupActivity" />
-        <activity android:name=".AppSetup.LoginActivity">
+        <activity android:name=".SignupActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

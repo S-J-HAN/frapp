@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp.ChangeUserSettings;
+package com.itproject.frapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.itproject.frapp.R;
-import com.itproject.frapp.AppSetup.SetLanguage;
+import com.itproject.frapp.SetLanguage;
 import com.itproject.frapp.SettingsActivity;
 
 

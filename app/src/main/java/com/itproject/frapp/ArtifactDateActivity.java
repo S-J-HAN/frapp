@@ -14,8 +14,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.itproject.frapp.ChangeUserSettings.ChooseDPSetting;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 

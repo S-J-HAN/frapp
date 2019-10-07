@@ -1,8 +1,4 @@
-/* Team: frapp
- * IT Project Semester 2, 2019
- */
-
-package com.itproject.frapp.ChangeUserSettings;
+package com.itproject.frapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,13 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.itproject.frapp.R;
-import com.itproject.frapp.SettingsActivity;
 
 
-/* allows the user to select font size
- */
-public class ChooseFontSetting extends AppCompatActivity {
+public class InitialFontSelection extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -32,7 +24,7 @@ public class ChooseFontSetting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_font_setting);
+        setContentView(R.layout.activity_initial_font_selection);
 
     }
 
@@ -103,10 +95,11 @@ public class ChooseFontSetting extends AppCompatActivity {
         //imageView.setImageResource(R.drawable.tick);
     }
 
+    public void openInitialBirthdaySelection(View view) {
 
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+        Intent intent = new Intent(this, InitialBirthdaySelection.class);
         startActivity(intent);
         finish();
     }
+
 }

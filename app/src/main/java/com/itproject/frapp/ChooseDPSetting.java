@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp.ChangeUserSettings;
+package com.itproject.frapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -72,7 +72,7 @@ public class ChooseDPSetting extends AppCompatActivity {
         uploadFromCameraButton = (Button) findViewById(R.id.uploadFromCameraButton);
         profileImage = (ImageView) findViewById(R.id.profileImageView);
 
-        // taken from aboave link
+        // initial setup from camera upload option
         Button photoButton = (Button) this.findViewById(R.id.takePhotoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +86,11 @@ public class ChooseDPSetting extends AppCompatActivity {
             }
         });
 
-        // close
     }
 
 
-    // from above link
-
+    /* checks whether app has permission to use the camera
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
@@ -111,6 +110,9 @@ public class ChooseDPSetting extends AppCompatActivity {
         }
     }
 
+
+    /* receives the photo from either gallery or camera then displays that photo on screen
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -131,8 +133,10 @@ public class ChooseDPSetting extends AppCompatActivity {
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
+
         //uploadImageToDatabase();
     }
+
 
 //
 //    private void uploadImageToDatabase() {
@@ -184,7 +188,6 @@ public class ChooseDPSetting extends AppCompatActivity {
 //                    }
 //                }
 //            });
-//            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //        }
 //    }
 

@@ -1,4 +1,4 @@
-package com.itproject.frapp.AppSetup;
+package com.itproject.frapp;
 
 import android.content.Context;
 import android.content.res.Configuration;

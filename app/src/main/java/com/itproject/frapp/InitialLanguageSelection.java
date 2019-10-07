@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp.InitialUserSelections;
+package com.itproject.frapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,8 +22,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.itproject.frapp.R;
-import com.itproject.frapp.AppSetup.SetLanguage;
 
 
 /* allows user to select a language the very first time they use the app

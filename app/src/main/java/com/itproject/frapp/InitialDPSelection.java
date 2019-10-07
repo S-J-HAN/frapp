@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp.InitialUserSelections;
+package com.itproject.frapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,7 +41,7 @@ import java.io.IOException;
 
 
 /* allows user to select their DP the very first time they use the app
- * note: camera taking functionality has ben adapted from https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity
+ * note: camera functionality has ben adapted from https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity
  */
 public class InitialDPSelection extends AppCompatActivity {
 
@@ -61,11 +61,9 @@ public class InitialDPSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_dpselection);
 
-
-
         this.profileImage = (ImageView) findViewById(R.id.profileImageView);
 
-        // taken from aboave link
+        // initial setup from camera upload option
         Button photoButton = (Button) this.findViewById(R.id.takePhotoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +77,11 @@ public class InitialDPSelection extends AppCompatActivity {
             }
         });
 
-        // close
     }
 
 
-    // from above link
-
+    /* checks whether app has permission to use the camera
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
     {
@@ -104,6 +101,9 @@ public class InitialDPSelection extends AppCompatActivity {
         }
     }
 
+
+    /* receives the photo from either gallery or camera then displays that photo on screen
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -125,6 +125,7 @@ public class InitialDPSelection extends AppCompatActivity {
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
+
        // uploadImageToDatabase();
     }
 
@@ -179,10 +180,8 @@ public class InitialDPSelection extends AppCompatActivity {
 //                }
 //            }
 //        });
-//        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //    }
 
-    //close
 
 
     /* on select, beings the intent for selecting a photo from the phones gallery
