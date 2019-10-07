@@ -1,8 +1,10 @@
-package com.itproject.frapp;
+package com.itproject.frapp.AppSetup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.itproject.frapp.R;
 
 public class LoginActivity extends AppCompatActivity {
 

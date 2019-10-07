@@ -1,16 +1,15 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
+package com.itproject.frapp.ChangeUserSettings;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,11 +18,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
+import com.itproject.frapp.SettingsActivity;
 
-import java.util.Locale;
 
-
-public class InitialFontSelection extends AppCompatActivity {
+/* allows the user to select font size
+ */
+public class ChooseFontSetting extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -31,7 +32,7 @@ public class InitialFontSelection extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_font_selection);
+        setContentView(R.layout.activity_choose_font_setting);
 
     }
 
@@ -102,11 +103,10 @@ public class InitialFontSelection extends AppCompatActivity {
         //imageView.setImageResource(R.drawable.tick);
     }
 
-    public void openInitialBirthdaySelection(View view) {
 
-        Intent intent = new Intent(this, InitialBirthdaySelection.class);
+    public void openSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();
     }
-
 }

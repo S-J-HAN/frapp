@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InitialDPSelection">
+    tools:context=".InitialUserSelections.InitialDPSelection">
 
     <TextView
         android:id="@+id/uploadDP"
@@ -59,10 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:onClick="selectPhotoFromGallery"
         android:text="@string/upload_from_gallery"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,17 +68,15 @@
         app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
     <Button
-        android:id="@+id/uploadFromCameraButton"
+        android:id="@+id/takePhotoButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:onClick="takePhoto"
         android:text="@string/open_camera"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadFromGalleryButton" />
 

@@ -1,23 +1,18 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
+package com.itproject.frapp.ChangeUserSettings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,13 +20,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
+import com.itproject.frapp.AppSetup.SetLanguage;
+import com.itproject.frapp.SettingsActivity;
 
-import java.util.Locale;
 
-
-public class InitialLanguageSelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    private Boolean firstTome = null;
+/* allows the user to select a language (either english or chinese)
+ */
+public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -41,9 +37,9 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_language_selection);
+        setContentView(R.layout.activity_choose_language);
 
-        // language spinner
+        // create language spinner
         Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages) {
             @Override
@@ -69,12 +65,11 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
-
-//
-
     }
 
 
+    /* sets the language of the app upon user selection
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -100,25 +95,22 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
 
         // add to data base
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
-
-        // add language preference to local data storage
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(InitialLanguageSelection.this);
-        SharedPreferences.Editor myEditor = myPreferences.edit();
-        myEditor.putString("LANGUAGE", language);
-        myEditor.commit();
-
     }
 
 
+    /* do nothing if no information selected from spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
-    public void openFontSizeSetting(View view) {
-        Intent intent = new Intent(this, InitialFontSelection.class);
+    /* move app to SettingsActivity
+     */
+    public void openSettingsActivity(View view) {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+        finish();
     }
-
 
 }
