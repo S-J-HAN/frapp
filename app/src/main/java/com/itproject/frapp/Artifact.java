@@ -1,8 +1,14 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
+// Class containing the details of an artifact
 public class Artifact {
 
     private String date;
@@ -69,6 +75,10 @@ public class Artifact {
                                         comments.get(key).get("dateTime"),
                                         comments.get(key).get("text")));
         }
+
+        // Sort the comments by date
+        newComments.sort(Comparator.comparing(Comment::getDateTime));
+
         this.comments = newComments;
     }
 
