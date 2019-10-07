@@ -8,8 +8,22 @@ import android.widget.ImageButton;
 
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.UUID;
+
 public class ArtifactTagsActivity extends AppCompatActivity {
 
+    DatabaseReference dbRef;
+    private FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+
+    private Artifact artifact;
     private ImageButton nextButton;
   
     @Override
@@ -17,12 +31,21 @@ public class ArtifactTagsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_tags);
 
+        // Authenticate current user
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        // Connect to database
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        // Get artifact from ArtifactUploadActivity
+        artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
+
         nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Open settings page
-                openHome();
+                finishUpload();
             }
         });
     }
@@ -30,6 +53,12 @@ public class ArtifactTagsActivity extends AppCompatActivity {
     public void openHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
+    }
+
+    public void finishUpload() {
+        artifact.setOp("fakeuser");
+        dbRef.child("artifacts").push().setValue(artifact);
+        openHome();
     }
 }
 
