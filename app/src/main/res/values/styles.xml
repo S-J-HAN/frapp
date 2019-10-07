@@ -1,11 +1,31 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Body">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:fontFamily">@font/proximanova</item>
+
+    </style>
+
+    <style name="AppTheme.BodySupport">
+        <item name="android:textColor">@color/colorSupport</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:fontFamily">@font/proximanova</item>
+
+    </style>
+
+    <style name="AppTheme.Header">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">12pt</item>
+        <item name="android:fontFamily">elephant</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">

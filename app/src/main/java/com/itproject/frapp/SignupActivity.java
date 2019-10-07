@@ -16,6 +16,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.itproject.frapp.HomeActivity;
+import com.itproject.frapp.R;
 
 public class SignupActivity extends AppCompatActivity {
 
