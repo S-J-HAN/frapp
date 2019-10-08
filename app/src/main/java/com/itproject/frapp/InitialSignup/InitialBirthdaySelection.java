@@ -1,3 +1,7 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp.InitialSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +26,9 @@ import com.itproject.frapp.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+
+/* allows user to select date of birth the very first time they use the app
+ */
 public class InitialBirthdaySelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
@@ -61,7 +68,7 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         this.years = createList(MIN_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         years.add(0, "YYYY");
 
-        // days spinner
+        // create days spinner
         Spinner daysSpinner = (Spinner) findViewById(R.id.daySpinner);
         ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, days) {
             @Override
@@ -88,7 +95,7 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         daysSpinner.setOnItemSelectedListener(this);
         daysSpinner.setSelection(0);
 
-        // years spinner
+        // create years spinner
         Spinner yearsSpinner = (Spinner) findViewById(R.id.yearSpinner);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years) {
             @Override
@@ -116,7 +123,7 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         yearsSpinner.setSelection(0);
 
 
-        // months spinner
+        // create months spinner
         Spinner monthsSpinner = (Spinner) findViewById(R.id.monthSpinner);
         ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, months) {
             @Override
@@ -143,24 +150,11 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         monthsSpinner.setOnItemSelectedListener(this);
         monthsSpinner.setSelection(0);
 
-
-
-
-        //Button next = findViewById(R.id.nextButton3);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-
-        // Set the user's birthday
-        //        String birthday = "DD/MM/YYYY"; // Replace this with user input
-        //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
-
-        // Move on the the next page - font settings
-        //       openDPSetting();
-        //    }
-        //});
     }
 
+
+    /* handles the user information once they select a value from any of the three spinners
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if (findViewById((int) id) != null) {
@@ -209,11 +203,15 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
     }
 
 
+    /* do nothing if no item is selected in the spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
+    /* creates a list of integers based on the given min and max numbers (inclusive)
+     */
     private ArrayList createList(int min, int max) {
         ArrayList list = new ArrayList();
 
@@ -224,11 +222,11 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
     }
 
 
+    /* moves the app to ChooseDPSetting
+     */
     public void openInitialDPSelection(View view) {
         Intent intent = new Intent(this, InitialDPSelection.class);
         startActivity(intent);
         finish();
     }
-
-
 }

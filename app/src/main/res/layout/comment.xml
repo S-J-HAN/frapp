@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/textView_op"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/textView_text"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/textView_dateTime"
-        style="@style/AppTheme.Body"
+        style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

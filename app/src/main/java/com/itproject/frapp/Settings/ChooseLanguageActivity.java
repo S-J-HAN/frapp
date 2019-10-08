@@ -1,8 +1,14 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,11 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.itproject.frapp.R;
 import com.itproject.frapp.SetLanguage;
+import com.itproject.frapp.Settings.SettingsActivity;
 
 
+/* allows the user to select a language (either english or chinese)
+ */
 public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    private Boolean firstTome = null;
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -36,7 +43,7 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_language);
 
-        // language spinner
+        // create language spinner
         Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages) {
             @Override
@@ -62,12 +69,11 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
-
-//
-
     }
 
 
+    /* sets the language of the app upon user selection
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -93,56 +99,18 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
 
         // add to data base
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
-
-        // add language preference to local data storage
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(ChooseLanguageActivity.this);
-        SharedPreferences.Editor myEditor = myPreferences.edit();
-        myEditor.putString("LANGUAGE", language);
-        myEditor.commit();
-
     }
 
 
+    /* do nothing if no information selected from spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
-//    private boolean isFirstTime() {
-//
-//    }
-
-//    public void setLocale(Locale locale) {
-//        Resources resources = getResources();
-//        Configuration configuration = resources.getConfiguration();
-//        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-//            configuration.setLocale(locale);
-//        } else{
-//            configuration.locale=locale;
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-//            getApplicationContext().createConfigurationContext(configuration);
-//        } else {
-//            resources.updateConfiguration(configuration,displayMetrics);
-//        }
-//
-//    }
-
-
-//    public void setLanguage(String language) {
-//        Locale locale = new Locale(language);
-//        Locale.setDefault(locale);
-//
-//        Configuration config = new Configuration();
-//        config.locale = locale;
-//
-//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//
-//    }
-
-
-
+    /* move app to SettingsActivity
+     */
     public void openSettingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

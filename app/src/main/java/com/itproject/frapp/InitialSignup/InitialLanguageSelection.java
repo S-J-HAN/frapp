@@ -1,3 +1,7 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp.InitialSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,9 +26,9 @@ import com.itproject.frapp.R;
 import com.itproject.frapp.SetLanguage;
 
 
+/* allows user to select a language the very first time they use the app
+ */
 public class InitialLanguageSelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    private Boolean firstTome = null;
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -36,7 +40,7 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_language_selection);
 
-        // language spinner
+        // create language spinner
         Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages) {
             @Override
@@ -62,12 +66,11 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
-
-//
-
     }
 
 
+    /* sets the language of the app upon user selection
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -103,14 +106,19 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
     }
 
 
+    /* do nothing if no information selected from spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
+    /* move app to InitialFontSelection
+     */
     public void openFontSizeSetting(View view) {
         Intent intent = new Intent(this, InitialFontSelection.class);
         startActivity(intent);
+        finish();
     }
 
 

@@ -1,10 +1,16 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp.InitialSignup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,29 +21,37 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
+
+/* allows user to select their DP the very first time they use the app
+ * note: camera functionality has ben adapted from https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity
+ */
 public class InitialDPSelection extends AppCompatActivity {
 
-    public final static int REQUEST_CAPTURE_IMAGE  = 100;
+    private static final int CAMERA_REQUEST  = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
+
     public final static int SELECT_PHOTO_CODE = 1046;
-
-    private Uri file;
-
-    private String currentPhotoPath;
-
     private ImageView profileImage;
+    private Bitmap bitmapImage;
     private Button uploadFromCameraButton;
 
     private FirebaseAuth mAuth;
@@ -48,102 +62,131 @@ public class InitialDPSelection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_dpselection);
 
-        // Authenticate current user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        this.profileImage = (ImageView) findViewById(R.id.profileImageView);
 
-        // Connect to database
-        dbRef = FirebaseDatabase.getInstance().getReference();
+        // initial setup from camera upload option
+        Button photoButton = (Button) this.findViewById(R.id.takePhotoButton);
+        photoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                } else {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
 
-        uploadFromCameraButton = (Button) findViewById(R.id.uploadFromCameraButton);
-        profileImage = (ImageView) findViewById(R.id.profileImageView);
-
-
-        // check have permission to use camera
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            uploadFromCameraButton.setEnabled(false);
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
-        }
-        //Button next = findViewById(R.id.nextButton4);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-
-        // Insert stuff for uploading photo here
-
-        // Move on the the next page - font settings
-        //        openHomePage();
-        //    }
-        //});
     }
 
-//    //@Override
-//    public void onRequestPermissionsResults(int requestCode, String[] permissions, int[] grantResults) {
-//        if (requestCode == 0) {
-//            if ((grantResults.length > 0) && (grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
-//                uploadFromCameraButton.setEnabled(true);
-//            }
-//        }
-//    }
 
-
-    public void takePhoto(View view) {
-        openCameraIntent();
-    }
-
-    private void openCameraIntent() {
-        Intent pictureIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE
-        );
-        if(pictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(pictureIntent,
-                    REQUEST_CAPTURE_IMAGE);
+    /* checks whether app has permission to use the camera
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+            else
+            {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
 
+    /* receives the photo from either gallery or camera then displays that photo on screen
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        // handles if uploading photo from camera
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK)
+        {
+            this.bitmapImage = (Bitmap) data.getExtras().get("data");
+            profileImage.setImageBitmap(cropImage(bitmapImage));
+        }
+
+        // handles if photo selected from gallery
+        if ((requestCode == SELECT_PHOTO_CODE) && (data != null)) {
+            Uri selectedPhotoUri = data.getData();
+            this.bitmapImage = null;
+            try {
+                bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedPhotoUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            profileImage.setImageBitmap(cropImage(bitmapImage));
+        }
+
+       // uploadImageToDatabase();
+    }
 
 
-//    public void dispatchTakePictureIntent(View view) {
-//        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//    private void uploadImageToDatabase() {
+//        //upload photo to database
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 //
-//        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException ex) {
-//                // Error occurred while creating the File
+//        StorageReference storageRef = storage.getReference().child("userID/" + userID.toString());
+//
+//        bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//        byte[] uploadData = baos.toByteArray();
+//
+//        UploadTask uploadTask = storageRef.putBytes(uploadData);
+//        uploadTask.addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception exception) {
+//                // Unsuccessful upload
+//                System.out.println("DERP upload failed");
 //            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(this,
-//                        "com.example.android.fileprovider",
-//                        photoFile);
-//                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+//        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//            @Override
+//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+//                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+//                // ...
 //            }
-//        }
+//        });
+//
+//        // Get the URL of the uploaded image and add that to the database instance
+//        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+//            @Override
+//            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+//                if (!task.isSuccessful()) {
+//                    throw task.getException();
+//                }
+//
+//                // Insert code here to add the URL to the database.
+//                return ref.getDownloadUrl();
+//            }
+//        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Uri> task) {
+//                if (task.isSuccessful()) {
+//                    Uri downloadUri = task.getResult();
+//
+//                    // Alternatively, insert code here to add the URL to the database.
+//                    // Not sure which one is correct
+//
+//                } else {
+//                    // Failure
+//                    System.out.println("DERP URL retrieval failure")
+//                }
+//            }
+//        });
 //    }
 
 
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
+    /* on select, beings the intent for selecting a photo from the phones gallery
+     */
     public void selectPhotoFromGallery(View view) {
         Intent selectPhotoIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -153,49 +196,9 @@ public class InitialDPSelection extends AppCompatActivity {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // handles if photo taken from camera
-        if (requestCode == REQUEST_CAPTURE_IMAGE &&
-                resultCode == RESULT_OK) {
-            if (data != null && data.getExtras() != null) {
-                Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-                ImageView mImageView = new ImageView(this);
-                mImageView.setImageBitmap(imageBitmap);
-            }
-        }
 
-        // handles if photo selected from gallery
-        if ((requestCode == SELECT_PHOTO_CODE) && (data != null)) {
-            Uri selectedPhotoUri = data.getData();
-            Bitmap selectedPhoto = null;
-            try {
-                selectedPhoto = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedPhotoUri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            profileImage.setImageBitmap(cropImage(selectedPhoto));
-
-//            // Upload photo onto firebase storage
-//            UploadTask uploadTask = mountainsRef.putBytes(data);
-//            uploadTask.addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    // Handle unsuccessful uploads
-//                }
-//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                    // ...
-//                }
-//            });
-        }
-
-
-    }
-
-
+    /* crops the image to a square
+     */
     private Bitmap cropImage(Bitmap image) {
         int width = image.getWidth();
         int height = image.getHeight();
@@ -212,18 +215,9 @@ public class InitialDPSelection extends AppCompatActivity {
     }
 
 
-//    private static File getOutputMediaFile() {
-//        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "CameraDemo");
-//
-//        if ((!mediaStorageDir.exists()) && (!mediaStorageDir.mkdirs())) {
-//            return null;
-//        }
-//
-//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//        return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
-//    }
 
-
+    /* move the app to HomeActivity
+     */
     public void openHomePage(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);

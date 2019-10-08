@@ -161,7 +161,6 @@ public class HomeActivity extends AppCompatActivity {
         for (Artifact a : allArtifacts) {
             for (String term : terms) {
                 if (a.getDescription().toLowerCase().contains(term.toLowerCase()) ||
-                    a.getLocation().toLowerCase().contains(term.toLowerCase()) ||
                     a.getTags().toLowerCase().contains(term.toLowerCase()) ||
                     a.getDate().toLowerCase().contains(term.toLowerCase())) {
                     relevant.add(a);

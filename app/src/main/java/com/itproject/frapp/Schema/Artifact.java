@@ -4,21 +4,19 @@
 
 package com.itproject.frapp.Schema;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
-// Class containing the details of an artifact
-public class Artifact {
+public class Artifact implements Serializable {
 
     private String date;
     private String description;
-    private String location;
     private String op; // UserID of the original poster
     private String tags;
-    private String title;
     private String url;
     private String id;
     private ArrayList<Comment> comments = new ArrayList<>();
@@ -26,50 +24,32 @@ public class Artifact {
     public Artifact() {
     }
 
-    public Artifact(String date, String description, String location, String op, String tags, String title, ArrayList<Comment> comments) {
+    public Artifact(String date, String description, String op,
+                    String tags, ArrayList<Comment> comments) {
         this.date = date;
         this.description = description;
-        this.location = location;
         this.op = op;
         this.tags = tags;
-        this.title = title;
         this.comments = comments;
     }
 
+    // SETTERS
     public void setDate(String date) {
         this.date = date;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public void setOp(String op) {
         this.op = op;
     }
-
     public void setTags(String tags) {
         this.tags = tags;
     }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public void setID(String id) { this.id = id; }
-
     public void setUrl(String url) {
         this.url = url;
     }
-
-    public String getUrl() {
-        return url;
-    }
-
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
         ArrayList<Comment> newComments = new ArrayList<>();
         for (String key : comments.keySet()) {
@@ -85,6 +65,7 @@ public class Artifact {
         this.comments = newComments;
     }
 
+    // GETTERS
     public String getDate() {
         return this.date;
     }
@@ -98,27 +79,18 @@ public class Artifact {
     public String getDescription() {
         return this.description;
     }
-
-    public String getLocation() {
-        return this.location;
-    }
-
     public String getOp() {
         return this.op;
     }
-
     public String getTags() {
         return this.tags;
     }
-
-    public String getTitle() {
-        return this.title;
-    }
-
     public ArrayList<Comment> getComments() {
         return this.comments;
     }
-
     public String getID() { return this.id; }
+    public String getUrl() {
+        return url;
+    }
 
 }

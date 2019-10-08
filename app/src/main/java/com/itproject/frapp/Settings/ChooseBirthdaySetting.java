@@ -1,7 +1,10 @@
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
 package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +24,11 @@ import com.itproject.frapp.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+/* Allows the user to change their birth date
+ */
+
+public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private final int MIN_YEAR = 1900;
     private final int NUM_DAYS = 31;
@@ -40,6 +45,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +58,6 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         // Connect to database
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-
         // create lists for spinners and add initial display value
         this.days = createList(1, NUM_DAYS);
         days.add(0, "DD");
@@ -61,7 +66,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         this.years = createList(MIN_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         years.add(0, "YYYY");
 
-        // days spinner
+        // create days spinner
         Spinner daysSpinner = (Spinner) findViewById(R.id.daySpinner);
         ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, days) {
             @Override
@@ -88,7 +93,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         daysSpinner.setOnItemSelectedListener(this);
         daysSpinner.setSelection(0);
 
-        // years spinner
+        // create years spinner
         Spinner yearsSpinner = (Spinner) findViewById(R.id.yearSpinner);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years) {
             @Override
@@ -116,7 +121,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         yearsSpinner.setSelection(0);
 
 
-        // months spinner
+        // create months spinner
         Spinner monthsSpinner = (Spinner) findViewById(R.id.monthSpinner);
         ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, months) {
             @Override
@@ -142,27 +147,14 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
         monthsSpinner.setAdapter(monthsAdapter);
         monthsSpinner.setOnItemSelectedListener(this);
         monthsSpinner.setSelection(0);
-
-
-
-
-        //Button next = findViewById(R.id.nextButton3);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-
-                // Set the user's birthday
-        //        String birthday = "DD/MM/YYYY"; // Replace this with user input
-        //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
-
-                // Move on the the next page - font settings
-        //       openDPSetting();
-        //    }
-        //});
     }
 
+
+    /* handles the user information once they select a value from any of the three spinners
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
+        // checks if a spinner has been changed and which spinner that is
         if (findViewById((int) id) != null) {
             switch (parent.getId()) {
                 case R.id.daySpinner:
@@ -194,6 +186,7 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
             }
         }
 
+        // once every value is selected, add the information to the data base
         if ((selectedDate == null) || (selectedMonth == null) || (selectedYear == null)) {
             // Authenticate current user
             mAuth = FirebaseAuth.getInstance();
@@ -209,11 +202,15 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     }
 
 
+    /* no action if nothing selected in spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
+    /* creates a list of integers based on the given min and max numbers (inclusive)
+     */
     private ArrayList createList(int min, int max) {
         ArrayList list = new ArrayList();
 
@@ -224,12 +221,17 @@ public class ChooseBirthdaySetting extends AppCompatActivity implements AdapterV
     }
 
 
+    /* moves the app to ChooseDPSetting
+     */
     public void openDPSetting(View view) {
         Intent intent = new Intent(this, ChooseDPSetting.class);
         startActivity(intent);
         finish();
     }
 
+
+    /* moves the app to SettingsActivity
+     */
     public void openSettingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

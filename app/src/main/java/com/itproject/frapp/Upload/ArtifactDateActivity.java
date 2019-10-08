@@ -9,19 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.itproject.frapp.R;
 import com.itproject.frapp.Settings.ChooseDPSetting;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private Artifact artifact;
 
     private final int MIN_YEAR = 1900;
     private final int NUM_DAYS = 31;
@@ -35,12 +36,18 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
     private String selectedMonth = null;
     private String selectedYear = null;
 
-    private Button nextButton;
+    private ImageButton nextButton;
+    private ImageView artifactImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_date);
+
+        // Get artifact from ArtifactUploadActivity
+        artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
+
+        artifactImage = findViewById(R.id.artifactImageView);
 
         // create lists for spinners and add initial display value
         this.days = createList(1, NUM_DAYS);
@@ -52,7 +59,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
 
         // days spinner
         Spinner daysSpinner = (Spinner) findViewById(R.id.daySpinner);
-        ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, days) {
+        ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, days) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -79,7 +87,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
 
         // years spinner
         Spinner yearsSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years) {
+        ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, years) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -107,7 +116,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
 
         // months spinner
         Spinner monthsSpinner = (Spinner) findViewById(R.id.monthSpinner);
-        ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, months) {
+        ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, months) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -150,7 +160,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
                     Spinner daySelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedDay = daySelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedDay, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedDay, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedDate = selectedDay;
                     break;
@@ -158,7 +169,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
                     Spinner monthSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedMonth = monthSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedMonth, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedMonth, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedMonth = selectedMonth;
                     break;
@@ -166,7 +178,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
                     Spinner yearSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedYear = yearSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedYear, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedYear, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedYear = selectedYear;
                     break;
@@ -174,19 +187,17 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
                     break;
             }
         }
-
+        // Handle if one of date isn't selected
         if ((selectedDate == null) || (selectedMonth == null) || (selectedYear == null)) {
 
-            String birthday = selectedDate + "/" + selectedMonth + "/" + selectedYear;
-
         }
+        // Add selected date to artifact
+        artifact.setDate(selectedDate + "/" + selectedMonth + "/" + selectedYear);
     }
 
+    // =============================== HELPER FUNCTIONS ======================================
 
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
+    public void onNothingSelected(AdapterView<?> parent) { }
 
     private ArrayList createList(int min, int max) {
         ArrayList list = new ArrayList();
@@ -197,15 +208,9 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         return list;
     }
 
-
-    public void openDPSetting(View view) {
-        Intent intent = new Intent(this, ChooseDPSetting.class);
-        startActivity(intent);
-        finish();
-    }
-
     public void openArtifactDescription() {
         Intent intent = new Intent(this, ArtifactDescriptionActivity.class);
+        intent.putExtra("Artifact", artifact);
         startActivity(intent);
 
     }

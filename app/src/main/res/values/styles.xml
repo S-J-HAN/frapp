@@ -7,25 +7,32 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
-    <style name="AppTheme.Body">
+    <!-- Comments and tags -->
+    <style name="AppTheme.Comment">
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">8pt</item>
         <item name="android:fontFamily">@font/proximanova</item>
-
     </style>
 
-    <style name="AppTheme.BodySupport">
+    <!-- Date for comments -->
+    <style name="AppTheme.CommentDate">
         <item name="android:textColor">@color/colorSupport</item>
         <item name="android:textSize">8pt</item>
         <item name="android:fontFamily">@font/proximanova</item>
-
     </style>
 
+    <!-- Titles -->
     <style name="AppTheme.Header">
-        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">12pt</item>
-        <item name="android:fontFamily">elephant</item>
+        <item name="android:fontFamily">@font/elephant</item>
+    </style>
 
+    <!-- Body -->
+    <style name="AppTheme.Body">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:fontFamily">@font/proximanova</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

@@ -84,7 +84,7 @@
         android:imeOptions="actionGo"
         android:inputType="text"
         android:paddingLeft="49dp"
-        android:textAppearance="@style/AppTheme.Body"
+        android:textAppearance="@style/AppTheme.Comment"
         android:textCursorDrawable="@drawable/blackcursor"
         android:textSize="24sp" />
 
