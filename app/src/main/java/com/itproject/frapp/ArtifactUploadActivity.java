@@ -72,26 +72,25 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
         artifactImage = findViewById(R.id.artifactImageView);
 
 
-        //--------------------------------- upload image --------------------------------------
 
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        // Create storage reference from the app
-        StorageReference storageRef = storage.getReference();
-        // Create reference to new image
-        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().
-                toString());
-        // Upload image to database
-        uploadImage(imageRef);
-        // Update URL of the artifact
-        artifact.setUrl(imageUri);
 
-        //------------------------------- next button ---------------------------------------------
+
+        //----------------------------------- next button -----------------------------------------
         nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Open next page
-                openArtifactDate();
+                //-------------------------------- upload image -----------------------------------
+
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                // Create storage reference from the app
+                StorageReference storageRef = storage.getReference();
+                // Create reference to new image
+                final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().
+                        toString());
+                // Upload image to database
+                uploadImage(imageRef);
+
             }
         });
 
@@ -175,6 +174,10 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     if (task.isSuccessful()) {
                                         imageUri = task.getResult().toString();
+                                        System.out.println("Image URI = " + imageUri);
+                                        artifact.setUrl(imageUri);
+                                        //Open next page
+                                        openArtifactDate();
                                     } else {
                                         System.out.println("DERP URL retrieval failure");
                                     }
