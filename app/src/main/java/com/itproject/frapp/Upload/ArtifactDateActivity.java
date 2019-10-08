@@ -59,7 +59,7 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         years.add(0, "YYYY");
 
         // days spinner
-        Spinner daysSpinner = (Spinner) findViewById(R.id.daySpinner);
+        Spinner daysSpinner = findViewById(R.id.daySpinner);
         ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_dropdown_item, days) {
             @Override
@@ -147,6 +147,9 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                selectedDate = daysSpinner.getSelectedItem().toString();
+                selectedMonth = monthsSpinner.getSelectedItem().toString();
+                selectedYear = yearsSpinner.getSelectedItem().toString();
                 // Add selected date to artifact
                 artifact.setDate(selectedDate + "/" + selectedMonth + "/" + selectedYear);
                 //Open settings page
