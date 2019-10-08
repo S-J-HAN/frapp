@@ -4,6 +4,7 @@
  */
 
 package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -33,9 +34,12 @@ import com.google.firebase.storage.UploadTask;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
-import java.io.ByteArrayOutputStream;
+import com.itproject.frapp.R;
+import com.itproject.frapp.Upload.ArtifactDateActivity;
+
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.ByteArrayOutputStream;
 
 import java.util.UUID;
 

@@ -1,31 +1,28 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
+import com.itproject.frapp.R;
+import com.itproject.frapp.Settings.ChooseDPSetting;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class InitialBirthdaySelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    private Artifact artifact;
 
     private final int MIN_YEAR = 1900;
     private final int NUM_DAYS = 31;
@@ -39,21 +36,18 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
     private String selectedMonth = null;
     private String selectedYear = null;
 
-    private FirebaseAuth mAuth;
-    private DatabaseReference dbRef;
+    private ImageButton nextButton;
+    private ImageView artifactImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_initial_birthday_selection);
+        setContentView(R.layout.activity_artifact_date);
 
-        // Authenticate current user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
+        // Get artifact from ArtifactUploadActivity
+        artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
 
-        // Connect to database
-        dbRef = FirebaseDatabase.getInstance().getReference();
-
+        artifactImage = findViewById(R.id.artifactImageView);
 
         // create lists for spinners and add initial display value
         this.days = createList(1, NUM_DAYS);
@@ -65,7 +59,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
 
         // days spinner
         Spinner daysSpinner = (Spinner) findViewById(R.id.daySpinner);
-        ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, days) {
+        ArrayAdapter<String> daysAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_dropdown_item, days) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -92,7 +87,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
 
         // years spinner
         Spinner yearsSpinner = (Spinner) findViewById(R.id.yearSpinner);
-        ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, years) {
+        ArrayAdapter<String> yearsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, years) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -120,7 +116,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
 
         // months spinner
         Spinner monthsSpinner = (Spinner) findViewById(R.id.monthSpinner);
-        ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, months) {
+        ArrayAdapter<String> monthsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, months) {
             @Override
             public boolean isEnabled(int pos) {
                 if (pos == 0) {
@@ -145,22 +142,14 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         monthsSpinner.setOnItemSelectedListener(this);
         monthsSpinner.setSelection(0);
 
-
-
-
-        //Button next = findViewById(R.id.nextButton3);
-        //next.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View view) {
-
-        // Set the user's birthday
-        //        String birthday = "DD/MM/YYYY"; // Replace this with user input
-        //        dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
-
-        // Move on the the next page - font settings
-        //       openDPSetting();
-        //    }
-        //});
+        nextButton = findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Open settings page
+                openArtifactDescription();
+            }
+        });
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -171,7 +160,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
                     Spinner daySelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedDay = daySelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedDay, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedDay, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedDate = selectedDay;
                     break;
@@ -179,7 +169,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
                     Spinner monthSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedMonth = monthSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedMonth, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedMonth, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedMonth = selectedMonth;
                     break;
@@ -187,7 +178,8 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
                     Spinner yearSelectedSpinner = (Spinner) findViewById((int) id);
                     String selectedYear = yearSelectedSpinner.getSelectedItem().toString();
                     if (position > 0) {
-                        Toast.makeText(getApplicationContext(), selectedYear, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),
+                                selectedYear, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedYear = selectedYear;
                     break;
@@ -195,26 +187,17 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
                     break;
             }
         }
-
+        // Handle if one of date isn't selected
         if ((selectedDate == null) || (selectedMonth == null) || (selectedYear == null)) {
-            // Authenticate current user
-            mAuth = FirebaseAuth.getInstance();
-            final FirebaseUser currentUser = mAuth.getCurrentUser();
 
-            // Connect to database
-            dbRef = FirebaseDatabase.getInstance().getReference();
-
-            String birthday = selectedDate + "/" + selectedMonth + "/" + selectedYear;
-
-            dbRef.child("users").child(currentUser.getUid()).child("birthday").setValue(birthday);
         }
+        // Add selected date to artifact
+        artifact.setDate(selectedDate + "/" + selectedMonth + "/" + selectedYear);
     }
 
+    // =============================== HELPER FUNCTIONS ======================================
 
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
+    public void onNothingSelected(AdapterView<?> parent) { }
 
     private ArrayList createList(int min, int max) {
         ArrayList list = new ArrayList();
@@ -225,12 +208,10 @@ public class InitialBirthdaySelection extends AppCompatActivity implements Adapt
         return list;
     }
 
-
-    public void openInitialDPSelection(View view) {
-        Intent intent = new Intent(this, InitialDPSelection.class);
+    public void openArtifactDescription() {
+        Intent intent = new Intent(this, ArtifactDescriptionActivity.class);
+        intent.putExtra("Artifact", artifact);
         startActivity(intent);
-        finish();
+
     }
-
-
 }

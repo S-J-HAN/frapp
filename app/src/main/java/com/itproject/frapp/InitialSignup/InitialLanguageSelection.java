@@ -1,24 +1,20 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
+package com.itproject.frapp.InitialSignup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,13 +22,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
+import com.itproject.frapp.SetLanguage;
 
-import java.util.Locale;
 
-
-public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
-    private Boolean firstTome = null;
+/* allows user to select a language the very first time they use the app
+ */
+public class InitialLanguageSelection extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -42,9 +38,9 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_language);
+        setContentView(R.layout.activity_initial_language_selection);
 
-        // language spinner
+        // create language spinner
         Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages) {
             @Override
@@ -70,12 +66,11 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         spinner.setSelection(0);
-
-//
-
     }
 
 
+    /* sets the language of the app upon user selection
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -103,7 +98,7 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
         // add language preference to local data storage
-        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(ChooseLanguageActivity.this);
+        SharedPreferences myPreferences = PreferenceManager.getDefaultSharedPreferences(InitialLanguageSelection.this);
         SharedPreferences.Editor myEditor = myPreferences.edit();
         myEditor.putString("LANGUAGE", language);
         myEditor.commit();
@@ -111,50 +106,20 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     }
 
 
+    /* do nothing if no information selected from spinner
+     */
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
 
-//    private boolean isFirstTime() {
-//
-//    }
-
-//    public void setLocale(Locale locale) {
-//        Resources resources = getResources();
-//        Configuration configuration = resources.getConfiguration();
-//        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
-//            configuration.setLocale(locale);
-//        } else{
-//            configuration.locale=locale;
-//        }
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
-//            getApplicationContext().createConfigurationContext(configuration);
-//        } else {
-//            resources.updateConfiguration(configuration,displayMetrics);
-//        }
-//
-//    }
-
-
-//    public void setLanguage(String language) {
-//        Locale locale = new Locale(language);
-//        Locale.setDefault(locale);
-//
-//        Configuration config = new Configuration();
-//        config.locale = locale;
-//
-//        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-//
-//    }
-
-
-
-    public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    /* move app to InitialFontSelection
+     */
+    public void openFontSizeSetting(View view) {
+        Intent intent = new Intent(this, InitialFontSelection.class);
         startActivity(intent);
         finish();
     }
+
 
 }

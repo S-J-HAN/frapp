@@ -1,7 +1,14 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
+package com.itproject.frapp.Schema;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Artifact implements Serializable {
@@ -50,6 +57,10 @@ public class Artifact implements Serializable {
                                         comments.get(key).get("dateTime"),
                                         comments.get(key).get("text")));
         }
+
+        // Sort the comments by date
+        newComments.sort(Comparator.comparing(Comment::getDateTime));
+
         this.comments = newComments;
     }
 
@@ -57,6 +68,13 @@ public class Artifact implements Serializable {
     public String getDate() {
         return this.date;
     }
+
+    public String getSortableDate() {
+        ArrayList<String> vals = new ArrayList<String>(Arrays.asList(this.date.split(Character.toString('/'))));
+        Collections.reverse(vals);
+        return String.join("", vals);
+    }
+
     public String getDescription() {
         return this.description;
     }

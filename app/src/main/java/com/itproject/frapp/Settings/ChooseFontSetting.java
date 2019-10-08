@@ -1,16 +1,15 @@
-package com.itproject.frapp;
+/* Team: frapp
+ * IT Project Semester 2, 2019
+ */
+
+package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,10 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.itproject.frapp.R;
+import com.itproject.frapp.Settings.SettingsActivity;
 
-import java.util.Locale;
 
-
+/* allows the user to select font size
+ */
 public class ChooseFontSetting extends AppCompatActivity {
 
     private FirebaseAuth mAuth;

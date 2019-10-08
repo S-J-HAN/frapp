@@ -24,6 +24,7 @@
     <string name="date_of_artifact" translatable="true">Date of artifact</string>
     <string name="add_a_description" translatable="true">Add a description</string>
     <string name="add_tags" translatable="true">Add tags</string>
+    <string name="error" translateable="true">Error</string>
 
 
     <string-array name="languageOptions">

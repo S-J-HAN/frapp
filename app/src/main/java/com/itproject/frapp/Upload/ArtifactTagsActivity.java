@@ -1,4 +1,4 @@
-package com.itproject.frapp;
+package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +16,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.UUID;
+import com.itproject.frapp.MainGallery.HomeActivity;
+import com.itproject.frapp.R;
 
 public class ArtifactTagsActivity extends AppCompatActivity {
 
@@ -25,7 +27,7 @@ public class ArtifactTagsActivity extends AppCompatActivity {
 
     private Artifact artifact;
     private ImageButton nextButton;
-  
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,4 +63,3 @@ public class ArtifactTagsActivity extends AppCompatActivity {
         openHome();
     }
 }
-
