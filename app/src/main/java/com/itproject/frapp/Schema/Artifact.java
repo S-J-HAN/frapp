@@ -55,7 +55,8 @@ public class Artifact implements Serializable {
         for (String key : comments.keySet()) {
             newComments.add(new Comment(comments.get(key).get("op"),
                                         comments.get(key).get("dateTime"),
-                                        comments.get(key).get("text")));
+                                        comments.get(key).get("text"),
+                                        key));
         }
 
         // Sort the comments by date

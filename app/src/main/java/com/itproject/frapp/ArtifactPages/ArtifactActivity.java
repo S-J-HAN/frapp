@@ -77,4 +77,3 @@ public class ArtifactActivity extends AppCompatActivity {
     }
 
 }
-
