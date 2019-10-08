@@ -18,6 +18,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.UUID;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
 
 public class ArtifactTagsActivity extends AppCompatActivity {
 
