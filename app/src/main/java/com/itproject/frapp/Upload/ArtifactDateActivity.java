@@ -147,6 +147,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Add selected date to artifact
+                artifact.setDate(selectedDate + "/" + selectedMonth + "/" + selectedYear);
                 //Open settings page
                 openArtifactDescription();
             }
@@ -165,6 +167,7 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
                                 selectedDay, Toast.LENGTH_SHORT).show();
                     }
                     this.selectedDate = selectedDay;
+                    System.out.println("NEW DATE SELECTED!");
                     break;
                 case R.id.monthSpinner:
                     Spinner monthSelectedSpinner = (Spinner) findViewById((int) id);
@@ -192,8 +195,6 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         if ((selectedDate == null) || (selectedMonth == null) || (selectedYear == null)) {
 
         }
-        // Add selected date to artifact
-        artifact.setDate(selectedDate + "/" + selectedMonth + "/" + selectedYear);
     }
 
     // =============================== HELPER FUNCTIONS ======================================

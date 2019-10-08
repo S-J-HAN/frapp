@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.os.Bundle;
@@ -15,6 +16,7 @@ public class ArtifactDescriptionActivity extends AppCompatActivity {
 
     private Artifact artifact;
     private ImageButton nextButton;
+    private String description;
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,10 @@ public class ArtifactDescriptionActivity extends AppCompatActivity {
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // Get description from user
+                EditText newDesc = findViewById(R.id.descInput);
+                description = newDesc.getText().toString();
+                artifact.setDescription(description);
                 //Open settings page
                 openArtifactTags();
             }
