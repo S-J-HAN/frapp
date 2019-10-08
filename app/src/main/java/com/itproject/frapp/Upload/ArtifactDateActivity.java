@@ -16,6 +16,7 @@ import android.widget.Toast;
 import android.widget.ImageView;
 
 import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
 import com.itproject.frapp.Settings.ChooseDPSetting;
 import java.util.ArrayList;
 import java.util.Calendar;

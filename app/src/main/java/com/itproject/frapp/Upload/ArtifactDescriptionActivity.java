@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.os.Bundle;
 
 import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
 
 public class ArtifactDescriptionActivity extends AppCompatActivity {
 

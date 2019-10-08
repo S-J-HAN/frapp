@@ -3,7 +3,6 @@
  * https://code.tutsplus.com/tutorials/image-upload-to-firebase-in-android-application--cms-29934
  */
 
-package com.itproject.frapp;
 package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +34,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.Artifact;
 import com.itproject.frapp.Upload.ArtifactDateActivity;
 
 import java.io.IOException;
