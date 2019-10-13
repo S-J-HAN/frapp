@@ -85,7 +85,6 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
             @Override
             public void onClick(View view) {
                 //-------------------------------- upload image -----------------------------------
-
                 FirebaseStorage storage = FirebaseStorage.getInstance();
                 // Create storage reference from the app
                 StorageReference storageRef = storage.getReference();

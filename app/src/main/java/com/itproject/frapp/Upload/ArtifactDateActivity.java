@@ -3,6 +3,8 @@ package com.itproject.frapp.Upload;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +20,10 @@ import android.widget.ImageView;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
 import com.itproject.frapp.Settings.ChooseDPSetting;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -39,15 +45,35 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
 
     private ImageButton nextButton;
     private ImageView artifactImage;
+    private URL artifactURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_date);
-
+        System.out.println("Hi I'm in the date activity");
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
-
+//        if (artifact != null) {
+//            try {
+//                artifactURL = new URL(artifact.getUrl());
+//                System.out.println("ARTIFACT URL RETRIEVED!");
+//            } catch (MalformedURLException e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            System.out.println("No URL found!");
+//        }
+//
+//        Bitmap bmp = null;
+//        try {
+//            bmp = BitmapFactory.decodeStream(artifactURL.openConnection().getInputStream());
+//            System.out.println("BITMAP STORED!");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        artifactImage.setImageBitmap(bmp);
+//        System.out.println("ARTIFACT IMAGE SET AS BITMAP!");
         artifactImage = findViewById(R.id.artifactImageView);
 
         // create lists for spinners and add initial display value

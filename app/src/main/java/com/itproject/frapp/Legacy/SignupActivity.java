@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 
-public class SignupActivity extends AppCompatActivity {
+public class  SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
@@ -32,8 +32,7 @@ public class SignupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
+        super.onCreate(savedInstanceState);        setContentView(R.layout.activity_signup);
 
         mAuth = FirebaseAuth.getInstance();
 
