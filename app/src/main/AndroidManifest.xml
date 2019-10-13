@@ -45,7 +45,7 @@
         <activity android:name=".Settings.ChooseBirthdaySetting" />
         <activity android:name=".Settings.ChooseFontSetting" />
         <activity android:name=".Settings.ChooseLanguageActivity" />
-        <activity android:name=".MainGallery.HomeActivity" />
+        <activity android:name=".MainGallery.HomeActivity"/>
         <activity android:name=".Legacy.SignupActivity" />
         <activity android:name=".Legacy.LoginActivity" />
 

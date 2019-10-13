@@ -1,5 +1,6 @@
 package com.itproject.frapp.MainGallery;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,12 +21,16 @@ import java.util.Comparator;
 
 public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
 
+    public static final int REQUEST_DELETE = 0;
+
     private ArrayList<Artifact> artifacts;
     private Context context;
+    private Activity activity;
 
-    public GalleryAdapter(Context context, ArrayList<Artifact> artifacts) {
+    public GalleryAdapter(Context context, ArrayList<Artifact> artifacts, Activity activity) {
         this.context = context;
         this.artifacts = artifacts;
+        this.activity = activity;
 
         // Sort artifacts based on date
         this.artifacts.sort(Comparator.comparing(Artifact::getSortableDate));
@@ -72,8 +77,10 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
 
     public void goToArtifact(String id) {
         Intent intent = new Intent(context, ArtifactActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("ARTIFACT_ID", id);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, REQUEST_DELETE);
+//        context.startActivity(intent);
+
     }
 }
