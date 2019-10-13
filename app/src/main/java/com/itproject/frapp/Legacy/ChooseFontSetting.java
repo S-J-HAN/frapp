@@ -2,7 +2,7 @@
  * IT Project Semester 2, 2019
  */
 
-package com.itproject.frapp.Settings;
+package com.itproject.frapp.Legacy;
 
 import androidx.appcompat.app.AppCompatActivity;
 

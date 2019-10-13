@@ -10,6 +10,8 @@ public class User {
     private String name;
 
     private String email;
+    private String url;
+
     private String location;
 
     public User() {
@@ -21,27 +23,31 @@ public class User {
         this.location = location;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
+    // SETTERS
+    public void setUrl(String url) { this.url = url; }
     public void setName(String name) {
         this.name = name;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
+
+    // GETTERS
+    public String getName() {
+        return name;
+    }
+    public String getLocation() {
+        return location;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public String getUrl() {
+        return url;
+    }
+
 }

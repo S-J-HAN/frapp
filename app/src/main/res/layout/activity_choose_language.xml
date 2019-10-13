@@ -17,21 +17,23 @@
         android:layout_marginRight="8dp"
         android:gravity="center"
         android:text="@string/select_preferred_language"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        style="@style/AppTheme.Header"
         app:autoSizeTextType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="50dp"
+        android:layout_height="40dip"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back_home"
         android:onClick="openSettingsActivity"
-        android:text="@string/back"
+        android:text="@string/next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

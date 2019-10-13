@@ -115,8 +115,8 @@ public class InitialLanguageSelection extends AppCompatActivity implements Adapt
 
     /* move app to InitialFontSelection
      */
-    public void openFontSizeSetting(View view) {
-        Intent intent = new Intent(this, InitialFontSelection.class);
+    public void openInitialDPSelection(View view) {
+        Intent intent = new Intent(this, InitialDPSelection.class);
         startActivity(intent);
         finish();
     }

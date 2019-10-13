@@ -32,5 +32,6 @@
     <string name="add_a_comment">添加评论…</string>
     <string name="post">邮寄</string>
     <string name="search">搜索</string>
+    <string name="logout">登出</string>
 
 </resources>

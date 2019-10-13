@@ -9,70 +9,57 @@
 
     <TextView
         android:id="@+id/textView"
+        style="@style/AppTheme.Header"
         android:layout_width="295dp"
         android:layout_height="55dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginTop="96dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:gravity="center"
         android:text="@string/edit_your_profile"
-        android:textSize="36sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         app:autoSizeTextType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+
+    <ImageButton
         android:id="@+id/editLanguageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="288dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/language"
         android:onClick="openLanguageSetting"
-        android:text="@string/language"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
     <Button
-        android:id="@+id/editBirthdayButton"
+        android:id="@+id/logOutButton"
         android:layout_width="91dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:onClick="openBirthdaySetting"
-        android:text="@string/birthday"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
+        android:layout_marginTop="60dp"
+        android:onClick="logoutOfApp"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="@+id/editLanguageButton"
+        app:layout_constraintStart_toStartOf="@+id/editLanguageButton"
         app:layout_constraintTop_toBottomOf="@+id/editLanguageButton" />
 
-    <Button
-        android:id="@+id/editTextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:onClick="openFontSetting"
-        android:text="@string/font_size"
-        app:layout_constraintBottom_toBottomOf="@+id/editBirthdayButton"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/editBirthdayButton"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
+    <ImageButton
         android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="100dp"
+        android:layout_height="40dip"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back"
         android:onClick="openHomeSetting"
-        android:text="Back"
+        android:text="@string/next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    =======
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -80,10 +67,10 @@
         android:layout_height="200dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:src="@drawable/frame"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="#00B18C8C"
         android:onClick="openDPSetting"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"

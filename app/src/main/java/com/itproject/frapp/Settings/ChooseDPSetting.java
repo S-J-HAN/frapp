@@ -14,12 +14,17 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,34 +35,43 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.itproject.frapp.R;
+import com.itproject.frapp.Schema.User;
 import com.itproject.frapp.Settings.SettingsActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /* allows the user to change their DP
  */
 public class ChooseDPSetting extends AppCompatActivity {
 
+    private User user = new User();
+
     private static final int CAMERA_REQUEST  = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     public final static int SELECT_PHOTO_CODE = 1046;
 
-    private Uri file;
-
+    private Uri filepath;
+    private String imageUri = "";
     private String currentPhotoPath;
 
     private ImageView profileImage;
     private Bitmap bitmapImage;
-    private Button uploadFromCameraButton;
+    //private ImageButton uploadFromCameraButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -69,11 +83,35 @@ public class ChooseDPSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_dpsetting);
 
-        uploadFromCameraButton = (Button) findViewById(R.id.uploadFromCameraButton);
         profileImage = (ImageView) findViewById(R.id.profileImageView);
 
+        // Authenticate current user
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        // Connect to database
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        dbRef.child("users").child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // Get User object and do stuff with it inside onDataChange
+                User user = dataSnapshot.getValue(User.class);
+
+                new DownloadImageFromInternet(profileImage).execute(user.getUrl());
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Something went wrong...
+                //Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
+            }
+        });
+
+
         // initial setup from camera upload option
-        Button photoButton = (Button) this.findViewById(R.id.takePhotoButton);
+        ImageButton photoButton = (ImageButton) this.findViewById(R.id.takePhotoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +124,34 @@ public class ChooseDPSetting extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    // https://www.viralandroid.com/2015/11/load-image-from-url-internet-in-android.html
+    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
     }
 
 
@@ -118,80 +184,92 @@ public class ChooseDPSetting extends AppCompatActivity {
 
         // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            this.filepath = data.getData();
             this.bitmapImage = (Bitmap) data.getExtras().get("data");
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
 
         // handles if photo selected from gallery
         if ((requestCode == SELECT_PHOTO_CODE) && (data != null)) {
-            Uri selectedPhotoUri = data.getData();
+            this.filepath = data.getData();
             this.bitmapImage = null;
             try {
-                bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedPhotoUri);
+                bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filepath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
 
-        //uploadImageToDatabase();
     }
 
 
-//
-//    private void uploadImageToDatabase() {
-//         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//
-//         StorageReference storageRef = storage.getReference().child("userID/" + userID.toString());
-//
-//         bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//         byte[] uploadData = baos.toByteArray();
-//
-//         UploadTask uploadTask = storageRef.putBytes(uploadData);
-//         uploadTask.addOnFailureListener(new OnFailureListener() {
-//                @Override
-//                public void onFailure(@NonNull Exception exception) {
-//                    // Unsuccessful upload
-//                    System.out.println("DERP upload failed");
-//                }
-//            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//                @Override
-//                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                    // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-//                    // ...
-//                }
-//            });
-//
-//            // Get the URL of the uploaded image and add that to the database instance
-//            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//                @Override
-//                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                    if (!task.isSuccessful()) {
-//                        throw task.getException();
-//                    }
-//
-//                    // Insert code here to add the URL to the database.
-//                    return ref.getDownloadUrl();
-//                }
-//            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//                @Override
-//                public void onComplete(@NonNull Task<Uri> task) {
-//                    if (task.isSuccessful()) {
-//                        Uri downloadUri = task.getResult();
-//
-//                        // Alternatively, insert code here to add the URL to the database.
-//                        // Not sure which one is correct
-//
-//                    } else {
-//                        // Failure
-//                        System.out.println("DERP URL retrieval failure")
-//                    }
-//                }
-//            });
-//        }
-//    }
+    // Upload image to Firebase storage and retrieve its URI
+    public void uploadImage (final StorageReference imageRef) {
+        Toast.makeText(this, "Saving image ... this may take a few moments", Toast.LENGTH_LONG).show();
+        new Thread (new Runnable () {
+            @Override
+            public void run() {
+                if(filepath != null) {
+                    // Get data from ImageView as bytes
+                    profileImage.setDrawingCacheEnabled(true);
+                    profileImage.buildDrawingCache();
+                    Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
 
-    //close
+                    final UploadTask uploadTask = imageRef.putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            System.out.println("DERP upload failed");
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // Handle success
+
+                            // taskSnapshot.getMetadata()?
+                            Task<Uri> urlTask = uploadTask.continueWithTask
+                                    (new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                                        @Override
+                                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task)
+                                                throws Exception {
+                                            if (!task.isSuccessful()) {
+                                                throw task.getException();
+                                            }
+                                            // Continue with the task to get the download URL
+                                            return imageRef.getDownloadUrl();
+                                        }
+                                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    if (task.isSuccessful()) {
+                                        imageUri = task.getResult().toString();
+                                        System.out.println("Image URI = " + imageUri);
+
+                                        // Authenticate current user
+                                        mAuth = FirebaseAuth.getInstance();
+                                        final FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                                        // Connect to database
+                                        dbRef = FirebaseDatabase.getInstance().getReference();
+                                        dbRef.child("users").child(currentUser.getUid()).child("url").setValue(imageUri);
+
+                                        Toast.makeText(ChooseDPSetting.this, "Profile image saved", Toast.LENGTH_LONG).show();
+
+                                    } else {
+                                        System.out.println("DERP URL retrieval failure");
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
 
 
     /* on select, beings the intent for selecting a photo from the phones gallery
@@ -230,5 +308,26 @@ public class ChooseDPSetting extends AppCompatActivity {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    /* move the app to SettingsActivity
+     */
+    public void goToSettingsActivity() {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
+    public void saveProfilePicture(View view) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create storage reference from the app
+        StorageReference storageRef = storage.getReference();
+        // Create reference to new image
+        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().
+                toString());
+        // Upload image to database
+        uploadImage(imageRef);
     }
 }
