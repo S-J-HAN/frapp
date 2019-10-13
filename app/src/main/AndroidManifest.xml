@@ -27,8 +27,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".InitialSignup.InitialDPSelection"/>
-        <activity android:name=".InitialSignup.InitialBirthdaySelection" />
-        <activity android:name=".InitialSignup.InitialFontSelection" />
+        <activity android:name=".Legacy.InitialBirthdaySelection" />
+        <activity android:name=".Legacy.InitialFontSelection" />
         <activity android:name=".InitialSignup.InitialLanguageSelection" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -42,8 +42,8 @@
         <activity android:name=".Settings.ChooseDPSetting" />
         <activity android:name=".Legacy.UploadActivity" />
         <activity android:name=".ArtifactPages.ArtifactActivity" />
-        <activity android:name=".Settings.ChooseBirthdaySetting" />
-        <activity android:name=".Settings.ChooseFontSetting" />
+        <activity android:name=".Legacy.ChooseBirthdaySetting" />
+        <activity android:name=".Legacy.ChooseFontSetting" />
         <activity android:name=".Settings.ChooseLanguageActivity" />
         <activity android:name=".MainGallery.HomeActivity" />
         <activity android:name=".Legacy.SignupActivity" />

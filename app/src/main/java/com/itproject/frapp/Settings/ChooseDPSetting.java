@@ -60,7 +60,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
     private Uri filepath;
     private String imageUri = "";
-
+    private Boolean imageUploaded = false;
     private String currentPhotoPath;
 
     private ImageView profileImage;
@@ -126,13 +126,14 @@ public class ChooseDPSetting extends AppCompatActivity {
 
         // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            this.filepath = data.getData();
             this.bitmapImage = (Bitmap) data.getExtras().get("data");
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
 
         // handles if photo selected from gallery
         if ((requestCode == SELECT_PHOTO_CODE) && (data != null)) {
-            filepath = data.getData();
+            this.filepath = data.getData();
             this.bitmapImage = null;
             try {
                 bitmapImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), filepath);
@@ -142,25 +143,17 @@ public class ChooseDPSetting extends AppCompatActivity {
             profileImage.setImageBitmap(cropImage(bitmapImage));
         }
 
-
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        // Create storage reference from the app
-        StorageReference storageRef = storage.getReference();
-        // Create reference to new image
-        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().
-                toString());
-        // Upload image to database
-        uploadImage(imageRef);
     }
 
 
     // Upload image to Firebase storage and retrieve its URI
     public void uploadImage (final StorageReference imageRef) {
+        Toast.makeText(this, "Saving image ... \nThis may take a moment", Toast.LENGTH_LONG).show();
         new Thread (new Runnable () {
             @Override
             public void run() {
                 if(filepath != null) {
-
+                    System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111111111111");
                     // Get data from ImageView as bytes
                     profileImage.setDrawingCacheEnabled(true);
                     profileImage.buildDrawingCache();
@@ -168,6 +161,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] data = baos.toByteArray();
+                    System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222");
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -179,6 +173,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Handle success
+
                             // taskSnapshot.getMetadata()?
                             Task<Uri> urlTask = uploadTask.continueWithTask
                                     (new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -195,6 +190,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Uri> task) {
                                     if (task.isSuccessful()) {
+                                        imageUploaded = true;
                                         imageUri = task.getResult().toString();
                                         System.out.println("Image URI = " + imageUri);
                                         user.setUrl(imageUri);
@@ -260,4 +256,21 @@ public class ChooseDPSetting extends AppCompatActivity {
     }
 
 
+    public void saveProfilePicture(View view) {
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create storage reference from the app
+        StorageReference storageRef = storage.getReference();
+        // Create reference to new image
+        final StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().
+                toString());
+        // Upload image to database
+        uploadImage(imageRef);
+
+
+        // prompt user that image has been saved
+        if (this.imageUploaded) {
+            Toast.makeText(this, "Profile image saved", Toast.LENGTH_LONG).show();
+        }
+    }
 }

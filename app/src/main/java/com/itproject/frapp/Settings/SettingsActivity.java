@@ -10,10 +10,6 @@ import android.view.View;
 import com.itproject.frapp.MainActivity;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
-import com.itproject.frapp.Settings.ChooseBirthdaySetting;
-import com.itproject.frapp.Settings.ChooseDPSetting;
-import com.itproject.frapp.Settings.ChooseFontSetting;
-import com.itproject.frapp.Settings.ChooseLanguageActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 

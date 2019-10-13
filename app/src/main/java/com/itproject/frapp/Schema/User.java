@@ -25,9 +25,7 @@ public class User {
 
 
     // SETTERS
-    public void setUrl(String url) {
-        this.url = url;
-    }
+    public void setUrl(String url) { this.url = url; }
     public void setName(String name) {
         this.name = name;
     }
