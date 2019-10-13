@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.content.Intent;
 import android.view.View;
 
+import com.itproject.frapp.MainActivity;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Settings.ChooseBirthdaySetting;
@@ -30,17 +31,10 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 
+    public void logoutOfApp(View view) {
 
-    public void openBirthdaySetting(View view) {
-        Intent intent = new Intent(this, ChooseBirthdaySetting.class);
-        startActivity(intent);
-        finish();
-    }
 
-    public void openNameSetting(View view) {
-        /*Intent intent = new Intent(this, ChooseNameSetting.class);
-        startActivity(intent);
-        finish();*/
+        openMainActivity();
     }
 
     public void openLanguageSetting(View view) {
@@ -49,8 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
         finish();
     }
 
-    public void openFontSetting(View view) {
-        Intent intent = new Intent(this, ChooseFontSetting.class);
+    public void openMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }
