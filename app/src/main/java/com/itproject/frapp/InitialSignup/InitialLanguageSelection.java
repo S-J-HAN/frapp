@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class InitialLanguageSelection extends AppCompatActivity {
     }
 
 
-    /* sets the language of the app to english upon user selection
+    /* sets the language of the app to chinese upon user selection
      */
     public void setLanguageToEnglish(View view) {
         // Authenticate current user
@@ -55,6 +56,13 @@ public class InitialLanguageSelection extends AppCompatActivity {
         String language = "en";
 
         // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.VISIBLE);
+
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.INVISIBLE);
+
+
 
         // set locale to required language
         SetLanguage.setLocale(this, language);
@@ -64,7 +72,7 @@ public class InitialLanguageSelection extends AppCompatActivity {
     }
 
 
-    /* sets the language of the app to chinese upon user selection
+    /* sets the language of the app to english upon user selection
      */
     public void setLanguageToChinese(View view) {
         // Authenticate current user
@@ -77,6 +85,12 @@ public class InitialLanguageSelection extends AppCompatActivity {
         String language = "zh";
 
         // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.INVISIBLE);
+
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.VISIBLE);
+
 
         // set locale to required language
         SetLanguage.setLocale(this, language);

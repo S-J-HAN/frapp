@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -58,6 +59,13 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         String language = "en";
 
         // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.VISIBLE);
+
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.INVISIBLE);
+
+
 
         // set locale to required language
         SetLanguage.setLocale(this, language);
@@ -80,6 +88,12 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         String language = "zh";
 
         // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.INVISIBLE);
+
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.VISIBLE);
+
 
         // set locale to required language
         SetLanguage.setLocale(this, language);

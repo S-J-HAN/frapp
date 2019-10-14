@@ -67,19 +67,23 @@
 
     <ImageView
         android:id="@+id/englishSelected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/selectEnglish"
         app:layout_constraintStart_toEndOf="@+id/selectEnglish"
         app:layout_constraintTop_toTopOf="@+id/selectEnglish"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        android:layout_width="40dp"
+        android:layout_height="30dip"
+        android:background="@drawable/back_home" />
+
 
     <ImageView
         android:id="@+id/chineseSelected"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="30dip"
+        android:background="@drawable/back_home"
         android:layout_marginStart="8dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/selectChinese"
         app:layout_constraintStart_toEndOf="@+id/selectChinese"
         app:layout_constraintTop_toTopOf="@+id/selectChinese"

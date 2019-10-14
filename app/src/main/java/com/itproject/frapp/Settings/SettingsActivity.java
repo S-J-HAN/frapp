@@ -99,6 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void logoutOfApp(View view) {
 
+        FirebaseAuth.getInstance().signOut();
 
         openMainActivity();
     }
