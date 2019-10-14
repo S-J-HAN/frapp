@@ -26,6 +26,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.itproject.frapp.ArtifactPages.ArtifactAdapter;
 import com.itproject.frapp.Upload.ArtifactUploadActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
@@ -103,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 // Show only relevant artifacts
-                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
+                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts, HomeActivity.this);
                 gallery.setAdapter(galleryAdapter);
 
                 return true;
@@ -128,7 +129,7 @@ public class HomeActivity extends AppCompatActivity {
                 currentArtifacts = allArtifacts;
 //                jsonView.setText(urls[0]);
 
-                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts);
+                GalleryAdapter galleryAdapter = new GalleryAdapter(getApplicationContext(), currentArtifacts, HomeActivity.this);
                 gallery.setAdapter(galleryAdapter);
             }
 
@@ -147,9 +148,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public void openUpload() {
         Intent intent = new Intent(this, ArtifactUploadActivity.class);
-
         startActivity(intent);
-
     }
 
     public ArrayList<Artifact> search(String input) {
@@ -171,5 +170,14 @@ public class HomeActivity extends AppCompatActivity {
         return relevant;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GalleryAdapter.REQUEST_DELETE && resultCode == RESULT_OK) {
+            String artifactID = data.getExtras().getString("Delete");
+            if (artifactID != null) {
+                ref.child("artifacts").child(artifactID).removeValue();
+            }
+        }
+    }
 
 }

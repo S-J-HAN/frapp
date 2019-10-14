@@ -5,10 +5,14 @@
 package com.itproject.frapp.ArtifactPages;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -19,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
 
@@ -60,7 +65,7 @@ public class ArtifactActivity extends AppCompatActivity {
                     Artifact artifact = dataSnapshot.getValue(Artifact.class);
 
                     // Create an adapter to manager the contents of the recycler view
-                    ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef, ArtifactActivity.this);
+                    ArtifactAdapter mAdapter = new ArtifactAdapter(artifact, artifactID, currentUser, dbRef, ArtifactActivity.this, ArtifactActivity.this);
 
                     recyclerView.setAdapter(mAdapter);
 
@@ -75,5 +80,6 @@ public class ArtifactActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

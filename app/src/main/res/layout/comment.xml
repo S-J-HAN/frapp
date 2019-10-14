@@ -11,21 +11,20 @@
         style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="24dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/circleImage_profilePicture" />
 
     <TextView
         android:id="@+id/textView_text"
         style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:text="TextView"
         app:layout_constraintEnd_toStartOf="@+id/imageButton_deleteComment"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView_op"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -33,7 +32,6 @@
         style="@style/AppTheme.Comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="16dp"
         android:gravity="left"
@@ -41,20 +39,87 @@
         android:textAlignment="gravity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageButton_deleteComment"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textView_op"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_text"
         app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         android:id="@+id/imageButton_deleteComment"
-        android:layout_width="53dp"
-        android:layout_height="41dp"
+        android:layout_width="40dp"
+        android:layout_height="30dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_delete"
+        android:src="@drawable/delete"
+        android:scaleType="fitCenter"
         android:background="#00FFFFFF" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circleImage_profilePicture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:src="@drawable/profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <FrameLayout-->
+<!--        android:id="@+id/frame_profilePicture"-->
+<!--        android:layout_width="51dp"-->
+<!--        android:layout_height="42dp"-->
+<!--        android:layout_marginStart="40dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView_userProfilePicture"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginStart="52dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:srcCompat="@tools:sample/avatars" />-->
+
+<!--        <ImageView android:id="@+id/imageView_circle"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:src="@drawable/dp_frame" />-->
+
+<!--    </FrameLayout>-->
+
+    <!--    <ImageView-->
+<!--        android:id="@+id/imageView_userProfilePicture"-->
+<!--        android:layout_width="38dp"-->
+<!--        android:layout_height="42dp"-->
+<!--        android:layout_marginStart="52dp"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:srcCompat="@tools:sample/avatars" />-->
+
+
+<!--    <FrameLayout android:id="@+id/frame"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp">-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/imageView_userProfilePicture"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginStart="52dp"-->
+<!--            android:scaleType="fitCenter"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            tools:srcCompat="@tools:sample/avatars" />-->
+
+<!--        <ImageView android:id="@+id/imageView_circle"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:src="@drawable/dp_frame" />-->
+
+<!--    </FrameLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
