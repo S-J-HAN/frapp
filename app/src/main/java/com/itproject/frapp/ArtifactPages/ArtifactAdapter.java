@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 // Adapter class for controlling the contents of the artifact page recycler view
 public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHolder> {
 
@@ -61,6 +64,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
         private ImageView image;
         private ImageButton deleteComment, deleteArtifact, postComment;
         private LinearLayout back;
+        private CircleImageView userProfile;
 
         ViewHolder(View view, int viewType) {
             super(view);
@@ -80,6 +84,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                 this.dateTime = view.findViewById(R.id.textView_dateTime);
                 this.text = view.findViewById(R.id.textView_text);
                 this.deleteComment = view.findViewById(R.id.imageButton_deleteComment);
+                this.userProfile = view.findViewById(R.id.circleImage_profilePicture);
             }
         }
     }
@@ -178,6 +183,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             holder.dateTime.setText(comment.getDateTime());
             holder.op.setText(comment.getOp());
             holder.text.setText(comment.getText());
+//            holder.userProfile.setImageURI();
 
             // Show the delete button on a comment if this is the user who posted it
             if (comment.getOp().equals(currentUser.getUid())) {
@@ -193,6 +199,7 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
                         holder.op.setText(user.getName());
+//                        holder.userProfile.setImageURI(user.get);
                     } else {
                         holder.op.setText(context.getResources().getString(R.string.error));
                     }
@@ -220,16 +227,10 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
 
     // Go back to the gallery
     private void goBack(int result, String artifactToDelete) {
-        System.out.println("going back");
-        System.out.println("result to return " + result);
-        System.out.println("artifactToDelete " + artifactToDelete);
         Intent intent = new Intent(activity, HomeActivity.class);
         intent.putExtra("Delete", artifactToDelete);
         activity.setResult(result, intent);
         ((Activity)context).finish();
-//        activity.finish();
-//        activity.finishAndRemoveTask();
-//        activity.finish();
     }
 
     // Show a confirmation dialog box before deleting a comment
@@ -246,14 +247,11 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
 
     // Show a confirmation dialog box before deleting a comment
     private void deleteArtifactConfirmation() {
-        System.out.println(artifact.getID());
         new AlertDialog.Builder(context)
                 .setTitle(R.string.delete_artifact)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-//                        dbRef.child("artifacts").child(artifactID).removeValue();
-                        System.out.println("clicked yes");
                         goBack(Activity.RESULT_OK, artifactID);
                     }
                 })

@@ -63,24 +63,17 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-//        ImageView image;
-//        Button galleryButton;
         ImageButton galleryButton;
 
         public ViewHolder(View view) {
             super(view);
-//            image = view.findViewById(R.id.imageView);
             galleryButton = view.findViewById(R.id.galleryButton);
         }
     }
 
     public void goToArtifact(String id) {
         Intent intent = new Intent(context, ArtifactActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("ARTIFACT_ID", id);
         activity.startActivityForResult(intent, REQUEST_DELETE);
-//        context.startActivity(intent);
-
     }
 }

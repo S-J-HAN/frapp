@@ -172,12 +172,8 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        System.out.println("request " + requestCode);
-        System.out.println("result " + resultCode);
-        System.out.println("data " + data);
         if (requestCode == GalleryAdapter.REQUEST_DELETE && resultCode == RESULT_OK) {
             String artifactID = data.getExtras().getString("Delete");
-            System.out.println("artifactID " + artifactID);
             if (artifactID != null) {
                 ref.child("artifacts").child(artifactID).removeValue();
             }
