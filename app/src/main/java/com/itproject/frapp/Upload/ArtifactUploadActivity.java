@@ -81,15 +81,6 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
 
         artifactImage = findViewById(R.id.artifactImageView);
 
-        //--------------------------------- gallery buttone --------------------------------------
-        uploadFromGalleryButton  = findViewById(R.id.uploadFromGalleryButton);
-        uploadFromGalleryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                selectPhotoFromGallery(v);
-            }
-        });
-
         //---------------------------------- camera button --------------------------------------
         uploadFromCameraButton = findViewById(R.id.uploadFromCameraButton);
         uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
