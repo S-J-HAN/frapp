@@ -49,6 +49,7 @@ import java.util.UUID;
 
 public class ArtifactUploadActivity extends AppCompatActivity implements Serializable {
 
+    public static Activity uploadActivity;
     private Artifact artifact = new Artifact();
     private ImageButton nextButton;
     private LinearLayout uploadFromGalleryButton;
@@ -61,7 +62,6 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
 
     private FirebaseAuth mAuth;
 
-
     private static final int CAMERA_REQUEST  = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     public final static int SELECT_PHOTO_CODE = 1046;
@@ -70,6 +70,7 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_upload);
+        uploadActivity = this;
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();

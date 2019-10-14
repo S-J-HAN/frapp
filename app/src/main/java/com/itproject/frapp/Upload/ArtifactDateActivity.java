@@ -2,6 +2,7 @@ package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,6 +31,7 @@ import java.util.Calendar;
 
 public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    public static Activity dateActivity;
     private Artifact artifact;
 
     private final int MIN_YEAR = 1900;
@@ -52,6 +54,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_date);
+        dateActivity = this;
+
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
 //        Glide.with(this)
