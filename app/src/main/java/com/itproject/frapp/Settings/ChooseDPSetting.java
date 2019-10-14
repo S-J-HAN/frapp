@@ -112,7 +112,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 
         // initial setup from camera upload option
-        LinearLayout photoButton = this.findViewById(R.id.takePhotoButton);
+        LinearLayout photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
