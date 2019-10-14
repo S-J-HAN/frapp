@@ -199,7 +199,9 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
                     User user = dataSnapshot.getValue(User.class);
                     if (user != null) {
                         holder.op.setText(user.getName());
-//                        holder.userProfile.setImageURI(user.get);
+                        if (user.getUrl() != null) {
+                            Glide.with(context).load(user.getUrl()).into(holder.userProfile);
+                        }
                     } else {
                         holder.op.setText(context.getResources().getString(R.string.error));
                     }
