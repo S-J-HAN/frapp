@@ -34,5 +34,6 @@
     <string name="post">邮寄</string>
     <string name="search">搜索</string>
     <string name="logout">登出</string>
+    <string name="change_language">改变语言</string>
 
 </resources>
