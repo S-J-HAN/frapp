@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,7 +36,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
-import com.itproject.frapp.Upload.ArtifactDateActivity;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -137,6 +137,8 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
 
     // Upload image to Firebase storage and retrieve its URI
     public void uploadImage (final StorageReference imageRef) {
+        Toast.makeText(this, "Saving image ... this may take a few moments",
+                Toast.LENGTH_LONG).show();
         new Thread (new Runnable () {
             @Override
             public void run() {
