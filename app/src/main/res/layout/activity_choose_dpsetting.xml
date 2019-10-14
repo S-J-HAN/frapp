@@ -39,11 +39,12 @@
         android:id="@+id/saveButton"
         android:layout_width="50dp"
         android:layout_height="50dip"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/tick"
         android:onClick="saveProfilePicture"
-        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton"
-        tools:layout_editor_absoluteX="180dp" />
+        app:layout_constraintEnd_toEndOf="@+id/uploadFromCameraButton"
+        app:layout_constraintStart_toStartOf="@+id/uploadFromCameraButton"
+        app:layout_constraintTop_toBottomOf="@+id/uploadFromCameraButton" />
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -66,10 +67,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="8dp"
         android:background="#00FFFFFF"
-        android:onClick="selectPhotoFromGallery"
         android:clickable="true"
+        android:onClick="selectPhotoFromGallery"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,15 +94,17 @@
             android:textAppearance="@style/AppTheme.Comment" />
     </LinearLayout>
 
+
     <LinearLayout
-        android:id="@+id/takePhotoButton"
-        android:layout_width="60dp"
-        android:layout_height="50dip"
+        android:id="@+id/uploadFromCameraButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/camera"
-        android:text="@string/open_camera"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadFromGalleryButton">
@@ -126,24 +128,5 @@
             android:textAppearance="@style/AppTheme.Comment" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/uploadFromGalleryText"
-        style="@style/AppTheme.Body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/upload_from_gallery"
-        app:layout_constraintEnd_toEndOf="@+id/uploadFromGalleryButton"
-        app:layout_constraintStart_toStartOf="@+id/uploadFromGalleryButton"
-        app:layout_constraintTop_toBottomOf="@+id/uploadFromGalleryButton" />
-
-    <TextView
-        android:id="@+id/uploadFromCameraText"
-        style="@style/AppTheme.Body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/open_camera"
-        app:layout_constraintEnd_toEndOf="@+id/takePhotoButton"
-        app:layout_constraintStart_toStartOf="@+id/takePhotoButton"
-        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

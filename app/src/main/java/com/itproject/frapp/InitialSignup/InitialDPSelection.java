@@ -71,7 +71,7 @@ public class InitialDPSelection extends AppCompatActivity {
         this.profileImage = (ImageView) findViewById(R.id.profileImageView);
 
         // initial setup from camera upload option
-        Button photoButton = (Button) this.findViewById(R.id.takePhotoButton);
+        Button photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
