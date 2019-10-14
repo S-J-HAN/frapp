@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -111,7 +112,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 
         // initial setup from camera upload option
-        ImageButton photoButton = (ImageButton) this.findViewById(R.id.takePhotoButton);
+        LinearLayout photoButton = this.findViewById(R.id.takePhotoButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
