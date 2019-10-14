@@ -16,8 +16,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:gravity="center"
+        style="@style/AppTheme.Header"
         android:text="@string/select_preferred_language"
-        android:textSize="36sp"
+        android:textSize="30sp"
+        android:textStyle="bold"
         app:autoSizeTextType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,18 +37,57 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Spinner
-        android:id="@+id/languageSpinner"
-        android:layout_width="267dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="96dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <TextView
+        android:id="@+id/selectEnglish"
+        style="@style/AppTheme.Body"
+        android:layout_width="143dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="English"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/selectPreferredLanguage"
+        app:layout_constraintStart_toStartOf="@+id/selectPreferredLanguage"
         app:layout_constraintTop_toBottomOf="@+id/selectPreferredLanguage" />
+
+    <TextView
+        android:id="@+id/selectChinese"
+        style="@style/AppTheme.Body"
+        android:layout_width="143dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center"
+        android:text="汉语"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/selectPreferredLanguage"
+        app:layout_constraintStart_toStartOf="@+id/selectPreferredLanguage"
+        app:layout_constraintTop_toBottomOf="@+id/selectEnglish" />
+
+    <ImageView
+        android:id="@+id/englishSelected"
+        android:layout_marginStart="8dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/selectEnglish"
+        app:layout_constraintStart_toEndOf="@+id/selectEnglish"
+        app:layout_constraintTop_toTopOf="@+id/selectEnglish"
+        android:layout_width="40dp"
+        android:layout_height="30dip"
+        android:background="@drawable/back_home" />
+
+
+    <ImageView
+        android:id="@+id/chineseSelected"
+        android:layout_width="40dp"
+        android:layout_height="30dip"
+        android:background="@drawable/back_home"
+        android:layout_marginStart="8dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/selectChinese"
+        app:layout_constraintStart_toEndOf="@+id/selectChinese"
+        app:layout_constraintTop_toTopOf="@+id/selectChinese"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
