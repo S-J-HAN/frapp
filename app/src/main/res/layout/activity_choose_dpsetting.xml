@@ -42,8 +42,9 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/tick"
         android:onClick="saveProfilePicture"
-        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton"
-        tools:layout_editor_absoluteX="180dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/takePhotoButton" />
 
     <ImageView
         android:id="@+id/profileImageView"

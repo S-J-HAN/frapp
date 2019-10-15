@@ -28,6 +28,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -76,7 +77,8 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         days.add(0, "DD");
         this.months = createList(1, NUM_MONTHS);
         months.add(0,"MM");
-        this.years = createList(MIN_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        this.years = (createList(MIN_YEAR, Calendar.getInstance().get(Calendar.YEAR)));
+        Collections.reverse(this.years);
         years.add(0, "YYYY");
 
         // days spinner
