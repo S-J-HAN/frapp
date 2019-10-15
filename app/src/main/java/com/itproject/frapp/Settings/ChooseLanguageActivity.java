@@ -95,8 +95,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         // set locale to required language
         SetLanguage.setLocale(this, language);
 
-        // add to data base
-        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
 //        finish();
 //        startActivity(getIntent());
