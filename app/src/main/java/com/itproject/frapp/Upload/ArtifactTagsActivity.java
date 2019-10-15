@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -30,11 +32,21 @@ public class ArtifactTagsActivity extends AppCompatActivity {
     private Artifact artifact;
     private ImageButton nextButton;
     private String tags;
+    private ImageView artifactImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_tags);
+        artifactImage = findViewById(R.id.artifactImageView);
+
+        // Get artifact from ArtifactUploadActivity
+        artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
+        System.out.println(artifact.getUrl());
+        Glide.with(this)
+                .load(artifact.getUrl())
+                .fitCenter()
+                .into(artifactImage);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
