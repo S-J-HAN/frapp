@@ -139,7 +139,8 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // handles if uploading photo from camera
-        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK &&
+                data != null && data.getData() != null) {
             this.filepath = data.getData();
             imageBitmap = (Bitmap) data.getExtras().get("data");
             artifactImage.setImageBitmap(imageBitmap);
