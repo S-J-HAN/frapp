@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ import com.itproject.frapp.Settings.SettingsActivity;
 
 /* allows the user to select a language (either english or chinese)
  */
-public class ChooseLanguageActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class ChooseLanguageActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
@@ -42,39 +43,12 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_language);
-
-        // create language spinner
-        Spinner spinner = (Spinner) findViewById(R.id.languageSpinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, languages) {
-            @Override
-            public boolean isEnabled(int pos) {
-                if (pos == 0) {
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-            @Override
-            public View getDropDownView(int pos, View convertView, ViewGroup parent) {
-                View view = super.getDropDownView(pos, convertView, parent);
-                TextView textview = (TextView) view;
-                if (pos == 0) {
-                    textview.setTextColor(Color.GRAY);
-                } else {
-                    textview.setTextColor(Color.BLACK);
-                }
-                return view;
-            }
-        };
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
-        spinner.setSelection(0);
     }
 
 
-    /* sets the language of the app upon user selection
+    /* sets the language of the app to chinese upon user selection
      */
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+    public void setLanguageToEnglish(View view) {
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
         final FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -82,17 +56,16 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
         // Connect to database
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        String languageSelected = (String) parent.getItemAtPosition(position);
         String language = "en";
 
+        // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.VISIBLE);
 
-        if (languageSelected.equals("English")) {
-            language = "en";
-        }
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.INVISIBLE);
 
-        if (languageSelected.equals("汉语")){
-            language = "zh";
-        }
+
 
         // set locale to required language
         SetLanguage.setLocale(this, language);
@@ -102,11 +75,33 @@ public class ChooseLanguageActivity extends AppCompatActivity implements Adapter
     }
 
 
-    /* do nothing if no information selected from spinner
+    /* sets the language of the app to english upon user selection
      */
-    public void onNothingSelected(AdapterView<?> parent) {
+    public void setLanguageToChinese(View view) {
+        // Authenticate current user
+        mAuth = FirebaseAuth.getInstance();
+        final FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        // Connect to database
+        dbRef = FirebaseDatabase.getInstance().getReference();
+
+        String language = "zh";
+
+        // change tick position
+        ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+        englishTick.setVisibility(View.INVISIBLE);
+
+        ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+        chineseTick.setVisibility(View.VISIBLE);
+
+
+        // set locale to required language
+        SetLanguage.setLocale(this, language);
+
+        // add to data base
+        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
     }
+
 
 
     /* move app to SettingsActivity

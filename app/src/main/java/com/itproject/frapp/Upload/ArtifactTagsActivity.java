@@ -65,7 +65,7 @@ public class ArtifactTagsActivity extends AppCompatActivity {
     }
 
     public void finishUpload() {
-        artifact.setOp("fakeuser");
+        artifact.setOp(currentUser.getUid());
         dbRef.child("artifacts").push().setValue(artifact);
         ArtifactUploadActivity.uploadActivity.finish();
         ArtifactDateActivity.dateActivity.finish();

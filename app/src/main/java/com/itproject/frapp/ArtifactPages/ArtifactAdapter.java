@@ -169,8 +169,10 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             });
 
             // Show the delete button on an artifact if this is the user who uploaded it
-//            if (artifact.getOp().equals(currentUser.getUid())) {
-            if (true) {
+            System.out.println(artifact.getOp());
+            System.out.println(currentUser.getUid());
+            if (artifact.getOp().equals(currentUser.getUid())) {
+//            if (true) {
                 holder.deleteArtifact.setVisibility(View.VISIBLE);
                 holder.deleteArtifact.setOnClickListener(view -> {
 //                    listener.onDelete(artifactID);
@@ -183,7 +185,6 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             holder.dateTime.setText(comment.getDateTime());
             holder.op.setText(comment.getOp());
             holder.text.setText(comment.getText());
-//            holder.userProfile.setImageURI();
 
             // Show the delete button on a comment if this is the user who posted it
             if (comment.getOp().equals(currentUser.getUid())) {
