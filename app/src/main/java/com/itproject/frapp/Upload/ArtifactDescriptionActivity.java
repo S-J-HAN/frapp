@@ -9,7 +9,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
 
@@ -19,12 +21,22 @@ public class ArtifactDescriptionActivity extends AppCompatActivity {
     private Artifact artifact;
     private ImageButton nextButton;
     private String description;
+    private ImageView artifactImage;
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_description);
         descActivity = this;
+        artifactImage = findViewById(R.id.artifactImageView);
+
+        // Get artifact from ArtifactUploadActivity
+        artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
+        System.out.println(artifact.getUrl());
+        Glide.with(this)
+                .load(artifact.getUrl())
+                .fitCenter()
+                .into(artifactImage);
 
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");

@@ -56,21 +56,15 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_date);
         dateActivity = this;
+        artifactImage = findViewById(R.id.artifactImageView);
 
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
-//        Glide.with(this)
-//            .load(artifact.getUrl())
-//            .fitCenter()
-//            .into(artifactImage);
-//        try {
-//            URL url = new URL(artifact.getUrl());
-//            imageBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//        } catch(IOException e) {
-//            System.out.println(e);
-//        }
- //       artifactImage.setImageBitmap(imageBitmap);
-        artifactImage = findViewById(R.id.artifactImageView);
+        System.out.println(artifact.getUrl());
+        Glide.with(this)
+            .load(artifact.getUrl())
+            .fitCenter()
+            .into(artifactImage);
 
         // create lists for spinners and add initial display value
         this.days = createList(1, NUM_DAYS);
