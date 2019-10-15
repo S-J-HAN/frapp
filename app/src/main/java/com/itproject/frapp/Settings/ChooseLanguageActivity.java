@@ -5,7 +5,9 @@
 package com.itproject.frapp.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.ConfigurationCompat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -29,6 +31,8 @@ import com.itproject.frapp.R;
 import com.itproject.frapp.SetLanguage;
 import com.itproject.frapp.Settings.SettingsActivity;
 
+import java.util.Locale;
+
 
 /* allows the user to select a language (either english or chinese)
  */
@@ -37,12 +41,34 @@ public class ChooseLanguageActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
 
-    private final String[] languages = {"Select language: ", "English", "汉语"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_language);
+
+        // check what current locale is
+        Locale current = ConfigurationCompat.getLocales(getResources().getConfiguration()).get(0);
+        String language = current.getDisplayLanguage();
+
+        System.out.println(language);
+
+        if (language.equals("English")) {
+            // change tick position
+            ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+            englishTick.setVisibility(View.VISIBLE);
+
+            ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+            chineseTick.setVisibility(View.INVISIBLE);
+        } else {
+            // change tick position
+            ImageView englishTick =(ImageView)findViewById(R.id.englishSelected);
+            englishTick.setVisibility(View.INVISIBLE);
+
+            ImageView chineseTick =(ImageView)findViewById(R.id.chineseSelected);
+            chineseTick.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
 
@@ -66,12 +92,15 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         chineseTick.setVisibility(View.INVISIBLE);
 
 
-
         // set locale to required language
         SetLanguage.setLocale(this, language);
 
         // add to data base
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
+
+//        finish();
+//        startActivity(getIntent());
+
     }
 
 
@@ -100,11 +129,14 @@ public class ChooseLanguageActivity extends AppCompatActivity {
 
         // add to data base
         dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
+
+//        finish();
+//        startActivity(getIntent());
     }
 
 
 
-    /* move app to SettingsActivity
+    /* go to SettingsActivity
      */
     public void openSettingsActivity(View view) {
         Intent intent = new Intent(this, SettingsActivity.class);
