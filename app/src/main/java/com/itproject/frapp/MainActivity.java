@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.itproject.frapp.ComputerVision.FacialRecognition;
+import com.itproject.frapp.ComputerVision.ImageTagger;
 import com.itproject.frapp.InitialSignup.InitialLanguageSelection;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.Schema.User;
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        FacialRecognition.tagImageWithFaces(getApplicationContext(), "http://www.swinburne.edu.au/media/swinburneeduau/media-centre/news/media-centre/group-2-600x309.jpg", "leon");
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();

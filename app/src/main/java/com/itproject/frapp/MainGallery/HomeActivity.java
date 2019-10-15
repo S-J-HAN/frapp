@@ -164,7 +164,8 @@ public class HomeActivity extends AppCompatActivity {
                 if (a.getDescription().toLowerCase().contains(term.toLowerCase()) ||
                     a.getTags().toLowerCase().contains(term.toLowerCase()) ||
                     a.getDate().toLowerCase().contains(term.toLowerCase()) ||
-                    a.getPeople().toLowerCase().contains(term.toLowerCase())) {
+                    a.getPeople().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getSemanticTags().toLowerCase().contains(term.toLowerCase())) {
                     relevant.add(a);
                 }
             }
