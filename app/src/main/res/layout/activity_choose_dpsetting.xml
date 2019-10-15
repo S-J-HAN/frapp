@@ -6,6 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".Settings.ChooseDPSetting">
 
+    <LinearLayout
+        android:id="@+id/linearLayout_back"
+        android:layout_width="120dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:onClick="openSettingsActivity"
+        android:orientation="horizontal"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView_back"
+            android:layout_width="59dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/back_home" />
+
+        <TextView
+            android:id="@+id/textView_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/back"
+            android:textAppearance="@style/AppTheme.Body" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/uploadDP"
         style="@style/AppTheme.Header"
@@ -20,18 +53,6 @@
         android:textSize="36sp"
         app:autoSizeTextType="none"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="100dp"
-        android:layout_height="40dip"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/back"
-        android:onClick="openSettingsActivity"
-        android:text="@string/next"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
