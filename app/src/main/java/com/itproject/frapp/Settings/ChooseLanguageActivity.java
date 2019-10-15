@@ -75,12 +75,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
     /* sets the language of the app to chinese upon user selection
      */
     public void setLanguageToEnglish(View view) {
-        // Authenticate current user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        // Connect to database
-        dbRef = FirebaseDatabase.getInstance().getReference();
 
         String language = "en";
 
@@ -95,11 +89,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         // set locale to required language
         SetLanguage.setLocale(this, language);
 
-        // add to data base
-//        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
-
-//        finish();
-//        startActivity(getIntent());
 
     }
 
@@ -107,12 +96,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
     /* sets the language of the app to english upon user selection
      */
     public void setLanguageToChinese(View view) {
-        // Authenticate current user
-        mAuth = FirebaseAuth.getInstance();
-        final FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        // Connect to database
-        dbRef = FirebaseDatabase.getInstance().getReference();
 
         String language = "zh";
 
@@ -127,11 +110,6 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         // set locale to required language
         SetLanguage.setLocale(this, language);
 
-        // add to data base
-//        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
-
-//        finish();
-//        startActivity(getIntent());
     }
 
 
