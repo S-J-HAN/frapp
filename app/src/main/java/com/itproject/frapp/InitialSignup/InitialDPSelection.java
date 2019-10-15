@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
@@ -71,7 +72,7 @@ public class InitialDPSelection extends AppCompatActivity {
         this.profileImage = (ImageView) findViewById(R.id.profileImageView);
 
         // initial setup from camera upload option
-        Button photoButton = this.findViewById(R.id.uploadFromCameraButton);
+        LinearLayout photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
