@@ -29,6 +29,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -99,8 +100,10 @@ public class ChooseDPSetting extends AppCompatActivity {
                 // Get User object and do stuff with it inside onDataChange
                 User user = dataSnapshot.getValue(User.class);
 
-                new DownloadImageFromInternet(profileImage).execute(user.getUrl());
-
+                Glide.with(ChooseDPSetting.this)
+                        .load(user.getUrl())
+                        .fitCenter()
+                        .into(profileImage);
             }
 
             @Override

@@ -38,6 +38,7 @@ import com.google.firebase.storage.UploadTask;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
+import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
 
@@ -237,5 +238,11 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
         }
+    }
+
+    public void openHome(View view) {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
