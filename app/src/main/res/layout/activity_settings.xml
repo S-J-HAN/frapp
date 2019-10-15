@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/textView"
         style="@style/AppTheme.Header"
-        android:layout_width="424dp"
+        android:layout_width="412dp"
         android:layout_height="61dp"
         android:layout_marginTop="105dp"
         android:layout_marginEnd="8dp"
@@ -27,14 +27,14 @@
         android:id="@+id/editLanguageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:background="#00FFFFFF"
         android:clickable="true"
         android:onClick="openLanguageSetting"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
-        app:layout_constraintStart_toStartOf="@+id/profileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/changeDPButton">
 
         <ImageView
             android:id="@+id/imageEditLanguage"
@@ -53,7 +53,40 @@
             android:layout_margin="5dp"
             android:text="@string/change_language"
             android:textAppearance="@style/AppTheme.Comment"
-            app:layout_constraintTop_toBottomOf="@+id/logOutButton"
+            tools:layout_editor_absoluteX="167dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/changeDPButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="8dp"
+        android:background="#00FFFFFF"
+        android:onClick="openDPSetting"
+        android:clickable="true"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImageView">
+
+        <ImageView
+            android:id="@+id/imageView_changeDP"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/choose_dp" />
+        <TextView
+            android:id="@+id/textView_changeDP"
+            android:layout_width="wrap_content"
+            android:layout_height="31dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/change_profile_picture"
+            android:textAppearance="@style/AppTheme.Comment"
             tools:layout_editor_absoluteX="167dp" />
 
     </LinearLayout>
@@ -62,24 +95,25 @@
         android:id="@+id/logOutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="8dp"
         android:background="#00FFFFFF"
-        android:onClick="logoutOfApp"
         android:clickable="true"
+        android:onClick="logoutOfApp"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/editLanguageButton"
-        app:layout_constraintStart_toStartOf="@+id/editLanguageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editLanguageButton">
 
         <ImageView
             android:id="@+id/imageView_gallery"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
             android:layout_margin="5dp"
             android:scaleType="fitCenter"
             android:src="@drawable/logout" />
+
         <TextView
             android:id="@+id/textView_gallery"
             android:layout_width="wrap_content"
@@ -88,7 +122,6 @@
             android:layout_margin="5dp"
             android:text="@string/logout"
             android:textAppearance="@style/AppTheme.Comment"
-            app:layout_constraintTop_toBottomOf="@+id/logOutButton"
             tools:layout_editor_absoluteX="167dp" />
 
     </LinearLayout>
@@ -135,7 +168,6 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:onClick="openDPSetting"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"

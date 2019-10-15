@@ -172,10 +172,8 @@ public class ArtifactAdapter extends RecyclerView.Adapter<ArtifactAdapter.ViewHo
             System.out.println(artifact.getOp());
             System.out.println(currentUser.getUid());
             if (artifact.getOp().equals(currentUser.getUid())) {
-//            if (true) {
                 holder.deleteArtifact.setVisibility(View.VISIBLE);
                 holder.deleteArtifact.setOnClickListener(view -> {
-//                    listener.onDelete(artifactID);
                     deleteArtifactConfirmation();
                 });
             }
