@@ -19,6 +19,7 @@
         android:text="@string/upload_a_profile_picture"
         android:textSize="36sp"
         android:textStyle="bold"
+        style="@style/AppTheme.Header"
         app:autoSizeTextType="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,35 +46,76 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/frame"
+        android:background="@drawable/dp"
+        android:foreground="@drawable/dp_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uploadDP" />
 
-    <Button
+    <LinearLayout
         android:id="@+id/uploadFromGalleryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="30dp"
+        android:background="#00FFFFFF"
+        android:clickable="true"
         android:onClick="selectPhotoFromGallery"
-        android:text="@string/upload_from_gallery"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView">
 
-    <Button
-        android:id="@+id/takePhotoButton"
+        <ImageView
+            android:id="@+id/imageView_gallery"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/upload_gallery" />
+
+        <TextView
+            android:id="@+id/textView_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/upload_from_gallery"
+            android:textAppearance="@style/AppTheme.Comment" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/uploadFromCameraButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/open_camera"
+        android:background="#00FFFFFF"
+        android:clickable="true"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadFromGalleryButton" />
+        app:layout_constraintTop_toBottomOf="@+id/uploadFromGalleryButton">
+
+        <ImageView
+            android:id="@+id/imageView_camera"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/camera" />
+
+        <TextView
+            android:id="@+id/textView_camera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="5dp"
+            android:text="@string/open_camera"
+            android:textAppearance="@style/AppTheme.Comment" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

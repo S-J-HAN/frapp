@@ -2,6 +2,7 @@ package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
 import com.itproject.frapp.Settings.ChooseDPSetting;
@@ -29,6 +31,7 @@ import java.util.Calendar;
 
 public class ArtifactDateActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    public static Activity dateActivity;
     private Artifact artifact;
 
     private final int MIN_YEAR = 1900;
@@ -45,35 +48,27 @@ public class ArtifactDateActivity extends AppCompatActivity implements AdapterVi
 
     private ImageButton nextButton;
     private ImageView artifactImage;
-    private URL artifactURL;
+    private Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_date);
-        System.out.println("Hi I'm in the date activity");
+        dateActivity = this;
+
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
-//        if (artifact != null) {
-//            try {
-//                artifactURL = new URL(artifact.getUrl());
-//                System.out.println("ARTIFACT URL RETRIEVED!");
-//            } catch (MalformedURLException e) {
-//                e.printStackTrace();
-//            }
-//        } else {
-//            System.out.println("No URL found!");
-//        }
-//
-//        Bitmap bmp = null;
+//        Glide.with(this)
+//            .load(artifact.getUrl())
+//            .fitCenter()
+//            .into(artifactImage);
 //        try {
-//            bmp = BitmapFactory.decodeStream(artifactURL.openConnection().getInputStream());
-//            System.out.println("BITMAP STORED!");
-//        } catch (IOException e) {
-//            e.printStackTrace();
+//            URL url = new URL(artifact.getUrl());
+//            imageBitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//        } catch(IOException e) {
+//            System.out.println(e);
 //        }
-//        artifactImage.setImageBitmap(bmp);
-//        System.out.println("ARTIFACT IMAGE SET AS BITMAP!");
+ //       artifactImage.setImageBitmap(imageBitmap);
         artifactImage = findViewById(R.id.artifactImageView);
 
         // create lists for spinners and add initial display value

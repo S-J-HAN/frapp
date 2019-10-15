@@ -7,18 +7,23 @@ package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,7 +40,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
-import com.itproject.frapp.Upload.ArtifactDateActivity;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -45,24 +49,28 @@ import java.util.UUID;
 
 public class ArtifactUploadActivity extends AppCompatActivity implements Serializable {
 
+    public static Activity uploadActivity;
     private Artifact artifact = new Artifact();
     private ImageButton nextButton;
-    private Button uploadFromCameraButton;
+    private LinearLayout uploadFromGalleryButton;
+    private LinearLayout uploadFromCameraButton;
 
     private Uri filepath;
     private String imageUri = "";
     private ImageView artifactImage;
+    private Bitmap imageBitmap = null;
 
     private FirebaseAuth mAuth;
 
-
-    public final static int REQUEST_IMAGE_CAPTURE = 100;
+    private static final int CAMERA_REQUEST  = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
     public final static int SELECT_PHOTO_CODE = 1046;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_upload);
+        uploadActivity = this;
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -72,12 +80,24 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
         // Connect to database
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        uploadFromCameraButton = findViewById(R.id.uploadFromCameraButton);
         artifactImage = findViewById(R.id.artifactImageView);
 
-
-
-
+        //---------------------------------- camera button --------------------------------------
+        uploadFromCameraButton = findViewById(R.id.uploadFromCameraButton);
+        uploadFromCameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager
+                        .PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},
+                            MY_CAMERA_PERMISSION_CODE);
+                } else {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore
+                            .ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
 
         //----------------------------------- next button -----------------------------------------
         nextButton = findViewById(R.id.nextButton);
@@ -96,9 +116,6 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
 
             }
         });
-
-        //----------------------- upload from camera button -------------------------
-        uploadFromCameraButton = findViewById(R.id.uploadFromCameraButton);
     }
 
     //==================================== HELPER FUNCTIONS =======================================
@@ -120,23 +137,32 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // handles if uploading photo from camera
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            this.filepath = data.getData();
+            imageBitmap = (Bitmap) data.getExtras().get("data");
+            artifactImage.setImageBitmap(imageBitmap);
+        }
+
         // handles if photo selected from gallery
         if (requestCode == SELECT_PHOTO_CODE && resultCode == RESULT_OK &&
                 data != null && data.getData() != null) {
             filepath = data.getData();
-            Bitmap selectedPhoto = null;
+            
             try {
-                selectedPhoto = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),
                         filepath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            artifactImage.setImageBitmap(selectedPhoto);
+            artifactImage.setImageBitmap(imageBitmap);
         }
     }
 
     // Upload image to Firebase storage and retrieve its URI
     public void uploadImage (final StorageReference imageRef) {
+        Toast.makeText(this, "Saving image ... this may take a few moments",
+                Toast.LENGTH_LONG).show();
         new Thread (new Runnable () {
             @Override
             public void run() {
@@ -191,5 +217,25 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
                 }
             }
         }).start();
+    }
+
+    // Check whether app has permission to use camera
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+            else
+            {
+                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

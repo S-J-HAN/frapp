@@ -2,6 +2,7 @@ package com.itproject.frapp.Upload;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import com.itproject.frapp.Schema.Artifact;
 
 public class ArtifactDescriptionActivity extends AppCompatActivity {
 
+    public static Activity descActivity;
     private Artifact artifact;
     private ImageButton nextButton;
     private String description;
@@ -22,6 +24,7 @@ public class ArtifactDescriptionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artifact_description);
+        descActivity = this;
 
         // Get artifact from ArtifactUploadActivity
         artifact = (Artifact) getIntent().getSerializableExtra("Artifact");
