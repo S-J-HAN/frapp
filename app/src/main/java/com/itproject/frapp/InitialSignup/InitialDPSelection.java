@@ -31,17 +31,22 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.itproject.frapp.ComputerVision.FacialRecognition;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Settings.ChooseDPSetting;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -190,6 +195,19 @@ public class InitialDPSelection extends AppCompatActivity {
                                         dbRef.child("users").child(currentUser.getUid()).child("url").setValue(imageUri);
 
                                         Toast.makeText(InitialDPSelection.this, "Profile image saved", Toast.LENGTH_LONG).show();
+
+                                        // Add face as a reference photo for facial recognition
+                                        dbRef.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Map<String, String> data = (Map<String, String>) dataSnapshot.getValue();
+                                                FacialRecognition.addPersonReferenceFace(getApplicationContext(), data.get("azurePersonID"), imageUri);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
+                                        });
 
                                     } else {
                                         System.out.println("DERP URL retrieval failure");

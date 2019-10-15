@@ -43,6 +43,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.itproject.frapp.ComputerVision.FacialRecognition;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.User;
 import com.itproject.frapp.Settings.SettingsActivity;
@@ -53,6 +54,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 /* allows the user to change their DP
@@ -258,6 +260,19 @@ public class ChooseDPSetting extends AppCompatActivity {
                                         dbRef.child("users").child(currentUser.getUid()).child("url").setValue(imageUri);
 
                                         Toast.makeText(ChooseDPSetting.this, "Profile image saved", Toast.LENGTH_LONG).show();
+
+                                        // Add face as a reference photo for facial recognition
+                                        dbRef.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                Map<String, String> data = (Map<String, String>) dataSnapshot.getValue();
+                                                FacialRecognition.addPersonReferenceFace(getApplicationContext(), data.get("azurePersonID"), imageUri);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            }
+                                        });
 
                                     } else {
                                         System.out.println("DERP URL retrieval failure");

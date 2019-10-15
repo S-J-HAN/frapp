@@ -19,6 +19,7 @@ public class Artifact implements Serializable {
     private String tags;
     private String url;
     private String id;
+    private String people = "photo";
     private ArrayList<Comment> comments = new ArrayList<>();
 
     public Artifact() {
@@ -50,6 +51,7 @@ public class Artifact implements Serializable {
     public void setUrl(String url) {
         this.url = url;
     }
+    public void setPeople(String people) { this.people = people; }
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
         ArrayList<Comment> newComments = new ArrayList<>();
         for (String key : comments.keySet()) {
@@ -92,5 +94,6 @@ public class Artifact implements Serializable {
     public String getUrl() {
         return url;
     }
+    public String getPeople() { return people; }
 
 }
