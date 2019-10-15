@@ -6,12 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -55,7 +57,10 @@ public class SettingsActivity extends AppCompatActivity {
                 // Get User object and do stuff with it inside onDataChange
                 User user = dataSnapshot.getValue(User.class);
 
-                new DownloadImageFromInternet(dp).execute(user.getUrl());
+                Glide.with(SettingsActivity.this)
+                        .load(user.getUrl())
+                        .fitCenter()
+                        .into(dp);
 
             }
 

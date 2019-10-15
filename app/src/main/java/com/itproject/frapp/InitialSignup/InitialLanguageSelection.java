@@ -63,7 +63,6 @@ public class InitialLanguageSelection extends AppCompatActivity {
         chineseTick.setVisibility(View.INVISIBLE);
 
 
-
         // set locale to required language
         SetLanguage.setLocale(this, language);
 

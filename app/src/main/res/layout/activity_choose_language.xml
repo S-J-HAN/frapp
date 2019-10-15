@@ -96,20 +96,19 @@
         app:layout_constraintTop_toTopOf="@+id/selectEnglish"
         android:layout_width="40dp"
         android:layout_height="30dip"
-        android:background="@drawable/back_home" />
+        android:background="@drawable/tick2" />
 
 
     <ImageView
         android:id="@+id/chineseSelected"
         android:layout_width="40dp"
         android:layout_height="30dip"
-        android:background="@drawable/back_home"
+        android:background="@drawable/tick2"
         android:layout_marginStart="8dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/selectChinese"
         app:layout_constraintStart_toEndOf="@+id/selectChinese"
-        app:layout_constraintTop_toTopOf="@+id/selectChinese"
-        app:srcCompat="?attr/actionModeCloseDrawable" />
+        app:layout_constraintTop_toTopOf="@+id/selectChinese" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
