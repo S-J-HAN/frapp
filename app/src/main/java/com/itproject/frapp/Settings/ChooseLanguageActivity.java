@@ -96,7 +96,7 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         SetLanguage.setLocale(this, language);
 
         // add to data base
-        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
+//        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
 //        finish();
 //        startActivity(getIntent());
@@ -128,7 +128,7 @@ public class ChooseLanguageActivity extends AppCompatActivity {
         SetLanguage.setLocale(this, language);
 
         // add to data base
-        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
+//        dbRef.child("users").child(currentUser.getUid()).child("language").setValue(language);
 
 //        finish();
 //        startActivity(getIntent());
