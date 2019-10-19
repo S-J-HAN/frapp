@@ -19,6 +19,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.UUID;
+
+import com.itproject.frapp.ComputerVision.FacialRecognition;
+import com.itproject.frapp.ComputerVision.ImageTagger;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.R;
 import com.itproject.frapp.Schema.Artifact;
@@ -65,6 +68,13 @@ public class ArtifactTagsActivity extends AppCompatActivity {
                 EditText newTags = findViewById(R.id.descInput);
                 tags = newTags.getText().toString();
                 artifact.setTags(tags);
+
+                // Run facial recognition on this photo
+                FacialRecognition.tagImageWithFaces(getApplicationContext(), artifact.getUrl(), artifact.getID());
+
+                // Run semantic tagging on this photo
+                ImageTagger.tagImage(getApplicationContext(), artifact.getUrl(), artifact.getID());
+
                 //Open settings page
                 finishUpload();
             }
