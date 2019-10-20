@@ -85,7 +85,7 @@ public class ChooseDPSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_dpsetting);
 
-        profileImage = (ImageView) findViewById(R.id.profileImageView);
+        profileImage = findViewById(R.id.profileImageView);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -123,6 +123,8 @@ public class ChooseDPSetting extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    //filepath = CameraUtils.getOutputMediaFileUri(this);
+                    //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
             }
@@ -130,33 +132,6 @@ public class ChooseDPSetting extends AppCompatActivity {
 
     }
 
-
-    // https://www.viralandroid.com/2015/11/load-image-from-url-internet-in-android.html
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-
-            } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
-            }
-            return bimage;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 
 
     /* checks whether app has permission to use the camera
@@ -214,6 +189,7 @@ public class ChooseDPSetting extends AppCompatActivity {
         new Thread (new Runnable () {
             @Override
             public void run() {
+                System.out.println(filepath);
                 if(filepath != null) {
                     // Get data from ImageView as bytes
                     profileImage.setDrawingCacheEnabled(true);

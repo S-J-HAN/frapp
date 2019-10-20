@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser == null) {
             // First time anyone has logged in on this device
-
+            System.out.println("test");
             Button goButton = findViewById(R.id.goButton);
             final TextView nameInput = findViewById(R.id.nameInput);
 
