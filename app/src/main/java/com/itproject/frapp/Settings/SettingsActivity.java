@@ -57,7 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
                 // Get User object and do stuff with it inside onDataChange
                 User user = dataSnapshot.getValue(User.class);
 
-                Glide.with(SettingsActivity.this)
+                Glide.with(getApplicationContext())
                         .load(user.getUrl())
                         .fitCenter()
                         .into(dp);
@@ -107,6 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
 
         openMainActivity();
+
     }
 
     public void openLanguageSetting(View view) {

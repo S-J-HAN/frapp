@@ -124,6 +124,7 @@ public class HomeActivity extends AppCompatActivity {
                 for (DataSnapshot arti : dataSnapshot.getChildren()) {
                     Artifact a = arti.getValue(Artifact.class);
                     a.setID(arti.getKey());
+                    System.out.println(arti.getValue().toString());
                     allArtifacts.add(a);
                 }
                 currentArtifacts = allArtifacts;
@@ -161,7 +162,9 @@ public class HomeActivity extends AppCompatActivity {
             for (String term : terms) {
                 if (a.getDescription().toLowerCase().contains(term.toLowerCase()) ||
                     a.getTags().toLowerCase().contains(term.toLowerCase()) ||
-                    a.getDate().toLowerCase().contains(term.toLowerCase())) {
+                    a.getDate().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getPeople().toLowerCase().contains(term.toLowerCase()) ||
+                    a.getSemanticTags().toLowerCase().contains(term.toLowerCase())) {
                     relevant.add(a);
                 }
             }

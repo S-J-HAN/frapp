@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.widget.TextView;
 
 
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,9 +22,28 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.itproject.frapp.ComputerVision.FacialRecognition;
+import com.itproject.frapp.ComputerVision.ImageTagger;
 import com.itproject.frapp.InitialSignup.InitialLanguageSelection;
 import com.itproject.frapp.MainGallery.HomeActivity;
 import com.itproject.frapp.Schema.User;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.RequestQueue;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (currentUser == null) {
             // First time anyone has logged in on this device
-
+            System.out.println("test");
             Button goButton = findViewById(R.id.goButton);
             final TextView nameInput = findViewById(R.id.nameInput);
 
@@ -97,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
                                                     dbRef.child("users").child(user.getUid()).child("email").setValue(nameInput.getText().toString()+"@frapp.com");
                                                     dbRef.child("users").child(user.getUid()).child("name").setValue(nameInput.getText().toString());
                                                     dbRef.child("users").child(user.getUid()).child("location").setValue("Somewhere, Earth");
+
+                                                    // Add user to facial recognition instances
+                                                    FacialRecognition.addPersonToPersonGroup(getApplicationContext(), user.getUid());
 
                                                     // Move on to the settings pages
                                                     openLanguageSettings();
