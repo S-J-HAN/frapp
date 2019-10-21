@@ -161,6 +161,7 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             Bitmap imageBitmap = loadImageFromFile();
             artifactImage.setImageBitmap(imageBitmap);
+            artifactImage.setBackgroundResource(android.R.color.transparent);
         }
 
 
@@ -176,6 +177,7 @@ public class ArtifactUploadActivity extends AppCompatActivity implements Seriali
                 e.printStackTrace();
             }
             artifactImage.setImageBitmap(imageBitmap);
+            artifactImage.setBackgroundResource(android.R.color.transparent);
         }
     }
 
