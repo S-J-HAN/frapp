@@ -21,6 +21,7 @@ public class Artifact implements Serializable {
     private String id;
     private String people = "photo";
     private String semanticTags = "photo";
+    private String location;
     private ArrayList<Comment> comments = new ArrayList<>();
 
     public Artifact() {
@@ -53,6 +54,7 @@ public class Artifact implements Serializable {
         this.url = url;
     }
     public void setPeople(String people) { this.people = people; }
+    public void setLocation(String location) {  this.location = location; }
     public void setSemanticTags(String semanticTags) { this.semanticTags = semanticTags; }
     public void setComments(HashMap<String, HashMap<String, String>> comments) {
         ArrayList<Comment> newComments = new ArrayList<>();
@@ -96,6 +98,7 @@ public class Artifact implements Serializable {
     public String getUrl() {
         return url;
     }
+    public String getLocation() { return this.location; }
     public String getPeople() { return people; }
     public String getSemanticTags() { return semanticTags; }
 

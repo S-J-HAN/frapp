@@ -69,11 +69,8 @@ public class ArtifactTagsActivity extends AppCompatActivity {
                 tags = newTags.getText().toString();
                 artifact.setTags(tags);
 
-                // Run facial recognition on this photo
-                FacialRecognition.tagImageWithFaces(getApplicationContext(), artifact.getUrl(), artifact.getID());
 
-                // Run semantic tagging on this photo
-                ImageTagger.tagImage(getApplicationContext(), artifact.getUrl(), artifact.getID());
+
 
                 //Open settings page
                 finishUpload();
@@ -88,7 +85,18 @@ public class ArtifactTagsActivity extends AppCompatActivity {
 
     public void finishUpload() {
         artifact.setOp(currentUser.getUid());
-        dbRef.child("artifacts").push().setValue(artifact);
+
+        String key = dbRef.child("artifacts").push().getKey();
+        dbRef.child("artifacts").child(key).setValue(artifact);
+
+        artifact.setID(key);
+
+        // Run facial recognition on this photo
+        FacialRecognition.tagImageWithFaces(getApplicationContext(), artifact.getUrl(), artifact.getID());
+
+        // Run semantic tagging on this photo
+        ImageTagger.tagImage(getApplicationContext(), artifact.getUrl(), artifact.getID());
+
         ArtifactUploadActivity.uploadActivity.finish();
         ArtifactDateActivity.dateActivity.finish();
         ArtifactDescriptionActivity.descActivity.finish();
