@@ -221,7 +221,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                     profileImage.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
                     byte[] data = baos.toByteArray();
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
@@ -321,14 +321,6 @@ public class ChooseDPSetting extends AppCompatActivity {
     /* move the app to SettingsActivity
      */
     public void openSettingsActivity(View view) {
-        Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    /* move the app to SettingsActivity
-     */
-    public void goToSettingsActivity() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
         finish();

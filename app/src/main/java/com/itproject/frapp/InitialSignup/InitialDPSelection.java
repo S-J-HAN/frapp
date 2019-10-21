@@ -8,12 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,7 +48,10 @@ import com.itproject.frapp.R;
 import com.itproject.frapp.Settings.ChooseDPSetting;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -59,11 +64,15 @@ public class InitialDPSelection extends AppCompatActivity {
     private static final int CAMERA_REQUEST  = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
+    private Uri filepath;
+    private String imageUri = "";
+    private String currentPhotoPath;
+    private String imageFileName = "";
+    private File cameraImageFile = null;
+
     public final static int SELECT_PHOTO_CODE = 1046;
     private ImageView profileImage;
     private Bitmap bitmapImage;
-    private Uri filepath;
-    private String imageUri = "";
     private Button uploadFromCameraButton;
 
     private FirebaseAuth mAuth;
@@ -77,6 +86,7 @@ public class InitialDPSelection extends AppCompatActivity {
         this.profileImage = (ImageView) findViewById(R.id.profileImageView);
 
         // initial setup from camera upload option
+        //https://developer.android.com/training/camera/photobasics
         LinearLayout photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +95,19 @@ public class InitialDPSelection extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                        try {
+                            cameraImageFile = createImageFile();
+                        } catch (IOException ex) {
+                            System.out.println("Error occurred while creating the File");
+                        }
+                        // continue if file was successfully created
+                        if (cameraImageFile != null) {
+                            filepath = FileProvider.getUriForFile(getApplicationContext(),"com.itproject.frapp.fileprovider", cameraImageFile);
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
+                            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                        }
+                    }
                 }
             }
         });
@@ -120,11 +142,10 @@ public class InitialDPSelection extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        // handles if uploading photo from camera
+//        // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            this.filepath = data.getData();
-            this.bitmapImage = (Bitmap) data.getExtras().get("data");
-            profileImage.setImageBitmap(cropImage(bitmapImage));
+            loadImageFromFile();
+            saveProfilePicture();
         }
 
         // handles if photo selected from gallery
@@ -137,9 +158,21 @@ public class InitialDPSelection extends AppCompatActivity {
                 e.printStackTrace();
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
+            saveProfilePicture();
         }
 
     }
+
+
+    private void loadImageFromFile() {
+        if (this.cameraImageFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(this.cameraImageFile.getAbsolutePath());
+            profileImage.setImageBitmap(cropImage(myBitmap));
+        } else {
+            System.out.println("Error: File does not exist");
+        }
+    }
+
 
 
     // Upload image to Firebase storage and retrieve its URI
@@ -154,7 +187,7 @@ public class InitialDPSelection extends AppCompatActivity {
                     profileImage.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 20, baos);
                     byte[] data = baos.toByteArray();
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
@@ -254,10 +287,26 @@ public class InitialDPSelection extends AppCompatActivity {
     }
 
 
+    // https://developer.android.com/training/camera/photobasics
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        this.imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
 
-    /* upload image to Firebase and move the app to HomeActivity
-     */
-    public void openHomePage(View view) {
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+    private void saveProfilePicture() {
+
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create storage reference from the app
         StorageReference storageRef = storage.getReference();
@@ -266,7 +315,12 @@ public class InitialDPSelection extends AppCompatActivity {
                 toString());
         // Upload image to database
         uploadImage(imageRef);
+    }
 
+
+    /* Move the app to HomeActivity
+     */
+    public void openHomePage(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
