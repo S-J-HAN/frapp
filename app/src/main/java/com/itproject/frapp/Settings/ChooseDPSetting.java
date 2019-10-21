@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -72,6 +73,8 @@ public class ChooseDPSetting extends AppCompatActivity {
     private Uri filepath;
     private String imageUri = "";
     private String currentPhotoPath;
+    private String imageFileName = "";
+    private File cameraImageFile = null;
 
     private ImageView profileImage;
     private Bitmap bitmapImage;
@@ -87,7 +90,7 @@ public class ChooseDPSetting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_dpsetting);
 
-        profileImage = (ImageView) findViewById(R.id.profileImageView);
+        profileImage = findViewById(R.id.profileImageView);
 
         // Authenticate current user
         mAuth = FirebaseAuth.getInstance();
@@ -102,7 +105,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                 // Get User object and do stuff with it inside onDataChange
                 User user = dataSnapshot.getValue(User.class);
 
-                Glide.with(ChooseDPSetting.this)
+                Glide.with(getApplicationContext())
                         .load(user.getUrl())
                         .fitCenter()
                         .into(profileImage);
@@ -117,6 +120,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 
         // initial setup from camera upload option
+        //https://developer.android.com/training/camera/photobasics
         LinearLayout photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,40 +129,24 @@ public class ChooseDPSetting extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                     try {
+                         cameraImageFile = createImageFile();
+                     } catch (IOException ex) {
+                         System.out.println("Error occurred while creating the File");
+                     }
+                     // continue if file was successfully created
+                        if (cameraImageFile != null) {
+                            filepath = FileProvider.getUriForFile(getApplicationContext(),"com.itproject.frapp.fileprovider", cameraImageFile);
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
+                            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                        }
+                    }
                 }
             }
         });
-
     }
 
-
-    // https://www.viralandroid.com/2015/11/load-image-from-url-internet-in-android.html
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-
-            } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
-            }
-            return bimage;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 
 
     /* checks whether app has permission to use the camera
@@ -188,11 +176,10 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        // handles if uploading photo from camera
+//        // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            this.filepath = data.getData();
-            this.bitmapImage = (Bitmap) data.getExtras().get("data");
-            profileImage.setImageBitmap(cropImage(bitmapImage));
+            loadImageFromFile();
+            saveProfilePicture();
         }
 
         // handles if photo selected from gallery
@@ -205,8 +192,19 @@ public class ChooseDPSetting extends AppCompatActivity {
                 e.printStackTrace();
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
+            saveProfilePicture();
         }
 
+    }
+
+
+    private void loadImageFromFile() {
+        if (this.cameraImageFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(this.cameraImageFile.getAbsolutePath());
+            profileImage.setImageBitmap(cropImage(myBitmap));
+        } else {
+            System.out.println("Error: File does not exist");
+        }
     }
 
 
@@ -216,13 +214,14 @@ public class ChooseDPSetting extends AppCompatActivity {
         new Thread (new Runnable () {
             @Override
             public void run() {
+                System.out.println(filepath);
                 if(filepath != null) {
                     // Get data from ImageView as bytes
                     profileImage.setDrawingCacheEnabled(true);
                     profileImage.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
                     byte[] data = baos.toByteArray();
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
@@ -235,7 +234,6 @@ public class ChooseDPSetting extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Handle success
-
                             // taskSnapshot.getMetadata()?
                             Task<Uri> urlTask = uploadTask.continueWithTask
                                     (new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -277,7 +275,6 @@ public class ChooseDPSetting extends AppCompatActivity {
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                             }
                                         });
-
                                     } else {
                                         System.out.println("DERP URL retrieval failure");
                                     }
@@ -338,7 +335,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     }
 
 
-    public void saveProfilePicture(View view) {
+    private void saveProfilePicture() {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create storage reference from the app
@@ -349,4 +346,24 @@ public class ChooseDPSetting extends AppCompatActivity {
         // Upload image to database
         uploadImage(imageRef);
     }
+
+
+
+    // https://developer.android.com/training/camera/photobasics
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        this.imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
 }

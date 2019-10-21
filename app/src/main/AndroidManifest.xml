@@ -10,6 +10,8 @@
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission-sdk-23 android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false"></uses-feature>
@@ -24,8 +26,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".InitialSignup.InitialDPSelection"/>
-        <activity android:name=".Legacy.InitialBirthdaySelection" />
-        <activity android:name=".Legacy.InitialFontSelection" />
         <activity android:name=".InitialSignup.InitialLanguageSelection" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -37,19 +37,24 @@
 
         <activity android:name=".Settings.SettingsActivity" />
         <activity android:name=".Settings.ChooseDPSetting" />
-        <activity android:name=".Legacy.UploadActivity" />
         <activity android:name=".ArtifactPages.ArtifactActivity" />
-        <activity android:name=".Legacy.ChooseBirthdaySetting" />
-        <activity android:name=".Legacy.ChooseFontSetting" />
         <activity android:name=".Settings.ChooseLanguageActivity" />
         <activity android:name=".MainGallery.HomeActivity"/>
-        <activity android:name=".Legacy.SignupActivity" />
-        <activity android:name=".Legacy.LoginActivity" />
 
         <activity android:name=".Upload.ArtifactUploadActivity" />
         <activity android:name=".Upload.ArtifactDateActivity" />
         <activity android:name=".Upload.ArtifactDescriptionActivity" />
         <activity android:name=".Upload.ArtifactTagsActivity" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.itproject.frapp.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
 
     </application>
 
