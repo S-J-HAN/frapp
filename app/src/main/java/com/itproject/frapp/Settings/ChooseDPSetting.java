@@ -191,17 +191,21 @@ public class ChooseDPSetting extends AppCompatActivity {
         new Thread (new Runnable () {
             @Override
             public void run() {
+                System.out.println("1111111111111111111111111111111111111111111111111111111111111111111");
                 System.out.println(filepath);
                 if(filepath != null) {
+                    System.out.println("2222222222222222222222222222222222222222222222222222222222222222222");
                     // Get data from ImageView as bytes
                     profileImage.setDrawingCacheEnabled(true);
                     profileImage.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
+                    System.out.println("33333333333333333333333333333333333333333333333333333333333333333333");
                     byte[] data = baos.toByteArray();
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
+                    System.out.println("44444444444444444444444444444444444444444444444444444444444444444444444444");
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -211,7 +215,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Handle success
-
+                            System.out.println("555555555555555555555555555555555555555555555555555555555555555555");
                             // taskSnapshot.getMetadata()?
                             Task<Uri> urlTask = uploadTask.continueWithTask
                                     (new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -234,13 +238,13 @@ public class ChooseDPSetting extends AppCompatActivity {
                                         // Authenticate current user
                                         mAuth = FirebaseAuth.getInstance();
                                         final FirebaseUser currentUser = mAuth.getCurrentUser();
-
+                                        System.out.println("66666666666666666666666666666666666666666666666666666666666");
                                         // Connect to database
                                         dbRef = FirebaseDatabase.getInstance().getReference();
                                         dbRef.child("users").child(currentUser.getUid()).child("url").setValue(imageUri);
-
+                                        System.out.println("7777777777777777777777777777777777777777777777777777777777777777777");
                                         Toast.makeText(ChooseDPSetting.this, "Profile image saved", Toast.LENGTH_LONG).show();
-
+                                        System.out.println("888888888888888888888888888888888888888888888888888888888888888");
                                         // Add face as a reference photo for facial recognition
                                         dbRef.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -253,7 +257,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                             }
                                         });
-
+                                        System.out.println("999999999999999999999999999999999999999999999999999999999999999999");
                                     } else {
                                         System.out.println("DERP URL retrieval failure");
                                     }
@@ -324,5 +328,6 @@ public class ChooseDPSetting extends AppCompatActivity {
                 toString());
         // Upload image to database
         uploadImage(imageRef);
+        System.out.println("0000000000000000000000000000000000000000000000000000000000000000000000000");
     }
 }
