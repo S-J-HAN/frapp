@@ -73,6 +73,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     private Uri filepath;
     private String imageUri = "";
     private String currentPhotoPath;
+    private String imageFileName = "";
     private File cameraImageFile = null;
 
     private ImageView profileImage;
@@ -104,7 +105,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                 // Get User object and do stuff with it inside onDataChange
                 User user = dataSnapshot.getValue(User.class);
 
-                Glide.with(ChooseDPSetting.this)
+                Glide.with(getApplicationContext())
                         .load(user.getUrl())
                         .fitCenter()
                         .into(profileImage);
@@ -128,18 +129,14 @@ public class ChooseDPSetting extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     if (cameraIntent.resolveActivity(getPackageManager()) != null) {
                      try {
                          cameraImageFile = createImageFile();
-                         System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-                         System.out.println(cameraImageFile);
                      } catch (IOException ex) {
                          System.out.println("Error occurred while creating the File");
                      }
                      // continue if file was successfully created
                         if (cameraImageFile != null) {
-                            System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
                             filepath = FileProvider.getUriForFile(getApplicationContext(),"com.itproject.frapp.fileprovider", cameraImageFile);
                             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
                             startActivityForResult(cameraIntent, CAMERA_REQUEST);
@@ -181,10 +178,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 //        // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-            Bundle extras = data.getExtras();
-            this.bitmapImage = (Bitmap) extras.get("data");
-            profileImage.setImageBitmap(cropImage(bitmapImage));
+            loadImageFromFile();
             saveProfilePicture();
         }
 
@@ -204,27 +198,33 @@ public class ChooseDPSetting extends AppCompatActivity {
     }
 
 
+    private void loadImageFromFile() {
+        if (this.cameraImageFile.exists()) {
+            Bitmap myBitmap = BitmapFactory.decodeFile(this.cameraImageFile.getAbsolutePath());
+            profileImage.setImageBitmap(cropImage(myBitmap));
+        } else {
+            System.out.println("Error: File does not exist");
+        }
+    }
+
+
     // Upload image to Firebase storage and retrieve its URI
     public void uploadImage (final StorageReference imageRef) {
         Toast.makeText(this, "Saving image ... this may take a few moments", Toast.LENGTH_LONG).show();
         new Thread (new Runnable () {
             @Override
             public void run() {
-                System.out.println("1111111111111111111111111111111111111111111111111111111111111111111");
                 System.out.println(filepath);
                 if(filepath != null) {
-                    System.out.println("2222222222222222222222222222222222222222222222222222222222222222222");
                     // Get data from ImageView as bytes
                     profileImage.setDrawingCacheEnabled(true);
                     profileImage.buildDrawingCache();
                     Bitmap bitmap = ((BitmapDrawable) profileImage.getDrawable()).getBitmap();
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
-                    System.out.println("33333333333333333333333333333333333333333333333333333333333333333333");
                     byte[] data = baos.toByteArray();
 
                     final UploadTask uploadTask = imageRef.putBytes(data);
-                    System.out.println("44444444444444444444444444444444444444444444444444444444444444444444444444");
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
@@ -234,7 +234,6 @@ public class ChooseDPSetting extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             // Handle success
-                            System.out.println("555555555555555555555555555555555555555555555555555555555555555555");
                             // taskSnapshot.getMetadata()?
                             Task<Uri> urlTask = uploadTask.continueWithTask
                                     (new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -257,13 +256,13 @@ public class ChooseDPSetting extends AppCompatActivity {
                                         // Authenticate current user
                                         mAuth = FirebaseAuth.getInstance();
                                         final FirebaseUser currentUser = mAuth.getCurrentUser();
-                                        System.out.println("66666666666666666666666666666666666666666666666666666666666");
+
                                         // Connect to database
                                         dbRef = FirebaseDatabase.getInstance().getReference();
                                         dbRef.child("users").child(currentUser.getUid()).child("url").setValue(imageUri);
-                                        System.out.println("7777777777777777777777777777777777777777777777777777777777777777777");
+
                                         Toast.makeText(ChooseDPSetting.this, "Profile image saved", Toast.LENGTH_LONG).show();
-                                        System.out.println("888888888888888888888888888888888888888888888888888888888888888");
+
                                         // Add face as a reference photo for facial recognition
                                         dbRef.child("users").child(currentUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
@@ -276,7 +275,6 @@ public class ChooseDPSetting extends AppCompatActivity {
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
                                             }
                                         });
-                                        System.out.println("999999999999999999999999999999999999999999999999999999999999999999");
                                     } else {
                                         System.out.println("DERP URL retrieval failure");
                                     }
@@ -355,7 +353,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        this.imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
