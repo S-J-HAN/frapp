@@ -176,7 +176,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-//        // handles if uploading photo from camera
+        // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
             loadImageFromFile();
             saveProfilePicture();
