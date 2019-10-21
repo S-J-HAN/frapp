@@ -26,6 +26,8 @@ public class ImageTagger {
     private static final String KEY = "41d1822e642940ec97bb69f6d2b3116b";
     private static final String URIBASE = "https://frapp-cv.cognitiveservices.azure.com/vision/v1.0/";
 
+    public static String finalTags;
+
     public static void tagImage(Context context, String url, String artifactID) {
         // Generates semantic tags for an artifact with image located at 'url' and automatically
         // updates the artifact's firebase db instance
@@ -47,6 +49,10 @@ public class ImageTagger {
                         allTags += ",";
                         allTags += ((JSONObject) tags.get(i)).get("name");
                     }
+
+                    System.out.println("ALL TAGS " + allTags);
+
+                    finalTags = allTags;
 
                     // Add tags to firebase instance
                     DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();

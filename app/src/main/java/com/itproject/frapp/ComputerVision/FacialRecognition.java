@@ -33,6 +33,7 @@ public class FacialRecognition {
     private static final String KEY = "11b7d055f5d742e4981bc64e4b3a99bf";
     private static final String URIBASE = "https://frapp-faces.cognitiveservices.azure.com/face/v1.0/";
 
+
     public static void addPersonToPersonGroup(Context context, String firebaseID) {
 
         // POST: create a new person and add it too our Azure persongroup instance
@@ -246,6 +247,7 @@ public class FacialRecognition {
                                             e.printStackTrace();
                                         }
                                     }
+
 
                                     dbRef.child("artifacts").child(artifactID).child("people").setValue(detectedUsers);
                                 }

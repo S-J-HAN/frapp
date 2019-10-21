@@ -103,12 +103,14 @@ public class MainActivity extends AppCompatActivity {
 
                             // This user does not yet exist, make a new account for them
                             if (!nameInput.getText().toString().equals("")) {
+                                System.out.println("Making new user");
                                 mAuth.createUserWithEmailAndPassword(nameInput.getText().toString()+"@frapp.com", "123456")
                                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
                                                     // Successfully created new user
+                                                    System.out.println("created new user");
                                                     FirebaseUser user = mAuth.getCurrentUser();
 
                                                     // Add new user data to database
@@ -129,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
+                            System.out.println("hello");
                             Log.e("ERROR", "onCancelled: ", databaseError.toException());
                         }
                     });
