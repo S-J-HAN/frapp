@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.Activity;
@@ -72,6 +73,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     private Uri filepath;
     private String imageUri = "";
     private String currentPhotoPath;
+    private File cameraImageFile = null;
 
     private ImageView profileImage;
     private Bitmap bitmapImage;
@@ -117,6 +119,7 @@ public class ChooseDPSetting extends AppCompatActivity {
 
 
         // initial setup from camera upload option
+        //https://developer.android.com/training/camera/photobasics
         LinearLayout photoButton = this.findViewById(R.id.uploadFromCameraButton);
         photoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,13 +128,26 @@ public class ChooseDPSetting extends AppCompatActivity {
                     requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
                 } else {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    //filepath = CameraUtils.getOutputMediaFileUri(this);
-                    //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                    System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                     try {
+                         cameraImageFile = createImageFile();
+                         System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+                         System.out.println(cameraImageFile);
+                     } catch (IOException ex) {
+                         System.out.println("Error occurred while creating the File");
+                     }
+                     // continue if file was successfully created
+                        if (cameraImageFile != null) {
+                            System.out.println("CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC");
+                            filepath = FileProvider.getUriForFile(getApplicationContext(),"com.itproject.frapp.fileprovider", cameraImageFile);
+                            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, filepath);
+                            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                        }
+                    }
                 }
             }
         });
-
     }
 
 
@@ -163,11 +179,13 @@ public class ChooseDPSetting extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        // handles if uploading photo from camera
+//        // handles if uploading photo from camera
         if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
-            this.filepath = data.getData();
-            this.bitmapImage = (Bitmap) data.getExtras().get("data");
+            System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
+            Bundle extras = data.getExtras();
+            this.bitmapImage = (Bitmap) extras.get("data");
             profileImage.setImageBitmap(cropImage(bitmapImage));
+            saveProfilePicture();
         }
 
         // handles if photo selected from gallery
@@ -180,6 +198,7 @@ public class ChooseDPSetting extends AppCompatActivity {
                 e.printStackTrace();
             }
             profileImage.setImageBitmap(cropImage(bitmapImage));
+            saveProfilePicture();
         }
 
     }
@@ -318,7 +337,7 @@ public class ChooseDPSetting extends AppCompatActivity {
     }
 
 
-    public void saveProfilePicture(View view) {
+    private void saveProfilePicture() {
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create storage reference from the app
@@ -328,6 +347,25 @@ public class ChooseDPSetting extends AppCompatActivity {
                 toString());
         // Upload image to database
         uploadImage(imageRef);
-        System.out.println("0000000000000000000000000000000000000000000000000000000000000000000000000");
     }
+
+
+
+    // https://developer.android.com/training/camera/photobasics
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
 }
