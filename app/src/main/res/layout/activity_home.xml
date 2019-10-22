@@ -80,7 +80,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/roundcorner"
         android:foregroundTint="@android:color/black"
-        android:hint="search"
+        android:hint="@string/search"
         android:imeOptions="actionGo"
         android:inputType="text"
         android:paddingLeft="49dp"
