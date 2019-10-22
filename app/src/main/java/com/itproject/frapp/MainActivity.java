@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null) {
             // First time anyone has logged in on this device
             System.out.println("test");
-            Button goButton = findViewById(R.id.goButton);
+            ImageButton goButton = findViewById(R.id.goButton);
             final TextView nameInput = findViewById(R.id.nameInput);
 
             goButton.setOnClickListener(new View.OnClickListener() {
